@@ -1,0 +1,16 @@
+<svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+	<defs>
+		<radialGradient cx="56.15%" cy="27.43%" fx="56.15%" fy="27.43%" r="57.526%" gradientTransform="matrix(.5626 -.82673 .8022 .54591 .026 .589)" id="ball-4-a">
+			<stop stop-color="#F8F7FF" offset="0%"></stop>
+			<stop stop-color="#DAD8FF" offset="34.827%"></stop>
+			<stop stop-color="#9B95F3" offset="100%"></stop>
+		</radialGradient>
+		<filter x="-500%" y="-500%" width="1000%" height="1000%" filterUnits="objectBoundingBox" id="dropshadow-ball-4">
+			<feOffset dx="24" dy="24" in="SourceAlpha" result="shadowOffsetOuter"></feOffset>
+			<feGaussianBlur stdDeviation="24" in="shadowOffsetOuter" result="shadowBlurOuter"></feGaussianBlur>
+			<feColorMatrix values="0 0 0 0 0.10 0 0 0 0 0.17 0 0 0 0 0.21 0 0 0 0.22 0" in="shadowBlurOuter"></feColorMatrix>
+		</filter>
+	</defs>
+	<circle cx="20" cy="20" r="20" fill="#FFF" fill-rule="evenodd" style="filter:url(#dropshadow-ball-4)"></circle>
+	<circle cx="20" cy="20" r="20" fill="url(#ball-4-a)" fill-rule="evenodd"></circle>
+		</svg>

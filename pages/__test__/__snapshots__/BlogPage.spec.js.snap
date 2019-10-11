@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BlogPage renders the component 1`] = `"<main><title-bar-stub title=\\"Blog\\" subtitle=\\"Featured posts\\"></title-bar-stub><section id=\\"carousel\\"><div class=\\"container\\"><div class=\\"row\\"><div class=\\"collumn\\"><blog-carousel-stub posts=\\"\\"></blog-carousel-stub></div></div></div></section><section id=\\"content\\"><div class=\\"container\\"><h2>hello</h2></div></section></main>"`;

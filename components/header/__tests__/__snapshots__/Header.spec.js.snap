@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Header renders links properly 1`] = `"<header><div class=\\"container\\"><div class=\\"row inner\\"><div class=\\"brand\\"><img src=\\"/images/logo.svg\\" alt=\\"logo\\"><p>karazann</p></div><div class=\\"links\\"><!----><div><div class=\\"horizontal-list\\"><li><a>Hello</a></li><li><a>Test</a></li></div><div class=\\"horizontal-list\\"><li><profile-menu-stub user=\\"[object Object]\\"></profile-menu-stub></li></div></div></div></div></div></header>"`;
+
+exports[`Header renders the component 1`] = `"<header><div class=\\"container\\"><div class=\\"row inner\\"><div class=\\"brand\\"><img src=\\"/images/logo.svg\\" alt=\\"logo\\"><p>karazann</p></div><div class=\\"links\\"><div><div class=\\"horizontal-list\\"><li><a>Developers</a></li><li><a>Blog</a></li><li><a>FAQ</a></li><li><a>Roadmap</a></li><li><a>Sign in</a></li><li><a class=\\"btn\\">Sign up</a></li></div></div><!----></div></div></div></header>"`;

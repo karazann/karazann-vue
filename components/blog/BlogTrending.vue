@@ -1,0 +1,40 @@
+<template lang="pug">
+    section
+        h3.title Trending
+        ul.trending-list
+            blog-trending-post(v-for="(post, index) in posts" :key="index" :post="post")
+</template>
+
+<script>
+	import BlogTrendingPost from './BlogTrendingPost.vue'
+	export default {
+		components: {
+			BlogTrendingPost
+		},
+		props: {
+			posts: {
+				type: Array,
+				required: true
+			}
+		}
+	}
+</script>
+
+<style lang="scss" scoped>
+	h3 {
+		font-size: 20px;
+		margin-bottom: 20px;
+		margin-top: 20px;
+	}
+	.trending-list {
+		padding: 0;
+		list-style: none;
+		margin-top: 25px;
+		display: block;
+
+		li {
+			margin-bottom: 20px;
+		}
+	}
+</style>
+

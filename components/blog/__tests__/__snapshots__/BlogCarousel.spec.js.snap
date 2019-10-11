@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BlogCarousel renders the component 1`] = `"<slick-stub options=\\"[object Object]\\" class=\\"carousel\\"></slick-stub>"`;

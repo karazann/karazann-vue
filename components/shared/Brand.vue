@@ -21,13 +21,13 @@
 		}
 
 		p {
-			color: #445;
+			color: #233458;
 			margin-left: 8px;
 			margin-top: 0;
 			margin-bottom: 24px;
 			font-family: 'Pouttu';
 			font-size: 15px;
-			font-weight: 400;
+			font-weight: 500;
 		}
 	}
 </style>

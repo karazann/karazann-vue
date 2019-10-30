@@ -29,13 +29,12 @@
 		display: flex;
 		background: #fff;
 		margin-bottom: 35px;
-		box-shadow: 0 3px 20px rgba(0, 0, 0, 0.04);
-		border-radius: 5px;
+		border-radius: 12px;
 		overflow: hidden;
 		transition: 0.3s;
 		&:hover {
-			box-shadow: 0 4px 18px rgba(0, 0, 0, 0.07);
-			transform: translateY(-5px);
+			box-shadow: 0 30px 70px rgba(0, 0, 0, 0.07);
+			transform: translateY(-2px);
 		}
 
 		flex-direction: column;
@@ -85,14 +84,11 @@
 
 			box-sizing: border-box;
 
-			font-size: 14px;
-			font-weight: 600;
-			color: #334;
+			color: #233458;
 			background-color: #fff;
-			border-radius: 4px;
-			padding: 5px 12px;
+			border-radius: 12px;
+			padding: 6px 14px;
 			line-height: 20px;
-			font-weight: 400;
 			margin-bottom: 9px;
 			position: absolute;
 			left: 32px;
@@ -106,9 +102,6 @@
 		padding: 35px;
 
 		h3 {
-			font-size: 22px;
-			line-height: 33px;
-			color: #334;
 			margin-bottom: 15px;
 			display: block;
 
@@ -128,14 +121,14 @@
 	a.info,
 	.info,
 	.date {
-		font-size: 14px;
-		color: #888;
+        font-size: 14px;
+        font-weight: 500;
+		color: #7C42FE;
 		margin-bottom: 20px;
 		display: inline-block;
-		background-color: #f0f0f0;
-		border-radius: 5px;
-		line-height: 20px;
-		padding: 4px 10px;
+		background-color: rgba(126, 66, 254, 0.164);
+		border-radius: 12px;
+		padding: 10px 14px;
 		margin-right: 3px;
 		transition: 0.3s;
 	}
@@ -150,7 +143,6 @@
 			padding: 0;
 			margin: 0;
 			display: block;
-			color: #808080;
 		}
 		a.button i.icon-feather-arrow-right {
 			font-size: 20px;

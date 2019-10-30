@@ -79,7 +79,7 @@
 			font-size: 15px;
 			height: 38px;
 			line-height: 38px;
-			font-weight: 600;
+			font-weight: 500;
 			text-decoration: none;
 			color: #99a;
 

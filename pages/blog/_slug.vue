@@ -3,18 +3,18 @@
 </template>
 
 <script>
-	export default {
+    export default {
         name: 'blog-detail-page',
-		asyncData({ store, params }) {
+        asyncData({ store, params }) {
             return {
                 msg: params.slug
             }
-		}
-	}
+        }
+    }
 </script>
 
 <style lang="scss" scoped>
-	h1 {
-		color: green;
-	}
+    h1 {
+        color: green;
+    }
 </style>

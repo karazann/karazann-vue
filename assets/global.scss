@@ -92,6 +92,7 @@ video {
 	font: inherit;
 	vertical-align: baseline;
 }
+
 /* HTML5 display-role reset for older browsers */
 
 article,
@@ -123,6 +124,7 @@ q {
 }
 
 blockquote {
+
 	&:before,
 	&:after {
 		content: '';
@@ -131,6 +133,7 @@ blockquote {
 }
 
 q {
+
 	&:before,
 	&:after {
 		content: '';
@@ -146,14 +149,30 @@ table {
 a {
 	text-decoration: none;
 }
-html { overflow-y: scroll; }
-  
+
+html {
+	overflow-y: scroll;
+}
 
 @font-face {
 	font-family: 'Pouttu';
 	font-weight: normal;
 	src: url('fonts/Pouttu.ttf') format('truetype');
 }
+
+
+@font-face {
+	font-family: 'Futura';
+	font-weight: normal;
+	src: url('fonts/Gilroy-Regular.ttf') format('truetype');
+}
+@font-face {
+	font-family: 'Futura';
+	font-weight: bold;
+	src: url('fonts/Gilroy-Bold.ttf') format('truetype');
+}
+
+
 
 @font-face {
 	font-family: 'MaterialIcons';
@@ -167,34 +186,110 @@ html { overflow-y: scroll; }
 	src: url('fonts/Feather-Icons.ttf') format('truetype');
 }
 
-@import url('https://fonts.googleapis.com/css?family=Nunito:400,600,700');
+
+//style guidde 
+
+h1 {
+	color: #051D40;
+	font-weight: bold;
+	font-size: 32px; //24pt
+}
+
+h2 {
+	color: #051D40;
+	font-weight: bold;
+	font-size: 26.666667px; //20pt
+}
+
+h3 {
+	color: #233458;
+	font-weight: bold;
+	font-size: 21.333333px; //16pt
+}
+
+h4 {
+	color: #233458;
+	font-weight: bold;
+	font-size: 18.666667; // 14pt
+}
+
+p {
+	&.sm {
+		font-size: 12px;
+		font-weight: normal;
+		color: #8093AD;
+	}
+
+	//normal
+	font-size: 16px;
+	font-weight: normal;
+	color: #8093AD;
+
+	&.md {
+		font-size: 18.666667px;
+		font-weight: normal;
+		color: #7285AB;
+	}
+
+	&.lg {
+		font-size: 21.333333px;
+		font-weight: normal;
+		color: #8093AD;
+	}
+
+	&.capitalize {
+		color: #4796EA;
+		text-transform: capitalize;
+	}
+}
+
+span {
+    font-size: 10pt;
+	font-weight: normal;
+	color: #233458;
+}
 
 .container {
 	@include make-container;
 	@include make-container-max-widths;
 }
+
 .row {
 	@include make-row;
 }
 
-button:focus { 
+button:focus {
 	outline: 0 !important;
 }
 
-//https://fonts.googleapis.com/css?family=Nunito:400,600,700&display=swap
+::selection {
+	background: #9f94f0;
+	/* WebKit/Blink Browsers */
+	color: white;
+	border-radius: 3px;
+}
+
+::-moz-selection {
+	background: #9f94f0;
+	/* Gecko Browsers */
+	color: white;
+	border-radius: 3px;
+}
+
 
 body,
 button,
 input,
 select,
 textarea {
-	font-family: 'Nunito', sans-serif;
+	font-family: 'Futura', sans-serif;
 	color: #667;
 }
 
 body {
-	background: #F7F8FB;
+	background: #F5F7FB;
 	box-sizing: border-box;
+	font-family: 'Futura', sans-serif;
 	//overflow-y: scroll;
 	//overflow-x: hidden;
 }
@@ -251,6 +346,7 @@ button {
 }
 
 .slick-slider {
+
 	.slick-track,
 	.slick-list {
 		-webkit-transform: translate3d(0, 0, 0);

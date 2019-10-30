@@ -38,7 +38,8 @@
         & > svg {
             overflow: visible;
             position: absolute;
-            z-index: 0;
+			z-index: 0;
+			visibility: hidden;
         }
 
         & > div {

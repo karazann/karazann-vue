@@ -1,6 +1,6 @@
 <template lang="pug">
     div
-        h4 Recent Posts
+        h3 Recent Posts
         div
             blog-post(v-for="(post, index) in posts" :key="index" :post="post")
 </template>
@@ -21,11 +21,9 @@
 </script>
 
 <style lang="scss" scoped>
-	h4 {
+	h3 {
 		margin-bottom: 35px !important;
 		margin-top: 60px !important;
-
-		font-size: 22px;
 		line-height: 34px;
 	}
 </style>

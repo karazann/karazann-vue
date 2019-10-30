@@ -1,76 +1,73 @@
 <template lang="pug">
-    button.ripple-outer(@mousedown="addRipple" ref="container" :style="style" :class="this.type")
+    button.ripple-outer(@mousedown="addRipple" @mouseup="purgeRipples" @lick ref="container" :style="style" :class="this.type")
         slot
         transition-group.ripples(name="grow" tag="div" )
             span.ripple(v-for="ripple in ripples" :key="ripple.id" :style="ripple.style")
 </template>
 
 <script>
-export default {
-    name: 'v-button',
-    data() {
-        return {
-            id: 0,
-            ripples: []
-        }
-    },
-    props: {
-		fill: Boolean,
-		type: String
-    },
-    computed: {
-        style() {
-            return `width: ${this.fill ? '100%' : 'intherited'};`
+	export default {
+		name: 'v-button',
+		data() {
+			return {
+				id: 0,
+				ripples: []
+			}
+		},
+		props: {
+			fill: Boolean,
+			type: String,
+			onClick: Function
+		},
+		computed: {
+			style() {
+				return `width: ${this.fill ? '100%' : 'intherited'};`
+			}
+		},
+		mounted() {
+			const width = this.$refs.container.offsetWidth
+			const height = this.$refs.container.offsetHeight
+			this.rippleWidth = width > height ? width : height
+			this.halfRippleWidth = this.rippleWidth / 2
+		},
+		methods: {
+			addRipple(e) {
+				const { left, top } = this.$refs.container.getBoundingClientRect()
+				const rippleId = Date.now()
+				this.ripples.push({
+					style: {
+						width: `${this.rippleWidth}px`,
+						height: `${this.rippleWidth}px`,
+						left: `${e.clientX - left - this.halfRippleWidth}px`,
+						top: `${e.clientY - top - this.halfRippleWidth}px`
+					},
+					id: rippleId
+				})
+			},
+			async purgeRipples(e) {
+				this.ripples = []
+				this.onClick ? await this.onClick(e) : null
+			}
 		}
-    },
-    mounted() {
-        const width = this.$refs.container.offsetWidth
-        const height = this.$refs.container.offsetHeight
-        this.rippleWidth = width > height ? width : height
-        this.halfRippleWidth = this.rippleWidth / 2
-
-        window.addEventListener('mouseup', this.purgeRipples)
-    },
-    beforeDestroy() {
-        window.removeEventListener('mouseup', this.purgeRipples)
-    },
-    methods: {
-        addRipple(e) {
-            const { left, top } = this.$refs.container.getBoundingClientRect()
-            const rippleId = Date.now()
-            this.ripples.push({
-                style: {
-                    width: `${this.rippleWidth}px`,
-                    height: `${this.rippleWidth}px`,
-                    left: `${e.clientX - left - this.halfRippleWidth}px`,
-                    top: `${e.clientY - top - this.halfRippleWidth}px`
-                },
-                id: rippleId
-            })
-        },
-        purgeRipples() {
-            this.ripples = []
-        }
-    }
-}
+	}
 </script>
 
 <style lang="scss" scoped>
 	button {
 		top: 0;
 		background: #9185f5;
-		padding: 10px 20px;
+		padding: 12px 20px;
 		line-height: 24px;
 		color: #fff;
 		position: relative;
 		font-size: 16px;
 		font-weight: 500;
 		display: inline-block;
-		transition: all .15s ease;
+		transition: all 0.15s ease;
 		cursor: pointer;
 		overflow: hidden;
 		border: none;
-		border-radius: 4px;
+		border-radius: 12px;
 		//&:hover {
 		//	transform: translateY(-3px);
 		//}
@@ -90,25 +87,40 @@ export default {
 			transform: translateY(1px);
 			//box-shadow: 0 8px 24px rgba(20,20,20,0.05);
 		}
-
 	}
 
 	.primary {
-		box-shadow: 0 8px 16px rgba(255,94,91,0.25);
-		background: #fc6b74; 
-		background: linear-gradient(65deg, #FF5E5B 0%, #F8778D 100%);
+		box-shadow: 0 8px 16px rgba(255, 94, 91, 0.4);
+		background: #fc6b74;
+		background: linear-gradient(65deg, #ff5e5b 0%, #f8778d 100%);
 		color: white;
 
 		&:hover {
-			box-shadow: 0 8px 16px rgba(255,94,91,0.4);
-			background: #fc7080; 
+			background: #fc7080;
+		box-shadow: 0 10px 20px rgba(255, 94, 91, 0.3);
 			background: linear-gradient(65deg, #ff6360 0, #f87c91 100%);
 		}
 
 		&:active {
-			box-shadow: 0 8px 16px rgba(255,94,91,0.1);
-			background: #fc7080; 
+			box-shadow: 0 8px 16px rgba(255, 94, 91, 0.1);
+			background: #fc7080;
 			background: linear-gradient(65deg, #ff6360 0, #f87c91 100%);
+		}
+	}
+
+	.google {
+		box-shadow: 0 8px 16px rgba(146, 133, 245, 0.3);
+		background: linear-gradient(65deg, #867ce0 0%, #A599F4 100%);
+		color: white;
+
+		&:hover {
+			box-shadow: 0 8px 16px rgba(146, 133, 245, 0.4);
+			background: linear-gradient(65deg, #867ce0 0%, #A599F4 100%);
+		}
+
+		&:active {
+			box-shadow: 0 8px 16px rgba(146, 133, 245, 0.1);
+			background: linear-gradient(65deg, #867ce0 0%, #A599F4 100%);
 		}
 	}
 
@@ -141,7 +153,7 @@ export default {
 
 	.grow-enter-active,
 	.grow-enter-to-active {
-		transition: all 800ms ease-out;
+		transition: all 1800ms ease-out;
 	}
 
 	.grow-leave-active,

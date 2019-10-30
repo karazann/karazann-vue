@@ -22,14 +22,13 @@
 
 <style lang="scss" scoped>
 	h3 {
-		font-size: 20px;
 		margin-bottom: 20px;
 		margin-top: 20px;
 	}
 	.trending-list {
 		padding: 0;
 		list-style: none;
-		margin-top: 25px;
+		margin-top: 35px;
 		display: block;
 
 		li {

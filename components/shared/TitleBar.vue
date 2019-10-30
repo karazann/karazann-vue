@@ -3,8 +3,8 @@
         .container
             .row
                 .col
-                    h2 {{title}}
-                    span(v-if="subtitle") {{subtitle}}
+                    h1 {{title}}
+                    p.lg(v-if="subtitle") {{subtitle}}
 </template>
 
 <script>
@@ -34,19 +34,14 @@
         @include make-col-ready;
         @include make-col(12);
     }
-	h2 {
-		font-size: 30px;
+	h1 {
 		line-height: 40px;
 		margin: 1px 0 3px;
-		color: #334;
-		font-weight: 500;
 		margin: 0;
 		padding: 0;
 	}
 
-	span {
-		font-size: 20px;
-		color: #889;
+	p {
 		margin-bottom: 3px;
 		margin-top: 3px;
 		display: block;

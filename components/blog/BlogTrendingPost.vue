@@ -3,7 +3,7 @@
         n-link.post(to="/")
             img(:src="post.image" alt="")
             .content
-                h5 {{ post.title }}
+                h4 {{ post.title }}
                 span {{ post.date }}
 </template>
 
@@ -23,8 +23,7 @@
 
 <style lang="scss" scoped>
 	.post {
-		box-shadow: 0 3px 9px rgba(0, 0, 0, 0.04);
-		border-radius: 5px;
+		border-radius: 12px;
 		background-color: #fff;
 		position: relative;
 		width: 100%;
@@ -45,7 +44,7 @@
 			z-index: 10;
 			background: #fff;
 			opacity: 1;
-			transition: 0.35s ease-in-out;
+			transition: 0.3s ease-out;
 		}
 
 		img {
@@ -59,7 +58,7 @@
 			z-index: 9;
 			opacity: 1;
 			transition: 0.35s;
-			border-radius: 5.5px;
+			border-radius: 13px;
 		}
 
 		&:hover:before,
@@ -71,8 +70,8 @@
 		&.active img {
 			opacity: 1;
 		}
-		&:hover h5,
-		&.active h5 {
+		&:hover h4,
+		&.active h4 {
 			color: #fff;
 		}
 		&:hover span,
@@ -83,24 +82,22 @@
 	}
 
 	.content {
-		h5 {
+		h4 {
 			//font-size: $body-font-size;
 			font-weight: 600;
 			line-height: 24px;
 			margin: 0 0 15px 0;
-			color: #334;
 			transition: 0.35s;
 		}
 		span {
 			font-size: 14px;
-			color: #888;
 			display: inline-block;
-			background-color: #f0f0f0;
-			border-radius: 5px;
+			background-color: #F5F7FB;
+			border-radius: 12px;
 			line-height: 20px;
-			padding: 4px 10px;
+			padding: 6px 12px;
 			margin-top: 3px;
-			transition: 0.35s;
+			transition: 0.3s;
 		}
 		display: block;
 		padding: 0;

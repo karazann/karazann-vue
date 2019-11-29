@@ -11,7 +11,8 @@
         "start": "nuxt-ts start",
         "generate": "nuxt-ts generate",
         "format-vue": "prettier --write \"src/**/*.vue\" --parser vue --vue-indent-script-and-style",
-        "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\""
+        "format-ts": "prettier --write \"src/**/*.ts\"",
+        "format": "npm run format-vue && npm run format-ts"
     },
     "dependencies": {
         "d3": "^5.14.1",

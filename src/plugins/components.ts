@@ -4,6 +4,9 @@ import Input from '@/components/shared/Input.vue'
 import Button from '@/components/shared/Button.vue'
 import Brand from '@/components/shared/Brand.vue'
 import TitleBar from '@/components/shared/TitleBar.vue'
+import VueCompositionApi from '@vue/composition-api'
+
+Vue.use(VueCompositionApi)
 
 Vue.directive('scroll', {
     inserted(el, binding) {

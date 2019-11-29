@@ -1,4 +1,17 @@
-export const state = () => ({
+interface BlogPost { 
+    slug: string,
+    title: string,
+    description: string,
+    image: string,
+    tag: string,
+    date: string
+}
+
+interface BlogState { 
+    posts: BlogPost[]
+}
+
+export const state = (): BlogState => ({
     posts: [
         {
             slug: '11-tips-to-help-you-get-new-clients-through-cold-calling',

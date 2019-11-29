@@ -3,48 +3,48 @@ import BlogCarousel from '../BlogCarousel.vue'
 import BlogCompactPost from '../BlogCompactPost.vue'
 
 describe('BlogCarousel', () => {
-	const build = props => {
-		const wrapper = shallowMount(BlogCarousel, { propsData: props })
+    const build = props => {
+        const wrapper = shallowMount(BlogCarousel, { propsData: props })
 
-		return {
-			wrapper
-		}
-	}
+        return {
+            wrapper
+        }
+    }
 
-	it('renders the component', () => {
-		// arrange
-		const { wrapper } = build({
-			posts: []
-		})
+    it('renders the component', () => {
+        // arrange
+        const { wrapper } = build({
+            posts: []
+        })
 
-		// assert
-		expect(wrapper.html()).toMatchSnapshot()
-	})
+        // assert
+        expect(wrapper.html()).toMatchSnapshot()
+    })
 
-	it('renders main components', () => {
-		// arrange
-		const { wrapper } = build({
-			posts: [
-				{
-					slug: '',
-					title: '',
-					description: '',
-					tag: '',
-					image: '',
-					date: ''
-				},
-				{
-					slug: '',
-					title: '',
-					description: '',
-					tag: '',
-					image: '',
-					date: ''
-				}
-			]
-		})
+    it('renders main components', () => {
+        // arrange
+        const { wrapper } = build({
+            posts: [
+                {
+                    slug: '',
+                    title: '',
+                    description: '',
+                    tag: '',
+                    image: '',
+                    date: ''
+                },
+                {
+                    slug: '',
+                    title: '',
+                    description: '',
+                    tag: '',
+                    image: '',
+                    date: ''
+                }
+            ]
+        })
 
-		// assert
-		expect(wrapper.findAll(BlogCompactPost).length).toEqual(2)
-	})
+        // assert
+        expect(wrapper.findAll(BlogCompactPost).length).toEqual(2)
+    })
 })

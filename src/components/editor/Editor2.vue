@@ -105,8 +105,6 @@
 
             svg.call(this.zoom)
 
-            
-
             // A background grid to help user experience
             // The width and height depends on the minimum scale extent and
             // the + 10% and negative index to create an infinite grid feel
@@ -257,7 +255,6 @@
 </script>
 
 <style lang="scss">
-    
     .node {
         transition: fill 0.1s ease-in-out;
     }

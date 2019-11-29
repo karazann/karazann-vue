@@ -12,21 +12,21 @@
 </template>
 
 <script>
-	import TitleBar from '@/components/shared/TitleBar.vue'
-	export default {
-		name: 'settings-page',
-		head: {
-			title: 'Settings'
-		},
-		components: {
-			TitleBar
-		}
-	}
+    import TitleBar from '@/components/shared/TitleBar.vue'
+    export default {
+        name: 'settings-page',
+        head: {
+            title: 'Settings'
+        },
+        components: {
+            TitleBar
+        }
+    }
 </script>
 
 <style lang="scss" scoped>
-	.col {
-		@include make-col-ready;
-		@include make-col(12);
-	}
+    .col {
+        @include make-col-ready;
+        @include make-col(12);
+    }
 </style>

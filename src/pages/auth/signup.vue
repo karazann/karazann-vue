@@ -24,7 +24,7 @@
 <script lang="ts">
     import AuthPanel from '@/components/auth/AuthPanel.vue'
     import { mapState } from 'vuex'
-    
+
     export default {
         name: 'signup-page',
         head: {
@@ -42,9 +42,7 @@
                 password: ''
             }
         },
-        methods: {
-            
-        }
+        methods: {}
     }
 </script>
 

@@ -3,7 +3,7 @@
 </template>
 
 <script>
-	export default {
-		name: 'auth-layout'
-	}
+    export default {
+        name: 'auth-layout'
+    }
 </script>

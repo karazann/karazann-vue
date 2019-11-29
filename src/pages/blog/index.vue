@@ -33,7 +33,6 @@
         },
         async created() {
             console.time('test1')
-            
         },
         computed: {
             ...mapState('blog', ['posts'])

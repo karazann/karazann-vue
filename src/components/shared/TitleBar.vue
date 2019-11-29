@@ -8,20 +8,20 @@
 </template>
 
 <script>
-	export default {
-		name: 'title-bar',
-		props: {
-			title: {
-				type: String,
-				required: true
-			},
-			subtitle: String
-		}
-	}
+    export default {
+        name: 'title-bar',
+        props: {
+            title: {
+                type: String,
+                required: true
+            },
+            subtitle: String
+        }
+    }
 </script>
 
 <style lang="scss" scoped>
-	section {
+    section {
         padding-top: 55px;
         padding-bottom: 30px;
     }
@@ -34,19 +34,16 @@
         @include make-col-ready;
         @include make-col(12);
     }
-	h1 {
-		line-height: 40px;
-		margin: 1px 0 3px;
-		margin: 0;
-		padding: 0;
-	}
+    h1 {
+        line-height: 40px;
+        margin: 1px 0 3px;
+        margin: 0;
+        padding: 0;
+    }
 
-	p {
-		margin-bottom: 3px;
-		margin-top: 3px;
-		display: block;
-	}
+    p {
+        margin-bottom: 3px;
+        margin-top: 3px;
+        display: block;
+    }
 </style>
-
-
-

@@ -6,24 +6,24 @@
 </template>
 
 <script>
-	import BlogPost from './BlogPost.vue'
-	export default {
-		components: {
-			BlogPost
-		},
-		props: {
-			posts: {
-				type: Array,
-				required: true
-			}
-		}
-	}
+    import BlogPost from './BlogPost.vue'
+    export default {
+        components: {
+            BlogPost
+        },
+        props: {
+            posts: {
+                type: Array,
+                required: true
+            }
+        }
+    }
 </script>
 
 <style lang="scss" scoped>
-	h3 {
-		margin-bottom: 35px !important;
-		margin-top: 60px !important;
-		line-height: 34px;
-	}
+    h3 {
+        margin-bottom: 35px !important;
+        margin-top: 60px !important;
+        line-height: 34px;
+    }
 </style>

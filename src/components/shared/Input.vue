@@ -25,7 +25,6 @@
     }
 </script>
 
-
 <style lang="scss" scoped>
     div#test {
         margin: 0 0 25px;
@@ -117,4 +116,3 @@
         }
     }
 </style>
-

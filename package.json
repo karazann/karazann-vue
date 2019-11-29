@@ -10,7 +10,7 @@
         "build": "nuxt-ts build",
         "start": "nuxt-ts start",
         "generate": "nuxt-ts generate",
-        "format-vue": "prettier --write \"src/**/*.vue\" --parser vue",
+        "format-vue": "prettier --write \"src/**/*.vue\" --parser vue --vue-indent-script-and-style",
         "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\""
     },
     "dependencies": {

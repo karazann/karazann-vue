@@ -5,29 +5,29 @@
 </template>
 
 <style lang="scss" scoped>
-	.brand {
-		display: flex;
-		height: 35px;
-		font-size: 15px;
-		width: 142px;
-		line-height: 35px;
-		text-decoration: none;
+    .brand {
+        display: flex;
+        height: 35px;
+        font-size: 15px;
+        width: 142px;
+        line-height: 35px;
+        text-decoration: none;
 
-		img {
-			z-index: 1100;
-			height: 35px;
-			width: 35px;
-			filter: brightness(100%);
-		}
+        img {
+            z-index: 1100;
+            height: 35px;
+            width: 35px;
+            filter: brightness(100%);
+        }
 
-		p {
-			color: #233458;
-			margin-left: 8px;
-			margin-top: 0;
-			margin-bottom: 24px;
-			font-family: 'Pouttu';
-			font-size: 15px;
-			font-weight: 500;
-		}
-	}
+        p {
+            color: #233458;
+            margin-left: 8px;
+            margin-top: 0;
+            margin-bottom: 24px;
+            font-family: 'Pouttu';
+            font-size: 15px;
+            font-weight: 500;
+        }
+    }
 </style>

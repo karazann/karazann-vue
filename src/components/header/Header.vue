@@ -80,7 +80,7 @@
             height: 38px;
             line-height: 38px;
             text-decoration: none;
-            color: #051D40;
+            color: #051d40;
             font-size: 16px;
 
             &:hover {

@@ -4,18 +4,15 @@
 
 <script>
     import TitleBar from '@/components/shared/TitleBar.vue'
-    
-	export default {
+
+    export default {
         head: {
-			title: 'FAQ'
-		},
-		components: {
-			TitleBar
-		}
-	}
+            title: 'FAQ'
+        },
+        components: {
+            TitleBar
+        }
+    }
 </script>
 
-
-<style lang="scss" scoped>
-	
-</style>
+<style lang="scss" scoped></style>

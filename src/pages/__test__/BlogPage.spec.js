@@ -7,66 +7,66 @@ const localVue = createLocalVue()
 localVue.use(Vuex)
 
 describe('BlogPage', () => {
-	let actions
-	let store
+    let actions
+    let store
 
-	const build = () => {
-		const wrapper = shallowMount(BlogPage, {
-			store,
-			localVue,
-			stub: {
-				RouterLinkStub
-			}
-		})
+    const build = () => {
+        const wrapper = shallowMount(BlogPage, {
+            store,
+            localVue,
+            stub: {
+                RouterLinkStub
+            }
+        })
 
-		return {
-			wrapper,
-			blogCarousel: () => wrapper.find(BlogCarousel)
-		}
-	}
+        return {
+            wrapper,
+            blogCarousel: () => wrapper.find(BlogCarousel)
+        }
+    }
 
-	beforeEach(() => {
-		actions = {
-			actionClick: jest.fn(),
-			actionInput: jest.fn()
-		}
-		store = new Vuex.Store({
-			modules: {
-				blog: {
+    beforeEach(() => {
+        actions = {
+            actionClick: jest.fn(),
+            actionInput: jest.fn()
+        }
+        store = new Vuex.Store({
+            modules: {
+                blog: {
                     namespaced: true,
-					state: {
-						posts: []
-					},
-					actions
-				}
-			}
-		})
-	})
+                    state: {
+                        posts: []
+                    },
+                    actions
+                }
+            }
+        })
+    })
 
-	it('renders the component', () => {
-		// arrange
-		const { wrapper } = build()
+    it('renders the component', () => {
+        // arrange
+        const { wrapper } = build()
 
-		// assert
-		expect(wrapper.html()).toMatchSnapshot()
-	})
+        // assert
+        expect(wrapper.html()).toMatchSnapshot()
+    })
 
-	it('renders main child components', () => {
-		// arrange
-		const { wrapper, blogCarousel } = build()
+    it('renders main child components', () => {
+        // arrange
+        const { wrapper, blogCarousel } = build()
 
-		// assert
-		expect(blogCarousel().exists()).toBe(true)
-	})
+        // assert
+        expect(blogCarousel().exists()).toBe(true)
+    })
 
-	it('passes a binded posts prop to blog carousel component', () => {
-		// arrange
-		const { wrapper, blogCarousel } = build()
-		//wrapper.({
-		//	posts: [{ title: 'Test1' }, { title: 'Test2' }]
-		//})
+    it('passes a binded posts prop to blog carousel component', () => {
+        // arrange
+        const { wrapper, blogCarousel } = build()
+        //wrapper.({
+        //	posts: [{ title: 'Test1' }, { title: 'Test2' }]
+        //})
 
-		// assert
-		expect(blogCarousel().vm.$props.posts).toBe(wrapper.vm.posts)
-	})
+        // assert
+        expect(blogCarousel().vm.$props.posts).toBe(wrapper.vm.posts)
+    })
 })

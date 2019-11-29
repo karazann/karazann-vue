@@ -257,7 +257,7 @@
 
                     self.selections.shadow.attr('d', `M ${x}, ${y} C ${x}, ${delta + y}, ${ex}, ${ey - delta}, ${ex}, ${ey}`)
                 })
-                .on('end', function () {
+                .on('end', function() {
                     select(this).attr('fill', 'transparent')
                     self.selections.shadow.attr('visibility', 'hidden')
                 })
@@ -292,7 +292,10 @@
 
                     return `M ${x1}, ${y1} C ${x1}, ${100 + y1}, ${x2}, ${y2 - 100}, ${x2}, ${y2}`
                 })
-            this.selections.graph.selectAll('.grabber').data(this.nodes_data).call(grabber)
+            this.selections.graph
+                .selectAll('.grabber')
+                .data(this.nodes_data)
+                .call(grabber)
 
             this.selections.arrows = this.selections.graph
                 .selectAll('.arrow')

@@ -13,7 +13,7 @@
                 v-input(autocomplete="email" type="email" placeholder="Email" v-model="email")
                 v-input(autocomplete="new-password" type="password" placeholder="Password" v-model="password")
                 p#warning By clicking the "Sign Up" button below you agree to the Terms and Conditions
-                v-button(:onClick="signup" fill type="primary") Sign Up
+                v-button(fill type="primary") Sign Up
                 p#separator or
                 div#social
                     v-button(type="google") Google 
@@ -21,25 +21,10 @@
                     v-button(type="google") Github
 </template>
 
-<script>
+<script lang="ts">
     import AuthPanel from '@/components/auth/AuthPanel.vue'
     import { mapState } from 'vuex'
-    import { onError } from 'apollo-link-error'
-    import gql from 'graphql-tag'
-
-    const signupInternal = gql`
-        mutation SignInAndGetToken($firstName: String!, $lastName: String!, $email: String!, $password: String!) {
-            signupInternal(firstName: $firstName, lastName: $lastName, email: $email, password: $password, passwordAgain: $password) {
-                token
-            }
-        }
-    `
-
-    const link = onError(({ graphQLErrors, networkError }) => {
-        if (graphQLErrors) graphQLErrors.map(({ message, locations, path }) => console.log(`[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`))
-        if (networkError) console.log(`[Network error]: ${networkError}`)
-    })
-
+    
     export default {
         name: 'signup-page',
         head: {
@@ -58,19 +43,7 @@
             }
         },
         methods: {
-            async signup() {
-                this.$apollo.writeData({ data: { visibilityFilter: 'filter' } })
-                const response = await this.$apollo.mutate({
-                    mutation: signupInternal,
-                    variables: {
-                        firstName: this.firstName,
-                        lastName: this.lastName,
-                        email: this.email,
-                        password: this.password
-                    }
-                })
-                console.log(response)
-            }
+            
         }
     }
 </script>

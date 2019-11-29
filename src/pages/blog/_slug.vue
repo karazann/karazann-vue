@@ -2,12 +2,19 @@
     h1 {{msg}}
 </template>
 
-<script>
+<script lang="ts">
+    import { Store } from 'vuex'
+
+    interface Context {
+        strore: Store<any>
+        params: any
+    }
+
     export default {
         name: 'blog-detail-page',
-        asyncData({ store, params }) {
+        asyncData(ctx: Context) {
             return {
-                msg: params.slug
+                msg: ctx.params.slug
             }
         }
     }

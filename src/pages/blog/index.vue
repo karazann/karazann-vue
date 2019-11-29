@@ -16,20 +16,10 @@
                         blog-feed(:posts="posts")
 </template>
 
-<script>
+<script lang="ts">
     import { mapState } from 'vuex'
-    import gql from 'graphql-tag'
-    import BlogCarousel from '@/components/blog/BlogCarousel.vue'
     import BlogTrending from '@/components/blog/BlogTrending.vue'
     import BlogFeed from '@/components/blog/BlogFeed.vue'
-
-    const mutation = gql`
-        mutation {
-            signin(provider: "facebook") {
-                token
-            }
-        }
-    `
 
     export default {
         name: 'blog-page',
@@ -37,27 +27,13 @@
             title: 'Blog'
         },
         components: {
-            BlogCarousel,
+            BlogCarousel: () => import('@/components/blog/BlogCarousel.vue'),
             BlogTrending,
             BlogFeed
         },
         async created() {
             console.time('test1')
-            try {
-                const response = await this.$apollo.mutate({
-                    mutation,
-                    fetchPolicy: 'no-cache',
-                    context: {
-                        headers: {
-                            authorization: `Bearer ${123}`
-                        }
-                    }
-                })
-                console.log(response.data)
-            } catch (e) {
-                console.log(e.message)
-            }
-            console.timeEnd('test1')
+            
         },
         computed: {
             ...mapState('blog', ['posts'])

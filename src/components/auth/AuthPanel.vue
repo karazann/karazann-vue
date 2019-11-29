@@ -14,32 +14,32 @@
             slot
 </template>
 
-<script>
-	export default {
-		name: 'auth-panel',
-		props: {
-			width: {
-				type: Number,
-				required: true
-			},
-			height: {
-				type: Number,
-				required: true
-			}
-		}
-	}
+<script lang="ts">
+    export default {
+        name: 'auth-panel',
+        props: {
+            width: {
+                type: Number,
+                required: true
+            },
+            height: {
+                type: Number,
+                required: true
+            }
+        }
+    }
 </script>
 
 <style lang="scss" scoped>
-	.panel {
-		margin: 0 auto;
-		position: relative;
-        
+    .panel {
+        margin: 0 auto;
+        position: relative;
+
         & > svg {
             overflow: visible;
             position: absolute;
-			z-index: 0;
-			visibility: hidden;
+            z-index: 0;
+            visibility: hidden;
         }
 
         & > div {
@@ -49,8 +49,7 @@
             position: absolute;
             z-index: 10;
         }
-	}
-
+    }
 </style>
 
 

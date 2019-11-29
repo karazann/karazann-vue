@@ -162,12 +162,12 @@ html {
 
 
 @font-face {
-	font-family: 'Futura';
+	font-family: 'Gilroy';
 	font-weight: normal;
 	src: url('fonts/Gilroy-Regular.ttf') format('truetype');
 }
 @font-face {
-	font-family: 'Futura';
+	font-family: 'Gilroy';
 	font-weight: bold;
 	src: url('fonts/Gilroy-Bold.ttf') format('truetype');
 }
@@ -213,7 +213,12 @@ h4 {
 	font-size: 18.666667; // 14pt
 }
 
-p {
+text {
+    font: bold 16px 'Gilroy';
+    fill: red;
+}
+
+p, a {
 	&.sm {
 		font-size: 12px;
 		font-weight: normal;
@@ -282,14 +287,14 @@ button,
 input,
 select,
 textarea {
-	font-family: 'Futura', sans-serif;
+	font-family: 'Gilroy', sans-serif;
 	color: #667;
 }
 
 body {
 	background: #F5F7FB;
 	box-sizing: border-box;
-	font-family: 'Futura', sans-serif;
+	font-family: 'Gilroy', sans-serif;
 	//overflow-y: scroll;
 	//overflow-x: hidden;
 }

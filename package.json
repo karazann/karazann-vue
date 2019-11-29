@@ -1,39 +1,53 @@
 {
-  "name": "karazann-vue",
-  "version": "1.0.0",
-  "description": "My super-excellent Nuxt.js project",
-  "author": "szkabaroli",
-  "private": true,
-  "scripts": {
-    "test": "jest --watch --verbose",
-    "dev": "nuxt",
-    "build": "nuxt build",
-    "start": "nuxt start",
-    "generate": "nuxt generate"
-  },
-  "dependencies": {
-    "graphql-tag": "^2.10.1",
-    "jquery": "^3.4.1",
-    "jquery-slim": "^3.0.0",
-    "vue-slick": "^1.1.15"
-  },
-  "devDependencies": {
-    "@nuxtjs/apollo": "^4.0.0-rc16",
-    "@nuxtjs/pwa": "^3.0.0-beta.19",
-    "@nuxtjs/sitemap": "^2.0.0",
-    "@nuxtjs/style-resources": "^1.0.0",
-    "@vue/test-utils": "^1.0.0-beta.27",
-    "babel-core": "7.0.0-bridge.0",
-    "babel-jest": "^24.9.0",
-    "jest": "^24.9.0",
-    "node-sass": "^4.12.0",
-    "nodemon": "^1.19.3",
-    "nuxt": "^2.10.0",
-    "nuxt-sass-resources-loader": "^2.0.5",
-    "prettier": "^1.18.2",
-    "pug": "^2.0.4",
-    "pug-plain-loader": "^1.0.0",
-    "sass-loader": "^8.0.0",
-    "vue-jest": "^3.0.5"
-  }
+    "name": "karazann-vue",
+    "version": "1.0.0",
+    "description": "My super-excellent Nuxt.js project",
+    "author": "szkabaroli",
+    "private": true,
+    "scripts": {
+        "test": "jest --watch --verbose",
+        "dev": "nuxt-ts",
+        "build": "nuxt-ts build",
+        "start": "nuxt-ts start",
+        "generate": "nuxt-ts generate",
+        "format-vue": "prettier --write \"src/**/*.vue\" --parser vue",
+        "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\""
+    },
+    "dependencies": {
+        "d3": "^5.14.1",
+        "d3-drag": "^1.2.5",
+        "jquery": "^3.4.1",
+        "jquery-slim": "^3.0.0",
+        "regenerator-runtime": "^0.13.3",
+        "vue-slick": "^1.1.15"
+    },
+    "devDependencies": {
+        "@nuxt/typescript-build": "^0.3.4",
+        "@nuxt/typescript-runtime": "^0.2.4",
+        "@nuxtjs/pwa": "^3.0.0-beta.19",
+        "@nuxtjs/sitemap": "^2.0.1",
+        "@nuxtjs/style-resources": "^1.0.0",
+        "@vue/composition-api": "^0.3.2",
+        "@vue/test-utils": "^1.0.0-beta.27",
+        "jest": "^24.9.0",
+        "node-sass": "^4.13.0",
+        "nuxt": "^2.10.2",
+        "nuxt-sass-resources-loader": "^2.0.5",
+        "prettier": "^1.19.1",
+        "pug": "^2.0.4",
+        "pug-plain-loader": "^1.0.0",
+        "sass-loader": "^8.0.0",
+        "tslint": "^5.20.1",
+        "tslint-config-prettier": "^1.18.0",
+        "vue-jest": "^3.0.5"
+    },
+    "vue": {
+        "configureWebpack": {
+            "resolve": {
+                "alias": {
+                    "@": "src"
+                }
+            }
+        }
+    }
 }

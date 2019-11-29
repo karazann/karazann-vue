@@ -6,14 +6,14 @@ import Brand from '@/components/shared/Brand.vue'
 import TitleBar from '@/components/shared/TitleBar.vue'
 
 Vue.directive('scroll', {
-	inserted(el, binding) {
-		const f = e => {
-			if (binding.value(e, el)) {
-				window.removeEventListener('scroll', f)
-			}
-		}
-		window.addEventListener('scroll', f)
-	}
+    inserted(el, binding) {
+        const f = (e: any) => {
+            if (binding.value(e, el)) {
+                window.removeEventListener('scroll', f)
+            }
+        }
+        window.addEventListener('scroll', f)
+    }
 })
 
 Vue.component('v-header', Header)

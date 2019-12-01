@@ -21,7 +21,7 @@ describe('Header', () => {
         }
     }
 
-    it('renders the component', () => {
+    it.skip('renders the component', () => {
         // arrange
         const { wrapper } = build()
 
@@ -29,7 +29,7 @@ describe('Header', () => {
         expect(wrapper.html()).toMatchSnapshot()
     })
 
-    it('renders links properly', () => {
+    it.skip('renders links properly', () => {
         // arrange
         const { wrapper } = build()
         wrapper.setProps({ signedIn: true })
@@ -38,7 +38,7 @@ describe('Header', () => {
         expect(wrapper.html()).toMatchSnapshot()
     })
 
-    it('renders hidden state properly', () => {
+    it.skip('renders hidden state properly', () => {
         // arrange
         const { wrapper } = build()
         wrapper.setProps({ hidden: true })

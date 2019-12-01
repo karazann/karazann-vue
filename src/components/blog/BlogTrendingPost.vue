@@ -7,8 +7,10 @@
                 span {{ post.date }}
 </template>
 
-<script>
-    export default {
+<script lang="ts">
+    import Vue from 'vue'
+    
+    export default Vue.extend({
         name: 'blog-trending-post',
         props: {
             post: {
@@ -18,7 +20,7 @@
                 }
             }
         }
-    }
+    })
 </script>
 
 <style lang="scss" scoped>

@@ -1,0 +1,71 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Header renders links properly 1`] = `
+"<header class=\\"shadow\\">
+  <div class=\\"container\\">
+    <div class=\\"row inner\\">
+      <v-brand></v-brand>
+      <div class=\\"links\\">
+        <div>
+          <div class=\\"horizontal-list\\">
+            <li>
+              <n-link to=\\"/developers\\">Developers</n-link>
+            </li>
+            <li>
+              <n-link to=\\"/blog\\">Blog</n-link>
+            </li>
+            <li>
+              <n-link to=\\"/faq\\">FAQ</n-link>
+            </li>
+            <li>
+              <n-link to=\\"/roadmap\\">Roadmap</n-link>
+            </li>
+            <li>
+              <n-link to=\\"/auth/signin\\">Sign in</n-link>
+            </li>
+            <li>
+              <n-link to=\\"/auth/signup\\" class=\\"btn\\">Sign up</n-link>
+            </li>
+          </div>
+        </div>
+        <!---->
+      </div>
+    </div>
+  </div>
+</header>"
+`;
+
+exports[`Header renders the component 1`] = `
+"<header class=\\"shadow\\">
+  <div class=\\"container\\">
+    <div class=\\"row inner\\">
+      <v-brand></v-brand>
+      <div class=\\"links\\">
+        <div>
+          <div class=\\"horizontal-list\\">
+            <li>
+              <n-link to=\\"/developers\\">Developers</n-link>
+            </li>
+            <li>
+              <n-link to=\\"/blog\\">Blog</n-link>
+            </li>
+            <li>
+              <n-link to=\\"/faq\\">FAQ</n-link>
+            </li>
+            <li>
+              <n-link to=\\"/roadmap\\">Roadmap</n-link>
+            </li>
+            <li>
+              <n-link to=\\"/auth/signin\\">Sign in</n-link>
+            </li>
+            <li>
+              <n-link to=\\"/auth/signup\\" class=\\"btn\\">Sign up</n-link>
+            </li>
+          </div>
+        </div>
+        <!---->
+      </div>
+    </div>
+  </div>
+</header>"
+`;

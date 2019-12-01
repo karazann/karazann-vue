@@ -10,8 +10,10 @@
                 p  {{post.description}}
 </template>
 
-<script>
-    export default {
+<script lang="ts">
+    import Vue from 'vue'
+
+    export default Vue.extend({
         name: 'blog-compact-post',
         props: {
             post: {
@@ -28,20 +30,21 @@
             }
         },
         methods: {
-            handleMouseDown(e) {
-                ;(this.clientX = e.clientX), (this.clientY = e.clientY)
+            handleMouseDown(e: MouseEvent) {
+                this.clientX = e.clientX
+                this.clientY = e.clientY
 
                 e.preventDefault() // stops weird link dragging effect
             },
-            handleClick(e) {
+            handleClick(e: MouseEvent) {
                 e.stopPropagation()
                 if (this.clientX === e.clientX || this.clientY === e.clientY) {
-                    console.log('open')
+                    console.debug('open')
                     this.$router.push({ path: this.post.slug })
                 }
             }
         }
-    }
+    })
 </script>
 
 <style lang="scss" scoped>

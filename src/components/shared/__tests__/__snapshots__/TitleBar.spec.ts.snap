@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TitleBar renders the component 1`] = `
+"<section>
+  <div class=\\"container\\">
+    <div class=\\"row\\">
+      <div class=\\"col\\">
+        <h1>Title</h1>
+        <!---->
+      </div>
+    </div>
+  </div>
+</section>"
+`;
+
+exports[`TitleBar renders title props properly 1`] = `
+"<section>
+  <div class=\\"container\\">
+    <div class=\\"row\\">
+      <div class=\\"col\\">
+        <h1>Title</h1>
+        <p class=\\"lg\\">Subtitle</p>
+      </div>
+    </div>
+  </div>
+</section>"
+`;

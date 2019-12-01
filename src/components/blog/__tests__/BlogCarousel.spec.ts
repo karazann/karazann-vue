@@ -3,7 +3,7 @@ import BlogCarousel from '../BlogCarousel.vue'
 import BlogCompactPost from '../BlogCompactPost.vue'
 
 describe('BlogCarousel', () => {
-    const build = props => {
+    const build = (props: Record<string, any>) => {
         const wrapper = shallowMount(BlogCarousel, { propsData: props })
 
         return {

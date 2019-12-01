@@ -2,7 +2,7 @@ import { shallowMount, RouterLinkStub } from '@vue/test-utils'
 import BlogCompactPost from '../BlogCompactPost.vue'
 
 describe('BlogCompactPost', () => {
-    const build = props => {
+    const build = (props: Record<string, any>) => {
         const wrapper = shallowMount(BlogCompactPost, {
             propsData: props,
             stubs: {

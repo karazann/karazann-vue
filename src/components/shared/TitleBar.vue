@@ -7,8 +7,10 @@
                     p.lg(v-if="subtitle") {{subtitle}}
 </template>
 
-<script>
-    export default {
+<script lang="ts">
+    import Vue from 'vue'
+
+    export default Vue.extend({
         name: 'title-bar',
         props: {
             title: {
@@ -17,7 +19,7 @@
             },
             subtitle: String
         }
-    }
+    })
 </script>
 
 <style lang="scss" scoped>

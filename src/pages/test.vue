@@ -1,17 +1,17 @@
 <template lang="pug">
-    //div
-    //    aside fadsf
     editor
 </template>
 
-<script>
+<script lang="ts">
+    import Vue from 'vue'
+    
     export default {
         name: 'test-page',
         head: {
             title: 'Test'
         },
         components: {
-            Editor: () => import('@/components/editor/Editor.vue')
+           Editor: () => import('@/components/editor/Editor.vue')
         }
     }
 </script>

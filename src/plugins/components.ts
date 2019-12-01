@@ -19,6 +19,15 @@ Vue.directive('scroll', {
     }
 })
 
+Vue.directive('pin', {
+    bind(el, binding, vnode) {
+        // vnode.context!.$props.bindPin(el, binding.arg, binding.value)
+    },
+    update(el, binding, vnode) {
+        // vnode.context!.$props.bindPin(el, binding.arg, binding.value)
+    }
+})
+
 Vue.component('v-header', Header)
 Vue.component('v-brand', Brand)
 Vue.component('v-input', Input)

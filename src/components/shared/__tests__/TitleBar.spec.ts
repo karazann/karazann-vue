@@ -2,7 +2,7 @@ import { shallowMount } from '@vue/test-utils'
 import TitleBar from '../TitleBar.vue'
 
 describe('TitleBar', () => {
-    const build = props => {
+    const build = (props: Record<string, any>) => {
         const wrapper = shallowMount(TitleBar, {
             propsData: props
         })

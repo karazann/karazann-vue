@@ -5,9 +5,11 @@
             blog-trending-post(v-for="(post, index) in posts" :key="index" :post="post")
 </template>
 
-<script>
+<script lang="ts">
+    import Vue from 'vue'
     import BlogTrendingPost from './BlogTrendingPost.vue'
-    export default {
+    
+    export default Vue.extend({
         components: {
             BlogTrendingPost
         },
@@ -17,7 +19,7 @@
                 required: true
             }
         }
-    }
+    })
 </script>
 
 <style lang="scss" scoped>

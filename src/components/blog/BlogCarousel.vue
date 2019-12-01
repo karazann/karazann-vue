@@ -3,7 +3,8 @@
         blog-compact-post(v-for="(post, index) in posts" :key="index" :post="post")
 </template>
 
-<script>
+<script lang="ts">
+    import Vue from 'vue'
     import Slick from 'vue-slick'
     import BlogCompactPost from './BlogCompactPost.vue'
 
@@ -44,7 +45,7 @@
         ]
     }
 
-    export default {
+    export default Vue.extend({
         components: {
             Slick,
             BlogCompactPost
@@ -60,7 +61,7 @@
                 options: slickOptions
             }
         }
-    }
+    })
 </script>
 
 <style lang="scss" scoped>

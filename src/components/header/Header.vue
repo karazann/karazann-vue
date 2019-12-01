@@ -25,10 +25,11 @@
                                 profile-menu(:user='user')
 </template>
 
-<script>
+<script lang="ts">
+    import Vue from 'vue'
     import ProfileMenu from './ProfileMenu.vue'
 
-    export default {
+    export default Vue.extend({
         name: 'v-header',
         components: {
             ProfileMenu
@@ -38,7 +39,7 @@
             signedIn: Boolean,
             shadow: Boolean
         }
-    }
+    })
 </script>
 
 <style lang="scss" scoped>

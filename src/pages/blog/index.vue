@@ -17,11 +17,13 @@
 </template>
 
 <script lang="ts">
+    import Vue from 'vue'
+
     import { mapState } from 'vuex'
     import BlogTrending from '@/components/blog/BlogTrending.vue'
     import BlogFeed from '@/components/blog/BlogFeed.vue'
 
-    export default {
+    export default Vue.extend({
         name: 'blog-page',
         head: {
             title: 'Blog'
@@ -37,7 +39,7 @@
         computed: {
             ...mapState('blog', ['posts'])
         }
-    }
+    })
 </script>
 
 <style lang="scss" scoped>

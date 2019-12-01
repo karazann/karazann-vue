@@ -13,15 +13,17 @@
             p {{post.description}}
 </template>
 
-<script>
-    export default {
+<script lang="ts">
+    import Vue from 'vue'
+
+    export default Vue.extend({
         props: {
             post: {
                 type: Object,
                 required: true
             }
         }
-    }
+    })
 </script>
 
 <style lang="scss" scoped>

@@ -1,5 +1,4 @@
 import path from 'path'
-
 export default {
     mode: 'spa',
     srcDir: 'src',
@@ -50,11 +49,11 @@ export default {
             splitChunks: {
                 chunks: 'all',
                 maxInitialRequests: 6,
-                minSize: 0, //50000,
+                minSize: 0, // 50000,
                 cacheGroups: {
                     vendor: {
                         test: /[\\/]node_modules[\\/]/,
-                        name(module) {
+                        name(module: any) {
                             // get the name. E.g. node_modules/packageName/not/this/part.js
                             // or node_modules/packageName
                             const packageName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)[1]
@@ -70,10 +69,14 @@ export default {
         devtool: true,
         extractCSS: true,
         filenames: {
-            app: process.env.NODE_ENV !== 'production' ? '[name].js' : '[name].[chunkhash].js'
+            app: (c: any) => c.isDev ? '[name].js' : '[name].[chunkhash].js',
+            chunk: (c: any) => c.isDev ? '[name].js' : '[name].[chunkhash].js',
+            css: (c: any) => c.isDev ? '[name].css' : '[contenthash].css',
+            img: (c: any) => c.isDev ? '[path][name].[ext]' : 'img/[hash:7].[ext]',
+            font: (c: any) => c.isDev ? '[path][name].[ext]' : 'fonts/[hash:7].[ext]',
+            video: (c: any) => c.isDev ? '[path][name].[ext]' : 'videos/[hash:7].[ext]'
         },
-        extend(config, ctx) {
-            console.log(process.env.NODE_ENV)
+        extend(this: any, config: any, ctx: any) {
             if (ctx.isClient) config.devtool = '#source-map'
             const alias = (config.resolve.alias = config.resolve.alias || {})
             alias['@'] = path.join(this.buildContext.options.rootDir, 'src')

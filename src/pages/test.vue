@@ -1,19 +1,19 @@
 <template lang="pug">
-    editor
+    v-editor
 </template>
 
 <script lang="ts">
     import Vue from 'vue'
     
-    export default {
+    export default Vue.extend({
         name: 'test-page',
         head: {
             title: 'Test'
         },
         components: {
-           Editor: () => import('@/components/editor/Editor.vue')
+           'v-editor': () => import('@/components/editor/Editor.vue')
         }
-    }
+    })
 </script>
 
 <style lang="scss" scoped>

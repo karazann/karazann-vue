@@ -1,12 +1,14 @@
 <template lang="pug">
     .editor(:style="{ height: height-78 + 'px', width: width-17 + 'px' }")
         svg(width="100%" height="100%" id="svg" ref="view")
+            filter#filter(x='-20%' y='-20%' width='140%' height='140%' filterunits='objectBoundingBox', primitiveunits='userSpaceOnUse' color-interpolation-filters='linearRGB')
+                feDropShadow(stdDeviation='5' in='SourceGraphic' dx='0' dy='7' flood-color='#051d4005' flood-opacity='1' x='0%' y='0%' width='100%' height='100%' result='dropShadow')
             v-area(:editor="editor")
-                v-node(v-for="(node, index) in getNodes" :node="node" :key="index")
+                v-node(v-for="node in getNodes" :editorNode="node" :key="node.index")
 </template>
 
 <script lang="ts">
-    import { Editor, Node, NodeBuilder, Output, Pin, PinType } from '@/shared/flow'
+    import { Editor, EditorNode, Node, NodeBuilder, Output, Input, Pin, PinType } from '@/shared/flow'
     import NodeView from '@/components/editor/Node.vue'
     import AreaView from '@/components/editor/Area.vue'
     import Vue from 'vue'
@@ -26,6 +28,22 @@
 
         build(node: Node) {
             node.addOutput(new Output('control', controlPin))
+        }
+
+        async worker(node: Node, inputs: any, outputs: any, control: any) {
+            node.processed = true
+            control['control']()
+        }
+    }
+
+    class Console extends NodeBuilder {
+        constructor() {
+            super('Console')
+        }
+
+        build(node: Node) {
+            node.addInput(new Input('control', controlPin))
+            node.addInput(new Input('test', controlPin))
         }
 
         async worker(node: Node, inputs: any, outputs: any, control: any) {
@@ -54,8 +72,8 @@
             }
         },
         computed: {
-            getNodes(): Node[] | null {
-                return this.editor ? this.editor.nodes : null
+            getNodes(): EditorNode[] | null {
+                return this.editor ? Array.from(this.editor.editorNodes.values()) : null
             }
         },
         created() {
@@ -63,14 +81,20 @@
             this.handleResize()
         },
         mounted() {
-            this.editor = new Editor(this.$refs.view as Element)
+            this.editor = new Editor(this.$refs.view as SVGElement)
 
-            const builders = [new OnStart()]
+            const builders = [new OnStart(), new Console()]
             builders.forEach((b: NodeBuilder) => {
                 this.editor!.register(b)
             })
 
-            this.editor.addNode(builders[0].createNode())
+            this.editor.addNode(builders[0].createNode({
+                position: [10, 10]
+            }))
+
+            this.editor.addNode(builders[1].createNode({
+                position: [500, 10]
+            }))
         },
         destroyed() {
             window.removeEventListener('resize', this.handleResize)

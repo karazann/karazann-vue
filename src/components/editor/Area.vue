@@ -1,13 +1,19 @@
 <template lang="pug">
-    g.area(ref="area" :style="{ transform: transformStyle, transformOrigin: '0 0' }")
-        slot
-            rect(width="50px" height="50px" fill="red")
+    g
+        defs
+            pattern(id="grid-pattern" :width="`${gridSize}px`" :height="`${gridSize}px`" patternUnits="userSpaceOnUse")
+                line(x1="0" y1="0" x2="0" y2="50" stroke-width="1px" stroke="#CCD6E1")
+                line(x1="0" y1="0" x2="50" y2="0" stroke-width="1px" stroke="#CCD6E1")
+        rect(height="410%" width="410%" x="-10%" y="-10%" fill="url(#grid-pattern)" :style="{ transform: gridStyle, transformOrigin: '0 0' }")
+        g.area(ref="area" :style="{ transform: transformStyle, transformOrigin: '0 0' }")
+            slot
 </template>
 
 <script lang="ts">
-    import Vue from 'vue'
+    import Vue, { PropType } from 'vue'
     import { Drag } from './Drag'
     import { Zoom } from './Zoom'
+    import { Editor } from '../../shared/flow'
 
     interface Mouse {
         x: number
@@ -22,20 +28,31 @@
 
     type ZoomSource = 'wheel' | 'touch' | 'dblclick'
 
-    interface AreaData {
+    interface VueData {
         mouse: Mouse
         transform: Transform
         transformStyle: string
+        gridStyle: string
         startPosition: Transform | null
     }
 
     export default Vue.extend({
-        props: ['editor'],
-        data(): AreaData {
+        props: {
+            editor: {
+                type: Object as PropType<Editor>,
+                required: true
+            },
+            gridSize: {
+                type: Number,
+                default: 50
+            }
+        },
+        data(): VueData {
             return {
                 mouse: { x: 0, y: 0 },
                 transform: { k: 1, x: 0, y: 0 },
                 transformStyle: `translate(0px, 0px) scale(0)`,
+                gridStyle: `translate(0px, 0px) scale(0)`,
                 startPosition: null
             }
         },
@@ -78,17 +95,16 @@
             },
             update() {
                 const t = this.transform
-                this.transformStyle = `translate(${t.x}px, ${t.y}px) scale(${t.k})`
+                this.transformStyle = `translate(${t.x}px, ${t.y}px) scale(${t.k.toFixed(2)})`
+                this.gridStyle      = `translate(${t.x % (this.gridSize * t.k)}px,${t.y % (this.gridSize * t.k)}px) scale(${t.k.toFixed(2)})`
             }
         },
         mounted() {
-            const el = this.$refs.area
-
+            const el = this.$refs.area as SVGGElement
 
             this.$nextTick(() => {
-                console.log(this.editor)
-                const drag = new Drag(this.editor.root, this.onTranslate, this.onStart)
-                const zoom = new Zoom(this.editor.root, el as SVGGElement, 0.1, this.onZoom)
+                const drag = new Drag(this.editor.root, this.onStart, this.onTranslate)
+                const zoom = new Zoom(this.editor.root, el, 0.1, this.onZoom)
             })
 
             this.update()

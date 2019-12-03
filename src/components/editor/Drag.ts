@@ -10,14 +10,14 @@ export class Drag {
     pointerStart: [number, number] | null
 
     constructor(
-        private el: SVGGraphicsElement,
-        private onTranslate?: (x: number, y: number, e: PointerEvent) => void,
+        el: SVGElement,
         private onStart?: (e: PointerEvent) => void,
+        private onTranslate?: (x: number, y: number, e: PointerEvent) => void,
         private onDrag?: (e: PointerEvent) => void
     ) {
         this.pointerStart = null
-        this.el.style.touchAction = 'none'
-        this.el.addEventListener('pointerdown', this.down.bind(this))
+        el.style.touchAction = 'none'
+        el.addEventListener('pointerdown', this.down.bind(this))
 
         const destroyMove = listenWindow('pointermove', this.move.bind(this))
         const destroyUp = listenWindow('pointerup', this.up.bind(this))

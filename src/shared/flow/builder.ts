@@ -1,16 +1,19 @@
-import { Node, InputsData, OutputsData, FlowControls } from './node'
+import { Node, InputsData, OutputsData, FlowControls, NodeMetadata } from './node'
 
 export abstract class NodeBuilder {
-    constructor(public name: string) {}
+    private metadata: NodeMetadata = {}
+    
+    constructor(public name: string) { }
 
     runBuild(node: Node): Node {
         this.build(node)
         return node
     }
 
-    createNode() {
+    createNode(metadata?: NodeMetadata) {
         const instance = new Node()
         instance.builderName = this.name
+        instance.metadata = { ...metadata, ...this.metadata}
         // Build io
         this.runBuild(instance)
         return instance

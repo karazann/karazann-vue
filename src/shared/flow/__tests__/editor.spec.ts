@@ -17,10 +17,10 @@ describe('Editor class', () => {
 
     beforeEach(() => {
         const par = document.createElement('div') as HTMLElement
-        const container = document.createElement('div') as HTMLElement
-        par.appendChild(container)
+        const root = document.createElementNS('http://www.w3.org/2000/svg', 'svg') as SVGElement
+        par.appendChild(root)
 
-        editor = new Editor(container)
+        editor = new Editor(root)
 
         builders = [new NumberNode(), new PrintNode()]
         builders.forEach(b => editor.register(b))

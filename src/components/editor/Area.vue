@@ -39,8 +39,7 @@
     export default Vue.extend({
         props: {
             editor: {
-                type: Object as PropType<Editor>,
-                required: true
+                type: Object as PropType<Editor>
             },
             gridSize: {
                 type: Number,

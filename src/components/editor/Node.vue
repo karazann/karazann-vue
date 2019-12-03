@@ -20,7 +20,7 @@
 
     interface NodeData {
         startPosition: number[]
-        transformStyle: string
+        transformStyle: string,
     }
 
     interface IOContext {
@@ -110,6 +110,7 @@
             update() {
                 const [x, y] = this.editorNode.node.metadata.position
                 this.transformStyle = `translate(${x}px, ${y}px)`
+                this.$root.$emit('update-connections')
             }
         },
         mounted() {

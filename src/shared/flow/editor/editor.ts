@@ -1,34 +1,24 @@
 import { Context } from '../core/context'
-import { Node } from '../node'
-import { Connection, Input, Output, IO } from '../io'
-import { NodeBuilder, PinType } from '..'
+import { NodeBuilder, Node, Connection, Input, Output, IO } from '..'
 
 export class EditorPin {
-    constructor(private io: IO, private node: Node) {}
-
-    /*getPosition({ position }: { position: number[] }): [number, number] {
-        const el = this.el;
-
-        return [
-            position[0] + el.offsetLeft + el.offsetWidth / 2,
-            position[1] + el.offsetTop + el.offsetHeight / 2
-        ]
-    }*/
+    position: [number, number] = [0,0]
+    constructor(public io: IO, public node: EditorNode) { }
 }
 
 export class EditorNode {
     editorPins = new Map<IO, EditorPin>()
 
-    constructor(public node: Node, private builder: NodeBuilder) {
+    constructor(public node: Node, private builder: NodeBuilder, public editor: Editor) {
         this.buildPins([...node.inputs.values(), ...node.outputs.values()])
     }
 
-    /*getPinPosition(io: IO) {
+    getPinPosition(io: IO) {
         const editorPin = this.editorPins.get(io)
         if (!editorPin) throw new Error(`Pin not found for ${io.key}`)
 
-        return editorPin.getPosition(this.node)
-    }*/
+        return editorPin.position
+    }
 
     destroy() {
         console.debug('destroy editor node')
@@ -37,7 +27,7 @@ export class EditorNode {
     private buildPins(ios: IO[]) {
         // this.clearSockets()
         ios.forEach(io => {
-            this.editorPins.set(io, new EditorPin(io, this.node))
+            this.editorPins.set(io, new EditorPin(io, this))
         })
     }
 }
@@ -51,6 +41,13 @@ export class EditorConnection {
 
         return [x1, y1, x2, y2]
     }*/
+
+    getPoints() {
+        const [x1, y1] = this.outputNode.getPinPosition(this.connection.output)
+        const [x2, y2] = this.inputNode.getPinPosition(this.connection.input)
+
+        return [x1, y1, x2, y2]
+    }
 }
 
 export class Editor extends Context {
@@ -71,7 +68,7 @@ export class Editor extends Context {
         const builder = this.builders.get(node.builderName)
         if (!builder) throw new Error(`Builder ${node.builderName} not found`)
 
-        this.editorNodes.set(node, new EditorNode(node, builder))
+        this.editorNodes.set(node, new EditorNode(node, builder, this))
     }
 
     removeNode(node: Node) {

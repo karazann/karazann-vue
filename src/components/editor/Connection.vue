@@ -1,9 +1,10 @@
 <template lang="pug">
-    path(:d="pathData" stroke-width="2px" stroke="#0396FF" fill="transparent")
+    path(:d="pathData" stroke-width="2px" :stroke="pinColor" fill="transparent")
 </template>
 
 <script lang="ts">
     import Vue, { PropType } from 'vue'
+    import { pinColorMapping } from './Nodes'
     import { EditorConnection } from '../../shared/flow'
 
     interface VueData {
@@ -27,6 +28,12 @@
         data(): VueData {
             return {
                 pathData: ''
+            }
+        },
+        computed: {
+            pinColor(): string {
+                const name = this.editorConnection.connection.input.pin.name
+                return pinColorMapping[name]
             }
         },
         mounted() {

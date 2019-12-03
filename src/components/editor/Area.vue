@@ -44,6 +44,9 @@
             gridSize: {
                 type: Number,
                 default: 50
+            },
+            svgSize: {
+                type: Array as PropType<number[]>
             }
         },
         data(): VueData {
@@ -100,13 +103,18 @@
         },
         mounted() {
             const el = this.$refs.area as SVGGElement
-
+            
             this.$nextTick(() => {
+                const bbox = el.getBBox()
+                const [width, height] = this.svgSize
+                this.transform.x = (width - bbox.width) / 2
+                this.transform.y = (height - bbox.height) / 2
+                
                 const drag = new Drag(this.editor.root, this.onStart, this.onTranslate)
                 const zoom = new Zoom(this.editor.root, el, 0.1, this.onZoom)
+                
+                this.update()
             })
-
-            this.update()
         }
     })
 </script>

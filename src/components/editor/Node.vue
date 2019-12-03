@@ -1,5 +1,5 @@
 <template lang="pug">
-    g.node.filter(ref="node" width="220px" height="200px" :style="{ transform: transformStyle }" )
+    g.node.filter(ref="node" :style="{ transform: transformStyle }" )
        
         // Outputs
         g.output(v-for='(output, i) in outputs' :key="output.key")
@@ -9,7 +9,8 @@
         g.input(v-for='(input, i) in inputs' :key="input.key")
             pin(:editorPin="input.pin" :x="input.pinX" :y="input.pinY")
         
-        rect.back
+        rect.back(:height="height")
+        rect.header(height="50px" width="150px" fill="transparent" stroke="#e6e9ef" stroke-width="1px")
 </template>
 
 <script lang="ts">
@@ -18,9 +19,10 @@
     import { Drag } from './Drag'
     import { EditorNode, IO, Input, EditorPin } from '@/shared/flow'
 
-    interface NodeData {
+    interface VueData {
         startPosition: number[]
         transformStyle: string,
+        height: number
     }
 
     interface IOContext {
@@ -40,10 +42,11 @@
                 type: Object as PropType<EditorNode>
             }
         },
-        data(): NodeData {
+        data(): VueData {
             return {
                 startPosition: [],
-                transformStyle: 'translate(0px, 0px)'
+                transformStyle: 'translate(0px, 0px)',
+                height: 0
             }
         },
         computed: {
@@ -78,11 +81,11 @@
         },
         methods: {
             getPinX(isOutput: boolean) {
-                if (isOutput) return 0
-                else return 190
+                if (isOutput) return -20
+                else return 170
             },
             getPinY(index: number) {
-                const baseY = 60
+                const baseY = 75
                 return baseY + index * 30
             },
             getPin(io: IO) {
@@ -116,6 +119,14 @@
         mounted() {
             const el = this.$refs.node as SVGGElement
 
+            let n = 0
+            
+            this.editorNode.node.outputs.size > this.editorNode.node.inputs.size ?
+            n = this.editorNode.node.outputs.size :
+            n = this.editorNode.node.inputs.size
+
+            this.height = 70 + (30 * n)
+
             this.$nextTick(() => {
                 const drag = new Drag(el, this.onStart, this.onDrag)
             })
@@ -133,9 +144,6 @@
     }
     .back {
         width: 150px;
-        height: 150px;
-        x: 20px;
-        y: 10px;
         rx: 12px;
         fill: white;
         stroke: #e6e9ef;

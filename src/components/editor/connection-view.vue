@@ -4,8 +4,8 @@
 
 <script lang="ts">
     import Vue, { PropType } from 'vue'
-    import { pinColorMapping } from './Nodes'
-    import { EditorConnection } from '../../shared/flow'
+    import { pinColorMapping } from './nodes'
+    import { EditorConnection } from '@/shared/flow'
 
     interface VueData {
         pathData: string
@@ -20,6 +20,7 @@
     }
 
     export default Vue.extend({
+        name: 'connection-view',
         props: {
             editorConnection: {
                 type: Object as PropType<EditorConnection>
@@ -37,10 +38,11 @@
             }
         },
         mounted() {
-            this.pathData = defaultPath(this.editorConnection.getPoints(), 0.6)
-
-            this.$root.$on('update-connections', () => {
+            Vue.nextTick(() => {
                 this.pathData = defaultPath(this.editorConnection.getPoints(), 0.6)
+                this.$root.$on('update-connections', () => {
+                    this.pathData = defaultPath(this.editorConnection.getPoints(), 0.6)
+                })
             })
         }
     })

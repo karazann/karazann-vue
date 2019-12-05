@@ -1,6 +1,6 @@
 <template lang="pug">
     n-link.brand(to="/")
-        img(src='/images/logo.svg' alt='logo')
+        img(src='/images/logo-blue.svg' alt='Karazann Logo')
         p Karazann
 </template>
 

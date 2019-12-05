@@ -1,8 +1,10 @@
 <template lang="pug">
-    h1 {{msg}}
+    main
+        h1 {{msg}}
 </template>
 
 <script lang="ts">
+    import Vue from 'vue'
     import { Store } from 'vuex'
 
     interface Context {
@@ -10,14 +12,14 @@
         params: any
     }
 
-    export default {
+    export default Vue.extend({
         name: 'blog-detail-page',
-        asyncData(ctx: Context) {
+        asyncData(ctx: any) {
             return {
                 msg: ctx.params.slug
             }
         }
-    }
+    })
 </script>
 
 <style lang="scss" scoped>

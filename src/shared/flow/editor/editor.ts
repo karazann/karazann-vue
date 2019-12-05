@@ -57,6 +57,9 @@ export class Editor extends Context {
     editorNodes = new Map<Node, EditorNode>()
     editorConnections = new Map<Connection, EditorConnection>()
 
+    zoomLevel: number = 1
+    area!: SVGElement
+
     constructor(public root: SVGElement) {
         super()
     }

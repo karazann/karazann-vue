@@ -20,7 +20,12 @@ export class Zoom {
     pointers: PointerEvent[] = []
     previous: TouchData | null = null
 
-    constructor(root: SVGElement, private el: SVGElement, private intensity: number, private onZoom: (...args: any) => void | undefined) {
+    constructor(
+        root: SVGElement,
+        private el: SVGElement,
+        private intensity: number,
+        private onZoom: (...args: any) => void | undefined
+    ) {
         root.addEventListener('wheel', this.wheel.bind(this))
         root.addEventListener('pointerdown', this.down.bind(this))
         root.addEventListener('dblclick', this.dblclick.bind(this))
@@ -111,4 +116,6 @@ export class Zoom {
 
         this.onZoom(delta, ox, oy, 'dblclick')
     }
+
+    
 }

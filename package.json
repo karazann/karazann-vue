@@ -24,7 +24,8 @@
         "jquery-slim": "^3.0.0",
         "regenerator-runtime": "^0.13.3",
         "typescript": "^3.7.2",
-        "vue-slick": "^1.1.15"
+        "vue-slick": "^1.1.15",
+        "vue-smooth-dnd": "^0.8.1"
     },
     "devDependencies": {
         "@nuxt/types": "^0.4.1",
@@ -47,6 +48,10 @@
         "pug": "^2.0.4",
         "pug-plain-loader": "^1.0.0",
         "sass-loader": "^8.0.0",
+        "style-loader": "^1.0.1",
+        "stylelint-config-standard": "^19.0.0",
+        "stylelint-processor-html": "^1.0.0",
+        "stylelint-scss": "^3.13.0",
         "ts-jest": "^24.2.0",
         "tslint": "^5.20.1",
         "tslint-config-prettier": "^1.18.0",

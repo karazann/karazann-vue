@@ -2,8 +2,8 @@
     g
         defs
             pattern(id="grid-pattern" :width="`${gridSize}px`" :height="`${gridSize}px`" patternUnits="userSpaceOnUse")
-                line(x1="0" y1="0" x2="0" y2="50" stroke-width="1px" stroke="#CCD6E1")
-                line(x1="0" y1="0" x2="50" y2="0" stroke-width="1px" stroke="#CCD6E1")
+                line(x1="0" y1="0" x2="0" :y2="`${gridSize}`" stroke-width="1px" stroke="#DFE4EB")
+                line(x1="0" y1="0" :x2="`${gridSize}`" y2="0" stroke-width="1px" stroke="#DFE4EB")
         rect(height="410%" width="410%" x="-10%" y="-10%" fill="url(#grid-pattern)" :style="{ transform: gridStyle, transformOrigin: '0 0' }")
         g.area(ref="area" :style="{ transform: transformStyle, transformOrigin: '0 0' }")
             slot
@@ -11,9 +11,9 @@
 
 <script lang="ts">
     import Vue, { PropType } from 'vue'
-    import { Drag } from './Drag'
-    import { Zoom } from './Zoom'
-    import { Editor } from '../../shared/flow'
+    import { Drag } from './drag'
+    import { Zoom } from './zoom'
+    import { Editor } from '@/shared/flow'
 
     interface Mouse {
         x: number
@@ -37,13 +37,14 @@
     }
 
     export default Vue.extend({
+        name: 'area-view',
         props: {
             editor: {
                 type: Object as PropType<Editor>
             },
             gridSize: {
                 type: Number,
-                default: 50
+                default: 55
             },
             svgSize: {
                 type: Array as PropType<number[]>
@@ -86,7 +87,18 @@
                 this.update()
             },
             onZoom(delta: number, ox: number, oy: number, source: ZoomSource) {
-                this.zoom(this.transform.k * (1 + delta), ox, oy, source)
+                let z = this.transform.k 
+                
+                z = z * (1 + delta)
+
+                const min = 0.5
+                const max = 1.4
+
+                z = z < min ? min : (z > max ? max : z)
+
+                this.editor.zoomLevel = this.transform.k = z
+
+                this.zoom(z, ox, oy, source)
                 this.update()
             },
             onStart() {
@@ -97,14 +109,15 @@
             },
             update() {
                 const t = this.transform
-                this.transformStyle = `translate(${t.x}px, ${t.y}px) scale(${t.k.toFixed(2)})`
-                this.gridStyle      = `translate(${t.x % (this.gridSize * t.k)}px,${t.y % (this.gridSize * t.k)}px) scale(${t.k.toFixed(2)})`
+                this.transformStyle = `translate(${t.x}px, ${t.y}px) scale(${t.k})`
+                this.gridStyle      = `translate(${t.x % (this.gridSize * t.k)}px,${t.y % (this.gridSize * t.k)}px) scale(${t.k})`
             }
         },
         mounted() {
             const el = this.$refs.area as SVGGElement
             
             this.$nextTick(() => {
+                this.editor.area = el
                 const bbox = el.getBBox()
                 const [width, height] = this.svgSize
                 this.transform.x = (width - bbox.width) / 2
@@ -119,8 +132,7 @@
     })
 </script>
 
-<style lang="scss" scoped>
-    .area {
-        overflow: hidden;
-    }
+<style lang="sass" scoped>
+    .area 
+        overflow: hidden
 </style>

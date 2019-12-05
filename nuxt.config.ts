@@ -33,10 +33,10 @@ export default {
         offline: true,
         offlineStrategy: 'NetworkFirst'
     },
-    css: ['@assets/global.scss'],
+    css: ['@assets/global.scss', '@assets/reset.scss'],
     plugins: ['~/plugins/components.ts'],
     styleResources: {
-        scss: ['@assets/scss/bootstrap-grid.scss', '@assets/scss/global.scss']
+        scss: ['@assets/grid.scss']
     },
     sitemap: {
         hostname: 'https://karazann.com',

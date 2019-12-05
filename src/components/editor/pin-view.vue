@@ -1,17 +1,17 @@
 <template lang="pug">
-    
     svg(v-if="flow" ref="arrow" :x="x-5" :y="y-8" width="13" height="16" viewBox="0 0 13 16" fill="none" xmlns="http://www.w3.org/2000/svg" )
-        path(:fill="fill ? '#0396FF': 'transparent'" ref="test" d="M1 3.86852L1 12.1315C1 13.7289 2.78029 14.6817 4.1094 13.7956L10.3066 9.6641C11.4941 8.87246 11.4941 7.12754 10.3066 6.3359L4.1094 2.20442C2.78029 1.31835 1 2.27112 1 3.86852Z" )
+        path(:fill="fill ? pinColor: 'transparent'" :stroke="pinColor" ref="test" d="M1 2.93426L1 13.0657C1 14.2638 2.33522 14.9784 3.33205 14.3138L10.9307 9.24808C11.8213 8.65434 11.8213 7.34566 10.9307 6.75193L3.33205 1.68618L2.77735 2.51823L3.33205 1.68618C2.33522 1.02163 1 1.73621 1 2.93426Z" )
     
-    circle.pin(v-else-if="!flow" ref="circle" :cx="x" :cy="y" :fill="fill ? '#0396FF': 'transparent'")
+    circle.pin(v-else-if="!flow" ref="circle" :cx="x" :cy="y" :fill="fill ? pinColor: 'transparent'" :stroke="pinColor")
 </template>
 
 <script lang="ts">
     import Vue, { PropType } from 'vue'
-    import { EditorPin, Input, Output } from '../../shared/flow'
+    import { EditorPin, Input, Output } from '@/shared/flow'
+    import { pinColorMapping } from './nodes'
 
     export default Vue.extend({
-        name: 'v-pin',
+        name: 'pin-view',
         props: {
             editorPin: {
                 type: Object as PropType<EditorPin>,
@@ -32,6 +32,10 @@
             },
             fill(): boolean {
                 return this.editorPin.io.hasConnection()
+            },
+            pinColor(): string {
+                const name = this.editorPin.io.pin.name
+                return pinColorMapping[name]
             }
         },
         methods: {
@@ -42,34 +46,34 @@
                 else el = this.$refs.arrow as SVGSVGElement
 
                 const [x, y] = this.editorPin.node.node.metadata.position
+
+                // x = Math.ceil(x/25)*25
+                // y = Math.ceil(y/25)*25
+
                 if (this.editorPin.io instanceof Input) {
-                    this.editorPin.position = [x + this.x-4, y + this.y]
+                    this.editorPin.position = [x + this.x-3, y + this.y]
                 } else {
-                    this.editorPin.position = [x + this.x+6, y + this.y]
+                    this.editorPin.position = [x + this.x+5, y + this.y]
                 }
             }
         },
         mounted() {
-
             this.updatePinPosition()
 
             this.$root.$on('update-connections', () => {
                 this.updatePinPosition()
             })
-
-            // console.debug(this.editorPin.position)
         }
     })
 </script>
 
 <style lang="scss" scoped>
     path {
-        stroke: #0396FF;
         stroke-width: 2;
     }
     circle {
-        stroke: #0396FF; 
-        stroke-width: 2; 
+        stroke-width: 2;
+        //ts-lint: disable
         r: 5px;
     }
 </style>

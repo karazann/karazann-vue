@@ -1,5 +1,5 @@
 <template lang="pug">
-    h1 Flows Page
+    flow-editor
 </template>
 
 <script lang="ts">
@@ -9,6 +9,9 @@
         name: 'flows-page',
         head: {
             title: 'Flows'
+        },
+        components: {
+            
         }
     })
 </script>

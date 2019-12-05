@@ -3,25 +3,27 @@
        
         // Outputs
         g.output(v-for='(output, i) in outputs' :key="output.key")
-            pin(:editorPin="output.pin" :x="output.pinX" :y="output.pinY")
+            pin-view(:editorPin="output.pin" :x="output.pinX" :y="output.pinY")
         
         // Inputs
         g.input(v-for='(input, i) in inputs' :key="input.key")
-            pin(:editorPin="input.pin" :x="input.pinX" :y="input.pinY")
+            pin-view(:editorPin="input.pin" :x="input.pinX" :y="input.pinY")
         
-        rect.back(:height="height")
-        rect.header(height="50px" width="150px" fill="transparent" stroke="#e6e9ef" stroke-width="1px")
+        g(width="200px")
+            rect.back(:height="height")
+            polyline.header(points="0,50 210,50" fill="transparent" stroke="#e6e9ef" stroke-width="1px")
+            text.text(x="105" y="32" text-anchor="middle") {{editorNode.node.builderName}}
 </template>
 
 <script lang="ts">
     import Vue, { PropType } from 'vue'
-    import Pin from './Pin.vue'
-    import { Drag } from './Drag'
+    import PinView from './pin-view.vue'
+    import { Drag } from './drag'
     import { EditorNode, IO, Input, EditorPin } from '@/shared/flow'
 
     interface VueData {
         startPosition: number[]
-        transformStyle: string,
+        transformStyle: string
         height: number
     }
 
@@ -33,9 +35,9 @@
     }
 
     export default Vue.extend({
-        name: 'v-node',
+        name: 'node-view',
         components: {
-            Pin
+            PinView
         },
         props: {
             editorNode: {
@@ -82,7 +84,7 @@
         methods: {
             getPinX(isOutput: boolean) {
                 if (isOutput) return -20
-                else return 170
+                else return 230
             },
             getPinY(index: number) {
                 const baseY = 75
@@ -95,8 +97,10 @@
                 this.startPosition = [...this.editorNode.node.metadata.position]
             },
             onDrag(dx: number, dy: number, e: PointerEvent) {
-                const x = this.startPosition[0] + dx
-                const y = this.startPosition[1] + dy
+                const z = this.editorNode.editor.zoomLevel
+
+                const x = this.startPosition[0] + dx / z
+                const y = this.startPosition[1] + dy / z
                 this.translate(x, y, e)
             },
             translate(x: number, y: number, e: PointerEvent) {
@@ -112,6 +116,8 @@
             },
             update() {
                 const [x, y] = this.editorNode.node.metadata.position
+                // x = Math.ceil(x/25)*25
+                // y = Math.ceil(y/25)*25
                 this.transformStyle = `translate(${x}px, ${y}px)`
                 this.$root.$emit('update-connections')
             }
@@ -119,13 +125,11 @@
         mounted() {
             const el = this.$refs.node as SVGGElement
 
-            let n = 0
-            
-            this.editorNode.node.outputs.size > this.editorNode.node.inputs.size ?
-            n = this.editorNode.node.outputs.size :
-            n = this.editorNode.node.inputs.size
+            let ioCount = 0
 
-            this.height = 70 + (30 * n)
+            this.editorNode.node.outputs.size > this.editorNode.node.inputs.size ? (ioCount = this.editorNode.node.outputs.size) : (ioCount = this.editorNode.node.inputs.size)
+
+            this.height = 70 + 30 * ioCount
 
             this.$nextTick(() => {
                 const drag = new Drag(el, this.onStart, this.onDrag)
@@ -136,22 +140,20 @@
     })
 </script>
 
-<style lang="scss">
-    .node {
-        overflow: visible rect {
-            fill: white;
-        }
-    }
-    .back {
-        width: 150px;
-        rx: 12px;
-        fill: white;
+<style lang="sass" scoped>
+    .node
+        overflow: visible 
+        rect
+            fill: white
+    .back 
+        width: 210px
+        rx: 12px
+        y: 0
+        fill: white
         stroke: #e6e9ef;
-        filter: url(#filter);
-    }
-</style>
-
-<style lang="scss">
-    .filter {
-    }
+        filter: url(#filter)
+    .text
+        fill: #051D40
+        y: 20
+        user-select: none
 </style>

@@ -1,14 +1,14 @@
 <template lang="pug">
     main
         title-bar#title(title="Settings")
-        section#account
-            .container
-                .row
-                    .col test
-        section#profile
-            .container
-                .row
-                    .col dasf
+        <!-- section#account -->
+        <!--    .container -->
+        <!--        .row -->
+        <!--            .col test -->
+        <!-- section#profile -->
+        <!--    .container -->
+        <!--        .row
+        <!--            .col dasf  -->
 </template>
 
 <script>
@@ -25,8 +25,5 @@
 </script>
 
 <style lang="scss" scoped>
-    .col {
-        @include make-col-ready;
-        @include make-col(12);
-    }
+    
 </style>

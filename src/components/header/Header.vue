@@ -8,15 +8,15 @@
             .row.inner
                 v-brand
                 .links
-                    div(v-if='!signedIn')
+                    nav(v-if='!signedIn')
                         .horizontal-list
-                            +menu-item('/developers', 'Developers')
+                            +menu-item('/test', 'Test')
                             +menu-item('/blog', 'Blog')
                             +menu-item('/faq', 'FAQ')
                             +menu-item('/roadmap', 'Roadmap')
                             +menu-item('/auth/signin', 'Sign in')
                             +menu-item('/auth/signup', 'Sign up')(class='btn')
-                    div(v-if='signedIn')
+                    nav(v-if='signedIn')
                         .horizontal-list
                             +menu-item('/', 'Hello')
                             +menu-item('/', 'Test')

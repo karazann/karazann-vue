@@ -16,7 +16,7 @@ export const dragDirective = (): DirectiveOptions => {
             if (!cbs.onStart && !cbs.onDrag && !cbs.onEnd) {
                 return
             } else { 
-                console.debug('register in bind drag:', el.className)
+                // console.debug('register in bind drag:', el.className)
                 dragHandlers.set(el, new Drag(el, cbs.onStart, cbs.onDrag, cbs.onEnd))
             }
         },
@@ -28,7 +28,7 @@ export const dragDirective = (): DirectiveOptions => {
             if (!cbs.onStart && !cbs.onDrag && !cbs.onEnd) {
                 return
             } else { 
-                console.debug('register in update drag: ', el.id)
+                // console.debug('register in update drag: ', el.id)
                 dragHandlers.set(el, new Drag(el, cbs.onStart, cbs.onDrag, cbs.onEnd))
             }
         },

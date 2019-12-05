@@ -4,8 +4,11 @@
 
 import { Node } from './node'
 import { Pin } from './pin'
+import { EditorConnection } from '.'
 
 export class Connection {
+    editorConnection!: EditorConnection
+    
     constructor(public output: Output, public input: Input, public data: unknown = {}) {
         this.input.addConnection(this)
     }

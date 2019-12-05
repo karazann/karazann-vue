@@ -7,14 +7,14 @@ export class EditorPin {
 }
 
 export class EditorNode {
-    editorPins = new Map<IO, EditorPin>()
+    editorPins: EditorPin[] = []
 
     constructor(public node: Node, private builder: NodeBuilder, public editor: Editor) {
         this.buildPins([...node.inputs.values(), ...node.outputs.values()])
     }
 
     getPinPosition(io: IO) {
-        const editorPin = this.editorPins.get(io)
+        const editorPin = this.editorPins.find(pin => pin.io === io)
         if (!editorPin) throw new Error(`Pin not found for ${io.key}`)
 
         return editorPin.position
@@ -27,7 +27,7 @@ export class EditorNode {
     private buildPins(ios: IO[]) {
         // this.clearSockets()
         ios.forEach(io => {
-            this.editorPins.set(io, new EditorPin(io, this))
+            this.editorPins.push(new EditorPin(io, this))
         })
     }
 }
@@ -50,12 +50,16 @@ export class EditorConnection {
     }
 }
 
+interface EditorConnectionObj {
+    [key: string]: EditorConnection
+}
+
 export class Editor extends Context {
     nodes: Node[] = []
 
     // View Layer
-    editorNodes = new Map<Node, EditorNode>()
-    editorConnections = new Map<Connection, EditorConnection>()
+    editorNodes: EditorNode[] = []
+    editorConnections: EditorConnection[] = []
 
     zoomLevel: number = 1
     area!: SVGElement
@@ -71,22 +75,15 @@ export class Editor extends Context {
         const builder = this.builders.get(node.builderName)
         if (!builder) throw new Error(`Builder ${node.builderName} not found`)
 
-        this.editorNodes.set(node, new EditorNode(node, builder, this))
+        this.editorNodes.push(new EditorNode(node, builder, this))
     }
 
     removeNode(node: Node) {
         node.getConnections().forEach((c: Connection) => this.removeConnection(c))
 
+        this.editorNodes = this.editorNodes.filter(enode => enode.node !== node)
+        
         this.nodes.splice(this.nodes.indexOf(node), 1)
-
-        // View Layer
-        const editorNode = this.editorNodes.get(node)
-
-        this.editorNodes.delete(node)
-
-        if (editorNode) {
-            editorNode.destroy()
-        }
     }
 
     connect(output: Output, input: Input) {
@@ -96,7 +93,10 @@ export class Editor extends Context {
 
     removeConnection(connection: Connection) {
         connection.remove()
-        this.removeConnectionEditor(connection)
+    }
+
+    getConnections() { 
+        return Array.from(this.editorConnections.values())
     }
 
     getBuilder(name: string) {
@@ -114,17 +114,12 @@ export class Editor extends Context {
     private addConnectionEditor(connection: Connection) {
         if (!connection.input.node || !connection.output.node) throw new Error('Connection input or output not added to node')
 
-        const editorInput = this.editorNodes.get(connection.input.node)
-        const editorOutput = this.editorNodes.get(connection.output.node)
+        const editorInput = this.editorNodes.find(enode => enode.node === connection.input.node)
+        const editorOutput = this.editorNodes.find(enode => enode.node === connection.output.node)
 
         if (!editorInput || !editorOutput) throw new Error('View node not fount for input or output')
 
         const connView = new EditorConnection(connection, editorInput, editorOutput)
-
-        this.editorConnections.set(connection, connView)
-    }
-
-    private removeConnectionEditor(connection: Connection) {
-        this.editorConnections.delete(connection)
+        this.editorConnections.push(connView)
     }
 }

@@ -7,7 +7,7 @@
                 feDropShadow(stdDeviation='6' in='SourceGraphic' dx='0' dy='7' flood-color='#0396FF20' flood-opacity='1' x='-10%' y='-10%' width='130%' height='130%' result='dropShadow')
             area-view(:editor="editor" :svgSize="[width, height]" ref="area")
                 connection-view(v-for="(connection, i) in getConnections" :editorConnection="connection" :key="i")
-                node-view(v-for="(node, i) in getNodes()" :editorNode="node" :key="node.index")
+                node-view(v-for="(node, i) in getNodes" :editorNode="node" :key="node.index")
         v-toolbox
             div.tool-outer(v-for="(builder, i) in getBuilders" :key="builder.name" )
                 .tool(v-drag="{ onStart, onDrag, onEnd }" :data-id="builder.name") {{builder.name}}
@@ -40,6 +40,7 @@
         isDragging: boolean
         ghost?: GhostNodeTool
         dragOptions: any
+        editorConnections?: any
     }
 
     export default Vue.extend({
@@ -52,6 +53,11 @@
         },
         directives: {
             drag: dragDirective()
+        },
+        provide() {
+            return {
+                foo: new WeakMap()
+            }
         },
         data(): VueData {
             return {
@@ -67,11 +73,14 @@
             }
         },
         computed: {
-            getConnections(): EditorConnection[] | null {
-                return this.editor ? Array.from(this.editor.editorConnections.values()) : null
+            getConnections(): EditorConnection[] {
+                return this.editor ? this.editor.editorConnections : []
             },
             getBuilders(): NodeBuilder[] | null {
                 return this.editor ? Array.from(this.editor.builders.values()) : null
+            },
+            getNodes(): EditorNode[] | null {
+                return this.editor ? this.editor.editorNodes : null
             }
         },
         methods: {
@@ -79,13 +88,9 @@
                 this.width = window.innerWidth
                 this.height = window.innerHeight
             },
-            getNodes(): EditorNode[] | null {
-                return this.editor ? Array.from(this.editor.editorNodes.values()) : null
-            },
+            
             onStart(e: PointerEvent) {
                 const z = this.editor!.zoomLevel
-
-
 
                 const ox = e.offsetX * z
                 const oy = e.offsetY * z
@@ -154,30 +159,7 @@
                 position: [0, 0]
             })
 
-            const node2 = builders[1].createNode({
-                position: [400, 100]
-            })
-
-            const node3 = builders[1].createNode({
-                position: [800, 150]
-            })
-
             this.editor.addNode(node1)
-            this.editor.addNode(node2)
-            this.editor.addNode(node3)
-
-            const o1 = node1.outputs.get('controlOut')
-            const i1 = node2.inputs.get('controlIn')
-
-            const o2 = node2.outputs.get('controlOut')
-            const i2 = node3.inputs.get('controlIn')
-
-            const o3 = node2.outputs.get('textOut')
-            const i3 = node3.inputs.get('textIn')
-
-            this.editor.connect(o1!, i1!)
-            this.editor.connect(o2!, i2!)
-            this.editor.connect(o3!, i3!)
         },
         destroyed() {
             window.removeEventListener('resize', this.handleResize)

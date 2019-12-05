@@ -94,7 +94,7 @@
                 return baseY + index * 30
             },
             getPin(io: IO) {
-                return this.editorNode.editorPins.get(io)!
+                return this.editorNode.editorPins.find(epin => epin.io === io)!
             },
             onStart() {
                 this.startPosition = [...this.editorNode.node.metadata.position]

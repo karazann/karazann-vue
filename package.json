@@ -61,7 +61,8 @@
         "configureWebpack": {
             "resolve": {
                 "alias": {
-                    "@": "src"
+                    "@": "src",
+                    "~": "src"
                 }
             }
         }

@@ -1,5 +1,5 @@
 <template lang="pug">
-    g.node.filter(ref="node" :style="{ transform: transformStyle }" )
+    g.node.filter(:style="{ transform: transformStyle }" )
        
         // Outputs
         g.output(v-for='(output, i) in outputs' :key="output.key")
@@ -9,17 +9,17 @@
         g.input(v-for='(input, i) in inputs' :key="input.key")
             pin-view(:editorPin="input.pin" :x="input.pinX" :y="input.pinY")
         
-        g(width="200px")
+        g(width="220px" v-drag="{ onStart, onDrag }" )
             rect.back(:height="height")
-            polyline.header(points="0,50 210,50" fill="transparent" stroke="#e6e9ef" stroke-width="1px")
-            text.text(x="105" y="32" text-anchor="middle") {{editorNode.node.builderName}}
+            polyline.header(points="1,50 219,50" fill="transparent" stroke="#e6e9ef" stroke-width="1px")
+            text.text(x="110" y="32" text-anchor="middle") {{editorNode.node.builderName}}
 </template>
 
 <script lang="ts">
     import Vue, { PropType } from 'vue'
     import PinView from './pin-view.vue'
-    import { Drag } from './drag'
-    import { EditorNode, IO, Input, EditorPin } from '@/shared/flow'
+    import { dragDirective } from '~/utils/drag'
+    import { EditorNode, IO, Input, EditorPin } from '~/shared/flow'
 
     interface VueData {
         startPosition: number[]
@@ -38,6 +38,9 @@
         name: 'node-view',
         components: {
             PinView
+        },
+        directives: {
+            drag: dragDirective()
         },
         props: {
             editorNode: {
@@ -84,7 +87,7 @@
         methods: {
             getPinX(isOutput: boolean) {
                 if (isOutput) return -20
-                else return 230
+                else return 240
             },
             getPinY(index: number) {
                 const baseY = 75
@@ -116,24 +119,14 @@
             },
             update() {
                 const [x, y] = this.editorNode.node.metadata.position
-                // x = Math.ceil(x/25)*25
-                // y = Math.ceil(y/25)*25
                 this.transformStyle = `translate(${x}px, ${y}px)`
                 this.$root.$emit('update-connections')
             }
         },
         mounted() {
-            const el = this.$refs.node as SVGGElement
-
             let ioCount = 0
-
             this.editorNode.node.outputs.size > this.editorNode.node.inputs.size ? (ioCount = this.editorNode.node.outputs.size) : (ioCount = this.editorNode.node.inputs.size)
-
             this.height = 70 + 30 * ioCount
-
-            this.$nextTick(() => {
-                const drag = new Drag(el, this.onStart, this.onDrag)
-            })
 
             this.update()
         }
@@ -142,16 +135,20 @@
 
 <style lang="sass" scoped>
     .node
-        overflow: visible 
-        rect
-            fill: white
+        overflow: visible
+        
     .back 
-        width: 210px
-        rx: 12px
+        width: 220px
+        rx: 6px
         y: 0
         fill: white
         stroke: #e6e9ef;
-        filter: url(#filter)
+        filter: url(#filter-black)
+        transition: stroke .1s, filter .1s
+        &:hover
+            stroke: #0396FF
+            filter: url(#filter-blue)
+        
     .text
         fill: #051D40
         y: 20

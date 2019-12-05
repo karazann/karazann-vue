@@ -81,6 +81,7 @@ export default {
             if (ctx.isClient) config.devtool = '#source-map'
             const alias = (config.resolve.alias = config.resolve.alias || {})
             alias['@'] = path.join(this.buildContext.options.rootDir, 'src')
+            alias['~'] = path.join(this.buildContext.options.rootDir, 'src')
             alias['jquery'] = 'jquery-slim'
         }
     }

@@ -10,7 +10,7 @@
                 .links
                     nav(v-if='!signedIn')
                         .horizontal-list
-                            +menu-item('/test', 'Test')
+                            +menu-item('/flow', 'Flows')
                             +menu-item('/blog', 'Blog')
                             +menu-item('/faq', 'FAQ')
                             +menu-item('/roadmap', 'Roadmap')

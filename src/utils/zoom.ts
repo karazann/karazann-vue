@@ -20,12 +20,7 @@ export class Zoom {
     pointers: PointerEvent[] = []
     previous: TouchData | null = null
 
-    constructor(
-        root: SVGElement,
-        private el: SVGElement,
-        private intensity: number,
-        private onZoom: (...args: any) => void | undefined
-    ) {
+    constructor(private root: SVGElement, private el: SVGElement, private intensity: number, private onZoom: (...args: any) => void | undefined) {
         root.addEventListener('wheel', this.wheel.bind(this))
         root.addEventListener('pointerdown', this.down.bind(this))
         root.addEventListener('dblclick', this.dblclick.bind(this))
@@ -33,16 +28,6 @@ export class Zoom {
         const destroyMove = listenWindow('pointermove', this.move.bind(this))
         const destroyUp = listenWindow('pointerup', this.end.bind(this))
         const destroyCancel = listenWindow('pointercancel', this.end.bind(this))
-
-        this.destroy = () => {
-            destroyMove()
-            destroyUp()
-            destroyCancel()
-        }
-    }
-
-    destroy() {
-        return
     }
 
     get translating() {
@@ -74,7 +59,7 @@ export class Zoom {
             cx: (x1 + x2) / 2,
             cy: (y1 + y2) / 2,
             distance
-        } as TouchData
+        }
     }
 
     down(e: PointerEvent) {
@@ -85,12 +70,12 @@ export class Zoom {
         this.pointers = this.pointers.map(p => (p.pointerId === e.pointerId ? e : p))
         if (!this.translating) return
 
-        const rect = this.el.getBoundingClientRect()
+        let rect = this.el.getBoundingClientRect()
 
-        const { cx, cy, distance } = this.touches()
+        let { cx, cy, distance } = this.touches()
 
         if (this.previous !== null) {
-            const delta = distance / this.previous.distance - 1
+            let delta = distance / this.previous.distance - 1
 
             const ox = (rect.left - cx) * delta
             const oy = (rect.top - cy) * delta
@@ -102,7 +87,7 @@ export class Zoom {
 
     end(e: PointerEvent) {
         this.previous = null
-        this.pointers = this.pointers.filter((p: PointerEvent) => p.pointerId !== e.pointerId)
+        this.pointers = this.pointers.filter(p => p.pointerId !== e.pointerId)
     }
 
     dblclick(e: MouseEvent) {
@@ -116,6 +101,4 @@ export class Zoom {
 
         this.onZoom(delta, ox, oy, 'dblclick')
     }
-
-    
 }

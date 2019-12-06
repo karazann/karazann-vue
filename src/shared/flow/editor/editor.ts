@@ -86,8 +86,18 @@ export class Editor extends Context {
         this.nodes.splice(this.nodes.indexOf(node), 1)
     }
 
-    connect(output: Output, input: Input) {
-        const connection = output.connectTo(input)
+    connect(io1: IO, io2: IO) {
+        let connection: Connection
+
+        if(io1 instanceof Input && io2 instanceof Input) throw new Error('Cannot connect input to another input')
+        if(io1 instanceof Output && io2 instanceof Output) throw new Error('Cannot connect output to another output')
+
+        if (io1 instanceof Input) { 
+            connection = (io2 as Output).connectTo(io1 as Input)
+        } else {
+            connection = (io1 as Output).connectTo(io2 as Input)
+        }
+
         this.addConnectionEditor(connection)
     }
 

@@ -5,11 +5,12 @@
 
 <script lang="ts">
     import Vue from 'vue'
+    import axios from 'axios'
 
     export default Vue.extend({
         name: 'flow-page',
         head: {
-            title: 'Test'
+            title: 'Flow'
         },
         components: {
             'node-editor': () => import('@/components/editor/node-editor.vue')

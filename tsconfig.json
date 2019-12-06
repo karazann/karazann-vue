@@ -12,6 +12,7 @@
         "baseUrl": ".",
         "types": [
             "@nuxt/types",
+            "@nuxtjs/axios",
             "node",
             "jest"
         ],

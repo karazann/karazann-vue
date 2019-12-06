@@ -3,6 +3,8 @@ import path from 'path'
 export default {
     mode: 'spa',
     srcDir: 'src',
+    modules: ['@nuxtjs/pwa', '@nuxtjs/style-resources', '@nuxtjs/sitemap', '@nuxtjs/axios'],
+    buildModules: ['@nuxt/typescript-build'],
     head: {
         titleTemplate: '%s - Karazann',
         meta: [
@@ -27,8 +29,14 @@ export default {
             }
         ]
     },
-    modules: ['@nuxtjs/pwa', '@nuxtjs/style-resources', '@nuxtjs/sitemap'],
-    buildModules: ['@nuxt/typescript-build'],
+    axios: {
+        prefix: '/api',
+        host: 'localhost',
+        port: 8080,
+        progress: false,
+        credentials: false,
+        debug: true
+    },
     workbox: {
         offline: true,
         offlineStrategy: 'NetworkFirst'

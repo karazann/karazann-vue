@@ -31,6 +31,7 @@
         },
         mounted() {
             this.$nextTick(() => {
+                console.log(this.editorConnection)
                 this.pathData = createPath(this.editorConnection.getPoints(), 0.6)
                 this.$root.$on('update-connections', () => {
                     this.pathData = createPath(this.editorConnection.getPoints(), 0.6)

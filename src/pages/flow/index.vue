@@ -11,6 +11,15 @@
         head: {
             title: 'Flows'
         },
+        async asyncData({ params }) {
+            
+            const { data } = await this.$axios.$get(`https://my-api/posts/${params.id}`)
+            this.$axios.
+            
+            return { 
+                title: data.title
+            }
+        },
         components: {}
     })
 </script>

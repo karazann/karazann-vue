@@ -25,7 +25,7 @@ export class OnStart extends NodeBuilder {
     }
 
     build(node: Node) {
-        node.addOutput(new Output('controlOut', controlPin))
+        node.addOutput(new Output('controlOut', 'On Start', controlPin, false))
     }
 
     async worker(node: Node, inputs: any, outputs: any, control: any) {
@@ -40,11 +40,10 @@ export class Console extends NodeBuilder {
     }
 
     build(node: Node) {
-        node.addInput(new Input('controlIn', controlPin))
-        node.addInput(new Input('textIn', textPin))
+        node.addInput(new Input('controlIn', 'In', controlPin))
+        node.addInput(new Input('textIn', 'Text to Print', textPin))
 
-        node.addOutput(new Output('controlOut', controlPin))
-        node.addOutput(new Output('textOut', textPin))
+        node.addOutput(new Output('controlOut', 'Out', controlPin, false))
     }
 
     async worker(node: Node, inputs: any, outputs: any, control: any) {
@@ -59,11 +58,11 @@ export class Branch extends NodeBuilder {
     }
 
     build(node: Node) {
-        node.addInput(new Input('controlIn', controlPin))
-        node.addInput(new Input('valueIn', booleanPin))
+        node.addInput(new Input('controlIn', 'In', controlPin))
+        node.addInput(new Input('valueIn', 'Value', booleanPin))
 
-        node.addOutput(new Output('controlIf', controlPin))
-        node.addOutput(new Output('controlElse', controlPin))
+        node.addOutput(new Output('controlIf', 'If', controlPin))
+        node.addOutput(new Output('controlElse', 'Else', controlPin))
     }
 
     async worker(node: Node, inputs: any, outputs: any, control: any) {
@@ -78,13 +77,13 @@ export class All extends NodeBuilder {
     }
 
     build(node: Node) {
-        node.addInput(new Input('controlIn', controlPin))
+        node.addInput(new Input('controlIn', 'In', controlPin))
 
-        node.addOutput(new Output('controlOut', controlPin))
-        node.addOutput(new Output('outNumber', numberPin))
-        node.addOutput(new Output('outBoolean', booleanPin))
-        node.addOutput(new Output('outText', textPin))
-        node.addOutput(new Output('outJob', jobPin))
+        node.addOutput(new Output('controlOut', 'Out', controlPin))
+        node.addOutput(new Output('outNumber', 'Number', numberPin))
+        node.addOutput(new Output('outBoolean', 'Boolean', booleanPin))
+        node.addOutput(new Output('outText', 'Text', textPin))
+        node.addOutput(new Output('outJob', 'Job', jobPin))
     }
 
     async worker(node: Node, inputs: any, outputs: any, control: any) {

@@ -1,6 +1,16 @@
 <template lang="pug">
     g.node.filter(:style="{ transform: transformStyle }" )
-       
+        g.graphics(width="220px" v-drag="{ onStart, onDrag }" )
+            rect.back(:height="height")
+            polyline.header(points="1,50 219,50" fill="transparent" stroke="#e6e9ef" stroke-width="1px")
+            text.text(x="110" y="32" text-anchor="middle") {{editorNode.node.builderName}}
+            // Output texts
+            g.output(v-for='(output, i) in outputs' :key="output.key")
+                text(:y="output.pinY+5" x="200" width="110px" text-anchor="end") {{output.io.name}}
+            // Input text
+            g.input(v-for='(input, i) in inputs' :key="input.key")
+                text(:y="input.pinY+5" x="20" width="110px" ) {{input.io.name}}
+
         // Outputs
         g.output(v-for='(output, i) in outputs' :key="output.key")
             pin-view(:editorPin="output.pin" :x="output.pinX" :y="output.pinY")
@@ -8,15 +18,11 @@
         // Inputs
         g.input(v-for='(input, i) in inputs' :key="input.key")
             pin-view(:editorPin="input.pin" :x="input.pinX" :y="input.pinY")
-        
-        g(width="220px" v-drag="{ onStart, onDrag }" )
-            rect.back(:height="height")
-            polyline.header(points="1,50 219,50" fill="transparent" stroke="#e6e9ef" stroke-width="1px")
-            text.text(x="110" y="32" text-anchor="middle") {{editorNode.node.builderName}}
 </template>
 
 <script lang="ts">
     import Vue, { PropType } from 'vue'
+
     import PinView from './pin-view.vue'
     import { dragDirective } from '~/utils/drag'
     import { EditorNode, IO, Input, EditorPin } from '~/shared/flow'
@@ -136,21 +142,29 @@
 <style lang="sass" scoped>
     .node
         overflow: visible
-        
-    .back 
-        width: 220px
-        rx: 6px
-        y: 0
-        fill: white
-        stroke: #e6e9ef;
-        filter: url(#filter-black)
-        transition: stroke .1s, filter .1s
+    
+    text
+        user-select: none
+        fill: #051D40
+
+    .graphics
+        .back 
+            width: 220px
+            rx: 6px
+            y: 0
+            fill: white
+            stroke: #e6e9ef;
+            filter: url(#filter-black)
+            transition: stroke .1s, filter .1s
         &:hover
-            stroke: #0396FF
-            filter: url(#filter-blue)
+            .back
+                stroke: #0396FF
+                filter: url(#filter-blue)
         
     .text
-        fill: #051D40
         y: 20
-        user-select: none
+    
+    .output, .input
+        text
+            font-weight: 400 
 </style>

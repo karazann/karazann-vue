@@ -55,7 +55,7 @@
 <style lang="scss" scoped>
     button {
         top: 0;
-        background: #9185f5;
+        background: #0396FF;
         padding: 12px 20px;
         line-height: 24px;
         color: #fff;
@@ -67,7 +67,7 @@
         cursor: pointer;
         overflow: hidden;
         border: none;
-        border-radius: 12px;
+        border-radius: 6px;
         //&:hover {
         //	transform: translateY(-3px);
         //}
@@ -109,18 +109,18 @@
     }
 
     .google {
-        box-shadow: 0 8px 16px rgba(146, 133, 245, 0.3);
-        background: linear-gradient(65deg, #867ce0 0%, #a599f4 100%);
+        box-shadow: 0 8px 16px rgba(5, 151, 255, 0.3);
+        background: #0396FF;
         color: white;
 
         &:hover {
-            box-shadow: 0 8px 16px rgba(146, 133, 245, 0.4);
-            background: linear-gradient(65deg, #867ce0 0%, #a599f4 100%);
+            box-shadow: 0 8px 16px rgba(5, 151, 255, 0.4);
+            background: l#0396FF;
         }
 
         &:active {
-            box-shadow: 0 8px 16px rgba(146, 133, 245, 0.1);
-            background: linear-gradient(65deg, #867ce0 0%, #a599f4 100%);
+            box-shadow: 0 8px 16px rgba(5, 151, 255, 0.1);
+            background: #0396FF;
         }
     }
 

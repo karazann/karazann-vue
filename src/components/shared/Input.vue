@@ -60,7 +60,10 @@
         display: block;
         font-weight: 500;
         opacity: 1;
-        border-radius: 12px;
+        border-radius: 6px;
+        background: #FFF;
+        border: 1px solid rgba(128, 147, 173, 0.2);
+        box-shadow: 0px 10px 20px rgba(5, 29, 64, 0.05);
         //border: 1px solid #e0e0e0;
         //box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.07);
 
@@ -85,8 +88,8 @@
         }
 
         &:focus {
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
-            transform: scale(1.01);
+            
+            transform: translateY(-1px);
             //border: 1px solid #9f94f0;
             & + span {
                 top: -5px;

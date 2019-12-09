@@ -1,9 +1,12 @@
 export interface ISignInRequest {
-    email: string
+    identifier: string
     password: string
 }
 
-export interface ISignUpRequest extends ISignInRequest {
+export interface ISignUpRequest {
+    email: string
+    username: string
     firstName: string
     lastName: string
+    password: string
 }

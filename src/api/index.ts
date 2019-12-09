@@ -17,9 +17,9 @@ export const signUpInternal = async (firstName: string, lastName: string, email:
     return await axios.post('/user/signup', data)
 }
 
-export const signInInternal = async (email: string, password: string) => {
+export const signInInternal = async (identifier: string, password: string) => {
     const data: ISignInRequest = {
-        email,
+        identifier,
         password
     }
     

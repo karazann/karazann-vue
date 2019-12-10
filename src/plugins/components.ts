@@ -1,10 +1,12 @@
+import 'reflect-metadata'
 import Vue from 'vue'
-import Header from '@/components/header/Header.vue'
-import Input from '@/components/shared/Input.vue'
-import Button from '@/components/shared/Button.vue'
-import Brand from '@/components/shared/Brand.vue'
-import TitleBar from '@/components/shared/TitleBar.vue'
 import VueCompositionApi from '@vue/composition-api'
+
+import Header from '~/components/header/Header.vue'
+import Input from '~/components/shared/Input.vue'
+import Button from '~/components/shared/Button.vue'
+import Brand from '~/components/shared/Brand.vue'
+import TitleBar from '~/components/shared/TitleBar.vue'
 
 Vue.use(VueCompositionApi)
 

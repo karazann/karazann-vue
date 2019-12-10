@@ -16,9 +16,7 @@
             v-button(fill type="primary") Sign Up
             p#separator or
             div#social
-                v-button(type="google") Google 
-                v-button(type="google") Facebook 
-                v-button(type="google") Github
+                v-button(type="google") Google
 </template>
 
 <script lang="ts">

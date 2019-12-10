@@ -8,8 +8,8 @@
                 p or 
                     n-link.bold(to="/auth/signup") create an account
             form(@submit.prevent="onSubmit")
-                v-input(autocomplete="email" placeholder="Username or email" type="text" v-model="user.identifier" name="identifier" :error="test('identifier')")
-                v-input(autocomplete="password" placeholder="Password" type="text" v-model="user.password" name="password" :error="test('password')")
+                v-input(autocomplete="email" placeholder="Username or email" type="text" v-model="user.identifier" name="identifier" :error="mapError(validationErrors, 'identifier')")
+                v-input(autocomplete="password" placeholder="Password" type="text" v-model="user.password" name="password" :error="mapError(validationErrors, 'password')")
                 v-button(fill type="submit") Sign in
             p#separator or
             v-button(fill type="google") Google
@@ -17,7 +17,19 @@
 
 <script lang="ts">
     import Vue from 'vue'
-    import AuthPanel from '@/components/auth/AuthPanel.vue'
+    import AuthPanel from '~/components/auth/AuthPanel.vue'
+    import { validate, mapError } from '~/utils/validator'
+    import { ValidationError } from '@bit/szkabaroli.karazann-shared.validator'
+    import { SignInValidator } from '@bit/szkabaroli.karazann-shared.validators'
+    import { plainToClass } from 'class-transformer'
+    import { ISignInUserRequest, APIErrorResponse, APIError } from '@bit/szkabaroli.karazann-shared.interfaces'
+
+    interface VueData {
+        loading: boolean
+        validationErrors: ValidationError[]
+        user: ISignInUserRequest
+        error?: APIError
+    }
 
     export default Vue.extend({
         name: 'signin-page',
@@ -25,10 +37,10 @@
             title: 'Sign In'
         },
         layout: 'auth',
-        data() {
+        data(): VueData {
             return {
                 loading: false,
-                errors: [],
+                validationErrors: [],
                 user: {
                     identifier: '',
                     password: ''
@@ -40,32 +52,34 @@
         },
         watch: {
             user(val, oldVal) {
-                this.errors = []
+                this.validationErrors = []
             }
         },
         methods: {
-            test(name: string) {
-                const fieldError: any = this.errors.find((e: { property: any }) => e.property === name)
-                fieldError ? console.log(Object.values(fieldError.constraints)) : undefined
-                return fieldError ? Object.values(fieldError.constraints)[0] : undefined
-            },
+            mapError,
             async onSubmit(e: any) {
-                this.loading = true
-                try {
-                    await this.$store.dispatch('user/signInInternal', this.user)
-                } catch (e) {
-                    const data = e.response.data
+                const errors = validate(SignInValidator, this.user)
 
-                    if (data.name === 'UnauthorizedError') {
-                        this.errors = []
-                    } else if (data.name === 'ValidationError') {
-                        console.log(data)
-                        this.errors  = data.errors
+                if (/*errors.length !== 0*/ false) {
+                    this.validationErrors = errors
+                } else {
+                    this.loading = true
+                    
+                    try {
+                        await this.$store.dispatch('user/signInInternal', this.user)
+                    } catch (e) {
+                        this.validationErrors = [];
+                        (e as APIErrorResponse).errors.forEach((error: APIError) => {
+                            if(error.name === 'ValidationError') {
+                                this.validationErrors.push(error as ValidationError)
+                            } else {
+                                this.error = error
+                            }
+                        })
                     }
 
-                    //this.$store.dispatch('notify/error', e.message)
+                    this.loading = false
                 }
-                this.loading = false
             }
         }
     })

@@ -53,7 +53,7 @@ export default {
         routes: []
     },
     build: {
-        analyze: false,
+        analyze: true,
         optimization: {
             splitChunks: {
                 chunks: 'all',

@@ -1,5 +1,5 @@
 import 'reflect-metadata'
-import Vue from 'vue'
+import Vue, { RenderContext } from 'vue'
 import VueCompositionApi from '@vue/composition-api'
 
 import Header from '~/components/header/Header.vue'
@@ -35,3 +35,6 @@ Vue.component('v-brand', Brand)
 Vue.component('v-input', Input)
 Vue.component('v-button', Button)
 Vue.component('v-title', TitleBar)
+
+
+Vue.prototype.$eventHub = new Vue()

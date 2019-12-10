@@ -28,7 +28,6 @@
         loading: boolean
         validationErrors: ValidationError[]
         user: ISignInUserRequest
-        error?: APIError
     }
 
     export default Vue.extend({
@@ -60,22 +59,23 @@
             async onSubmit(e: any) {
                 const errors = validate(SignInValidator, this.user)
 
-                if (/*errors.length !== 0*/ false) {
+                if (errors.length > 0) {
                     this.validationErrors = errors
                 } else {
                     this.loading = true
-                    
+
                     try {
                         await this.$store.dispatch('user/signInInternal', this.user)
                     } catch (e) {
-                        this.validationErrors = [];
-                        (e as APIErrorResponse).errors.forEach((error: APIError) => {
-                            if(error.name === 'ValidationError') {
-                                this.validationErrors.push(error as ValidationError)
-                            } else {
-                                this.error = error
-                            }
-                        })
+                        const apiError = e.response.data as APIErrorResponse
+                        this.validationErrors = []
+                        if (apiError.errors) {
+                            apiError.errors.forEach((error: APIError) => {
+                                if (error.name === 'ValidationError') {
+                                    this.validationErrors.push(error as ValidationError)
+                                }
+                            })
+                        }
                     }
 
                     this.loading = false

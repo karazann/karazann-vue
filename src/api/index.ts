@@ -11,13 +11,9 @@ export interface APIError {
     name: string
 }
 
-async function postJSON<T>(url: string, data: any): Promise<T> {
-    try {
-        const res = await axios.post(url, data)
-        return res.data as T
-    } catch (e) { 
-        throw e.response.data as APIErrorResponse
-    }
+export async function postJSON<T>(url: string, data: any): Promise<T> {
+    const res = await axios.post(url, data)
+    return res.data as T
 }
 
 export const signUpInternal = async (firstName: string, lastName: string, email: string, password: string) => {

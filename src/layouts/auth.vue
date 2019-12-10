@@ -1,9 +1,17 @@
 <template lang="pug">
-    nuxt
+    div
+        notifications-container
+        nuxt
 </template>
 
 <script lang="ts">
-    export default {
-        name: 'auth-layout'
-    }
+    import Vue from 'vue'
+    import NotificationsContainer from '~/components/notifications/NotificationsContainer.vue'
+
+    export default Vue.extend({
+        name: 'auth-layout',
+        components: {
+            NotificationsContainer
+        }
+    })
 </script>

@@ -34,7 +34,8 @@
         "regenerator-runtime": "^0.13.3",
         "typescript": "^3.7.3",
         "vue-slick": "^1.1.15",
-        "vue-smooth-dnd": "^0.8.1"
+        "vue-smooth-dnd": "^0.8.1",
+        "vuex-module-decorators": "^0.11.0"
     },
     "devDependencies": {
         "@nuxt/types": "^0.5.5",

@@ -55,7 +55,7 @@
 <style lang="scss" scoped>
     button {
         top: 0;
-        background: #0396FF;
+        background: #0396ff;
         padding: 12px 20px;
         line-height: 24px;
         color: #fff;
@@ -110,7 +110,7 @@
 
     .primary {
         box-shadow: 0 8px 16px rgba(5, 151, 255, 0.3);
-        background: #0396FF;
+        background: #0396ff;
         color: white;
 
         &:hover {
@@ -120,7 +120,7 @@
 
         &:active {
             box-shadow: 0 8px 16px rgba(5, 151, 255, 0.1);
-            background: #0396FF;
+            background: #0396ff;
         }
     }
 

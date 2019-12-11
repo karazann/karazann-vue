@@ -15,7 +15,7 @@ export const dragDirective = (): DirectiveOptions => {
             const cbs = bind.value
             if (!cbs.onStart && !cbs.onDrag && !cbs.onEnd) {
                 return
-            } else { 
+            } else {
                 // console.debug('register in bind drag:', el.className)
                 dragHandlers.set(el, new Drag(el, cbs.onStart, cbs.onDrag, cbs.onEnd))
             }
@@ -23,11 +23,11 @@ export const dragDirective = (): DirectiveOptions => {
         componentUpdated(el, bind, vnode) {
             const cbs = bind.value
             const exist = dragHandlers.get(el) ? true : false
-            if(exist) return
+            if (exist) return
 
             if (!cbs.onStart && !cbs.onDrag && !cbs.onEnd) {
                 return
-            } else { 
+            } else {
                 // console.debug('register in update drag: ', el.id)
                 dragHandlers.set(el, new Drag(el, cbs.onStart, cbs.onDrag, cbs.onEnd))
             }
@@ -41,12 +41,7 @@ export const dragDirective = (): DirectiveOptions => {
 export class Drag {
     pointerStart: [number, number] | null
 
-    constructor(
-        el: SVGElement | HTMLElement,
-        public onStart?: (e: PointerEvent) => void,
-        public onDrag?: (x: number, y: number, e: PointerEvent) => void,
-        public onEnd?: (e: PointerEvent) => void
-    ) {
+    constructor(el: SVGElement | HTMLElement, public onStart?: (e: PointerEvent) => void, public onDrag?: (x: number, y: number, e: PointerEvent) => void, public onEnd?: (e: PointerEvent) => void) {
         this.pointerStart = null
         el.style.touchAction = 'none'
         el.addEventListener('pointerdown', this.down.bind(this) as EventListenerOrEventListenerObject)

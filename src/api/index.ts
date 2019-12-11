@@ -10,29 +10,8 @@ export interface APIError {
     message: string
     name: string
 }
-
-export async function postJSON<T>(url: string, data: any): Promise<T> {
-    const res = await axios.post(url, data)
-    return res.data as T
+interface APIResponse<T> {
+    data: T
 }
 
-export const signUpInternal = async (firstName: string, lastName: string, email: string, password: string) => {
-    const data: ISignUpUserRequest = {
-        lastName,
-        firstName,
-        email,
-        username: '',
-        password
-    }
-
-    return await postJSON<ICurrentUser>('/user/signup', data)
-}
-
-export const signInInternal = async (identifier: string, password: string) => {
-    const data: ISignInUserRequest = {
-        identifier,
-        password
-    }
-
-    return await postJSON<ICurrentUser>('/user/signin', data)
-}
+export const signInInternal = async (req: ISignInUserRequest) => await axios.post<ICurrentUser>('/user/signin', req)

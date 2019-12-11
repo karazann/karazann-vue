@@ -3,7 +3,7 @@
  */
 
 import { NumberNode, PrintNode } from './testBuilders'
-import { Node, NodeBuilder, Output, Input, Editor  } from '..'
+import { Node, NodeBuilder, Output, Input, Editor } from '..'
 
 describe('Editor class', () => {
     let editor: Editor
@@ -76,7 +76,7 @@ describe('Editor class', () => {
 
         expect(mockConnectionCreated).toBeCalledTimes(1)
         expect(mockConnectionCreated).toBeCalledWith(nodes[0].getConnections()[0])
-        
+
         // Remove
         expect(() => editor.removeConnection(nodes[0].getConnections()[0])).not.toThrow()
         expect(nodes[0].getConnections()).toHaveLength(0)

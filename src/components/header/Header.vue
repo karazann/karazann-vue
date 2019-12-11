@@ -5,7 +5,7 @@
 
     header(:class="{'shadow': !top || shadow}")
         .container
-            .row.inner
+            .inner
                 v-brand
                 .links
                     nav(v-if='!signedIn')
@@ -42,51 +42,131 @@
     })
 </script>
 
-<style lang="scss" scoped>
-    header {
+<style lang="sass" scoped>
+    header 
         top: 0;
         display: flex;
         padding: 20px 0;
+        border-bottom: $border
         justify-content: space-between;
         background: #fff;
         position: relative;
         position: fixed;
+        height: 78px
         width: 100%;
         z-index: 1000;
         transition: all 0.4s ease;
-    }
-    .shadow {
-        box-shadow: 0 3px 30px rgba(0, 0, 0, 0.08);
-    }
-    .inner {
+    
+    .shadow
+        box-shadow: $shadow-sm
+
+
+    
+    .inner
+        @include make-col-ready
+        @include make-col(12)
         display: flex;
         justify-content: space-between;
         align-items: center;
-    }
-    .horizontal-list {
+    
+    .horizontal-list 
         display: flex;
         list-style: none;
-    }
-    .links {
+    
+    .links 
         display: none;
         position: relative;
 
-        @include media-breakpoint-up(md) {
+        @include media-breakpoint-up(md) 
             // Larger than md: 768px,
             display: flex;
-        }
+        
 
-        a {
-            margin: 0 15px 0 22px;
-            height: 38px;
-            line-height: 38px;
-            text-decoration: none;
-            color: #051d40;
-            font-size: 16px;
+        a 
+            padding: 9px 17px 9px 17px
+            margin: 0 0 0 5px
+            text-decoration: none
+            font-size: 15px
+            font-weight: bold
+            color: $grey-color
+            display: block
+            transition: all .1s ease-in
 
-            &:hover {
-                color: #9285f5;
-            }
-        }
-    }
+            &.btn
+                background: $primary-color
+                border-radius: $radius-md
+                color: white
+                box-shadow: $primary-shadow
+                &:hover
+                    box-shadow: none
+                    transform: translateY(1px)
+                    color: white
+
+            &:hover
+                color: $primary-color
+            
+        
+    
 </style>
+
+/*
+header
+        top: 0
+        display: flex
+        padding: 20px 0
+        justify-content: space-between
+        background: #fff
+        position: fixed
+        width: 100%
+        z-index: 1000
+        transition: all 0.4s ease
+
+    .header-wrapper
+        @include create-container
+        .header
+            height: 38px
+            display: flex
+            justify-content: space-between
+            align-items: center
+            grid-area: container
+
+    .shadow
+        box-shadow: $shadow-sm
+
+
+    .horizontal-list
+        display: flex
+        list-style: none
+
+    .links
+        display: none
+        position: relative
+
+        @include md
+            // Larger than md: 768px,
+            display: flex
+
+        a
+            padding: 9px 17px 9px 17px
+            margin: 0 0 0 5px
+            text-decoration: none
+            font-size: 15px
+            font-weight: bold
+            color: $grey-color
+            display: block
+            transition: all .1s ease-in
+
+            &.btn
+                background: $primary-color
+                border-radius: $radius-md
+                color: white
+                box-shadow: $primary-shadow
+                &:hover
+                    box-shadow: none
+                    transform: translateY(1px)
+                    color: white
+
+            &:hover
+                color: $primary-color
+
+*/

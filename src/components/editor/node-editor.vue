@@ -88,7 +88,7 @@
                 this.width = window.innerWidth
                 this.height = window.innerHeight
             },
-            
+
             onStart(e: PointerEvent) {
                 const z = this.editor!.zoomLevel
 
@@ -171,7 +171,7 @@
     .node-editor
         overflow-y: hidden
 
-    svg 
+    svg
         overflow-y: hidden
         position: absolute
         height: 100%
@@ -196,12 +196,12 @@
         transition: border .2s, box-shadow .2s
         user-select: none
         color: #051D40
-        
+
         &:hover
             cursor: pointer
             border: 1px solid #0396FF
             box-shadow: 0px 10px 30px rgba(3, 150, 255, 0.1)
-        
+
         &:active
             cursor: grab
 

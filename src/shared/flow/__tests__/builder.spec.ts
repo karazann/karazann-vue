@@ -1,7 +1,6 @@
 import { Node } from '../node'
 import { Output, Input } from '../io'
-import { NumberNode, PrintNode, pinNumber, pinFlow }  from './testBuilders'
-
+import { NumberNode, PrintNode, pinNumber, pinFlow } from './testBuilders'
 
 describe('NodeBuilder class', () => {
     const numberBuilder = new NumberNode()
@@ -10,12 +9,11 @@ describe('NodeBuilder class', () => {
     let nodeInstance1: Node
     let nodeInstance2: Node
 
-    describe('instance', () => { 
+    describe('instance', () => {
         it.todo('should build correctly')
     })
 
     describe('Nodes', () => {
-        
         nodeInstance1 = numberBuilder.createNode()
         nodeInstance2 = printBuilder.createNode()
 
@@ -24,7 +22,7 @@ describe('NodeBuilder class', () => {
             expect(nodeInstance2).toBeDefined()
         })
 
-        it('should have corerct builderName', () => { 
+        it('should have corerct builderName', () => {
             expect(nodeInstance1.builderName).toBe(numberBuilder.name)
             expect(nodeInstance2.builderName).toBe(printBuilder.name)
         })
@@ -34,7 +32,7 @@ describe('NodeBuilder class', () => {
             expect(nodeInstance2.id).toBe(2)
         })
 
-        it('should have correct io', () => { 
+        it('should have correct io', () => {
             // Number Node
             expect(nodeInstance1.outputs.get('number')).toBeInstanceOf(Output)
             expect((nodeInstance1.outputs.get('number') as Output).pin).toBe(pinNumber)
@@ -49,7 +47,7 @@ describe('NodeBuilder class', () => {
             expect((nodeInstance2.outputs.get('control') as Output).pin).toBe(pinFlow)
         })
 
-        it('should connect correctly', () => { 
+        it('should connect correctly', () => {
             const numberNodeOut = nodeInstance1.outputs.get('number') as Output
             const printNodeIn = nodeInstance2.inputs.get('text') as Input
 

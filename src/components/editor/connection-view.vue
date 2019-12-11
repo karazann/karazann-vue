@@ -6,7 +6,7 @@
     import Vue, { PropType } from 'vue'
 
     import { EditorConnection } from '~/shared/flow'
-    import { createPath, pinColorMapping  } from '~/helpers'
+    import { createPath, pinColorMapping } from '~/helpers'
 
     interface VueData {
         pathData: string

@@ -20,8 +20,9 @@
     })
 </script>
 
-<style lang="sass" scoped> 
-    .notification-container 
+<style lang="sass" scoped>
+    .notification-container
+        pointer-events: none
         top: 20px
         right: 0
         bottom: auto

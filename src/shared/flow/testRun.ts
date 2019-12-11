@@ -13,7 +13,7 @@ class OnStart extends NodeBuilder {
     }
 
     build(node: Node) {
-        node.addOutput(new Output('control','', controlPin))
+        node.addOutput(new Output('control', '', controlPin))
     }
 
     async worker(node: Node, inputs: InputsData, outputs: OutputsData, control: FlowControls) {
@@ -28,11 +28,11 @@ class Random extends NodeBuilder {
     }
 
     build(node: Node) {
-        node.addInput(new Input('control','', controlPin))
+        node.addInput(new Input('control', '', controlPin))
 
-        node.addOutput(new Output('control','', controlPin))
-        node.addOutput(new Output('number','', numberPin))
-        node.addOutput(new Output('number2','', numberPin))
+        node.addOutput(new Output('control', '', controlPin))
+        node.addOutput(new Output('number', '', numberPin))
+        node.addOutput(new Output('number2', '', numberPin))
     }
 
     async worker(node: Node, inputs: InputsData, outputs: OutputsData, control: FlowControls) {
@@ -50,11 +50,11 @@ class Print extends NodeBuilder {
     }
 
     build(node: Node) {
-        node.addInput(new Input('control','', controlPin))
-        node.addInput(new Input('number','',numberPin))
-        node.addInput(new Input('number2','', numberPin))
+        node.addInput(new Input('control', '', controlPin))
+        node.addInput(new Input('number', '', numberPin))
+        node.addInput(new Input('number2', '', numberPin))
 
-        node.addOutput(new Output('control','', controlPin))
+        node.addOutput(new Output('control', '', controlPin))
     }
 
     async worker(node: Node, inputs: InputsData, outputs: OutputsData, control: FlowControls) {

@@ -1,13 +1,13 @@
-interface BlogPost { 
-    slug: string,
-    title: string,
-    description: string,
-    image: string,
-    tag: string,
+interface BlogPost {
+    slug: string
+    title: string
+    description: string
+    image: string
+    tag: string
     date: string
 }
 
-interface BlogState { 
+interface BlogState {
     posts: BlogPost[]
 }
 

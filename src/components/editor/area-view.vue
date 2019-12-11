@@ -78,8 +78,8 @@
                 this.update()
             },
             zoom(zoom: number, ox = 0, oy = 0, source: ZoomSource) {
-                if(zoom > 2) return
-                if(zoom < 0.4) return
+                if (zoom > 2) return
+                if (zoom < 0.4) return
                 this.editor.zoomLevel = zoom
 
                 const k = this.transform.k
@@ -128,6 +128,6 @@
 </script>
 
 <style lang="sass" scoped>
-    .area 
+    .area
         overflow: hidden
 </style>

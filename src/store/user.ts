@@ -30,21 +30,26 @@ export const mutations: MutationTree<UserState> = {
 export const actions = {
     async signInInternal({ dispatch, commit }: ActionContext<UserState, any>, req: ISignInUserRequest) {
         try {
-            const data = await Api.postJSON<ICurrentUser>('/user/signin', req)
+            const { data } = await Api.signInInternal(req)
             localStorage.setItem('jwt_token', data.token)
             axios.defaults.headers.common = { Authorization: `Bearer ${data.token}` }
             commit('SET_CURRENT_USER', data)
-        } catch (e) {
-            if (!e.response) dispatch('notification/notify', { key: 'networkError' }, { root: true })
-            else {
-                const apiError = e.response.data as APIErrorResponse
-                apiError.errors.forEach((error: APIError) => {
-                    if (error.name !== 'ValidationError') {
-                        dispatch('notification/notify', { key: 'apiError', overrideMsg: error.message }, { root: true })
-                    }
-                })
+        } catch (error) {
+            if (!error.response) {
+                dispatch('notification/notify', { key: 'networkError' }, { root: true })
+            } else {
+                const { response } = error
+                const apiError: APIErrorResponse = response.data
+                console.log(response.data)
 
-                throw e
+                if (apiError.errors.length === 1) {
+                    if (apiError.errors[0].name !== 'ValidationError') {
+                        dispatch('notification/notify', { key: 'apiError', overrideMsg: apiError.errors[0].message }, { root: true })
+                        console.log('after api error')
+                    }
+                }
+
+                throw error
             }
         }
     }

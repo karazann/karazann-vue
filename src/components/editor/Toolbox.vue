@@ -44,8 +44,8 @@
                 const minY = 78
                 const maxY = window.window.innerHeight - 600
 
-                x = x < minX ? minX : (x > maxX ? maxX : x)
-                y = y < minY ? minY : (y > maxY ? maxY : y)
+                x = x < minX ? minX : x > maxX ? maxX : x
+                y = y < minY ? minY : y > maxY ? maxY : y
 
                 this.x = x
                 this.y = y
@@ -63,7 +63,7 @@
         background: #FFF;
         border-radius: 12px;
         box-shadow: 0px 7px 50px rgba(5, 29, 64, 0.05)
-        .header 
+        .header
             width: 280px
             height: 50px
             padding: 12px 30px

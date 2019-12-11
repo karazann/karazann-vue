@@ -6,7 +6,7 @@ import Vuex, { Store } from 'vuex'
 const localVue = createLocalVue()
 localVue.use(Vuex)
 
-test('palecholder', () => { 
+test('palecholder', () => {
     expect(true).toBe(true)
 })
 /*

@@ -14,7 +14,7 @@ export class NumberNode extends NodeBuilder {
 
     build(node: Node) {
         // Data
-        node.addOutput(new Output('number','', pinNumber))
+        node.addOutput(new Output('number', '', pinNumber))
     }
 
     worker(node: Node, input: InputsData, output: OutputsData, flow: FlowControls) {
@@ -29,10 +29,10 @@ export class PrintNode extends NodeBuilder {
 
     build(node: Node) {
         // Flows
-        node.addInput(new Input('control','', pinFlow))
-        node.addOutput(new Output('control','', pinFlow))
+        node.addInput(new Input('control', '', pinFlow))
+        node.addOutput(new Output('control', '', pinFlow))
         // Data
-        node.addInput(new Input('text','', pinNumber))
+        node.addInput(new Input('text', '', pinNumber))
     }
 
     worker(node: Node, input: InputsData, output: OutputsData, flow: FlowControls) {

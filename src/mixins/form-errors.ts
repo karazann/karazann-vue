@@ -17,7 +17,7 @@ export const formError = Vue.extend({
         clear(field: string) {
             if (this.errors[field]) delete this.errors[field]
         },
-        clearAll() { 
+        clearAll() {
             this.errors = {}
         },
         addErrors(errors: ValidationError[]) {

@@ -11,7 +11,7 @@
 
     export default Vue.extend({
         name: 'default-layout',
-         components: {
+        components: {
             NotificationsContainer
         },
         data() {
@@ -27,8 +27,7 @@
     })
 </script>
 
-<style lang="scss" scoped>
-    .top {
-        margin-top: 78px;
-    }
+<style lang="sass" scoped>
+    .top 
+        margin-top: 78px
 </style>

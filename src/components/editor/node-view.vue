@@ -142,13 +142,13 @@
 <style lang="sass" scoped>
     .node
         overflow: visible
-    
+
     text
         user-select: none
         fill: #051D40
 
     .graphics
-        .back 
+        .back
             width: 220px
             rx: 6px
             y: 0
@@ -160,11 +160,11 @@
             .back
                 stroke: #0396FF
                 filter: url(#filter-blue)
-        
+
     .text
         y: 20
-    
+
     .output, .input
         text
-            font-weight: 400 
+            font-weight: 400
 </style>

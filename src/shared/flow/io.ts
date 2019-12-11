@@ -8,7 +8,7 @@ import { EditorConnection } from '.'
 
 export class Connection {
     editorConnection!: EditorConnection
-    
+
     constructor(public output: Output, public input: Input, public data: unknown = {}) {
         this.input.addConnection(this)
     }
@@ -45,7 +45,7 @@ export class IO {
 
 export class Input extends IO {
     constructor(key: string, name: string, pin: Pin, multiConns: boolean = false) {
-        super(key,name, pin, multiConns)
+        super(key, name, pin, multiConns)
     }
 
     addConnection(connection: Connection): void {

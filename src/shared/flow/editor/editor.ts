@@ -2,8 +2,8 @@ import { Context } from '../core/context'
 import { NodeBuilder, Node, Connection, Input, Output, IO } from '..'
 
 export class EditorPin {
-    position: [number, number] = [0,0]
-    constructor(public io: IO, public node: EditorNode) { }
+    position: [number, number] = [0, 0]
+    constructor(public io: IO, public node: EditorNode) {}
 }
 
 export class EditorNode {
@@ -82,17 +82,17 @@ export class Editor extends Context {
         node.getConnections().forEach((c: Connection) => this.removeConnection(c))
 
         this.editorNodes = this.editorNodes.filter(enode => enode.node !== node)
-        
+
         this.nodes.splice(this.nodes.indexOf(node), 1)
     }
 
     connect(io1: IO, io2: IO) {
         let connection: Connection
 
-        if(io1 instanceof Input && io2 instanceof Input) throw new Error('Cannot connect input to another input')
-        if(io1 instanceof Output && io2 instanceof Output) throw new Error('Cannot connect output to another output')
+        if (io1 instanceof Input && io2 instanceof Input) throw new Error('Cannot connect input to another input')
+        if (io1 instanceof Output && io2 instanceof Output) throw new Error('Cannot connect output to another output')
 
-        if (io1 instanceof Input) { 
+        if (io1 instanceof Input) {
             connection = (io2 as Output).connectTo(io1 as Input)
         } else {
             connection = (io1 as Output).connectTo(io2 as Input)
@@ -105,7 +105,7 @@ export class Editor extends Context {
         connection.remove()
     }
 
-    getConnections() { 
+    getConnections() {
         return Array.from(this.editorConnections.values())
     }
 
@@ -118,7 +118,7 @@ export class Editor extends Context {
     }
 
     clear() {
-        [...this.nodes].forEach(node => this.removeNode(node))
+        ;[...this.nodes].forEach(node => this.removeNode(node))
     }
 
     private addConnectionEditor(connection: Connection) {

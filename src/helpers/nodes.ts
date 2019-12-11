@@ -1,15 +1,15 @@
 import { NodeBuilder, PinType, Pin, Output, Node, Input } from '~/shared/flow'
 
-interface ColorMapping { 
+interface ColorMapping {
     [key: string]: string
 }
 
 export const pinColorMapping: ColorMapping = {
-    'flow': '#0396FF',
-    'boolean': '#EB5757',
-    'text': '#F2C94C',
-    'number': '#27AE60',
-    'job': '#F2994A'
+    flow: '#0396FF',
+    boolean: '#EB5757',
+    text: '#F2C94C',
+    number: '#27AE60',
+    job: '#F2994A'
 }
 
 export const controlPin = new Pin('flow', PinType.Flow)

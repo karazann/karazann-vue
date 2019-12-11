@@ -77,7 +77,7 @@
                 this.ghostPath = ''
 
                 const pin: EditorPin = (this as any).foo.get(e.target)
-                
+
                 if (pin) this.editorPin.node.editor.connect(this.editorPin.io, pin.io)
             }
         },
@@ -85,9 +85,8 @@
             let el: SVGCircleElement | SVGPathElement
 
             if (this.$refs.circle) el = this.$refs.circle as SVGCircleElement
-            else el = this.$refs.arrow as SVGPathElement;
-
-            ((this as any).foo as WeakMap<SVGElement, EditorPin>).set(el, this.editorPin)
+            else el = this.$refs.arrow as SVGPathElement
+            ;((this as any).foo as WeakMap<SVGElement, EditorPin>).set(el, this.editorPin)
 
             this.updatePinPosition()
             this.$root.$on('update-connections', () => {

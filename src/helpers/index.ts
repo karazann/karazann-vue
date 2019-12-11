@@ -13,9 +13,9 @@ export const createPath = (points: number[], curvature: number) => {
 
 export const roundPosTo = (points: number[], to: number = 10) => {
     let [x, y] = points
-    
+
     x = Math.ceil(x / to) * to
     y = Math.ceil(y / to) * to
-    
+
     return [x, y]
 }

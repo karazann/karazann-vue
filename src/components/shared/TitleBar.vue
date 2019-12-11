@@ -22,30 +22,30 @@
     })
 </script>
 
-<style lang="scss" scoped>
-    section {
-        padding-top: 55px;
-        padding-bottom: 30px;
-    }
-    .row {
-        display: flex;
-        flex: 0 0 100%;
-        max-width: 100%;
-    }
-    .col {
-        @include make-col-ready;
-        @include make-col(12);
-    }
-    h1 {
-        line-height: 40px;
-        margin: 1px 0 3px;
-        margin: 0;
-        padding: 0;
-    }
+<style lang="sass" scoped>
+    section
+        padding-top: 55px
+        padding-bottom: 30px
 
-    p {
-        margin-bottom: 3px;
-        margin-top: 3px;
-        display: block;
-    }
+    .row 
+        display: flex
+        flex: 0 0 100%
+        max-width: 100%
+    
+    .col 
+        @include make-col-ready
+        @include make-col(12)
+    
+    h1 
+        line-height: 40px
+        margin: 1px 0 3px
+        margin: 0
+        padding: 0
+    
+
+    p 
+        margin-bottom: 3px
+        margin-top: 3px
+        display: block
+    
 </style>

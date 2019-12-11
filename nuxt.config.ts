@@ -44,7 +44,7 @@ export default {
     css: ['@assets/global.scss', '@assets/reset.scss'],
     plugins: ['~/plugins/components.ts'],
     styleResources: {
-        scss: ['@assets/grid.scss']
+        sass: ['@assets/grid.scss', '@assets/variables.sass', '@assets/mixins.sass']
     },
     sitemap: {
         hostname: 'https://karazann.com',

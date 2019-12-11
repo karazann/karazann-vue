@@ -1,7 +1,7 @@
 <template lang="pug">
     div
         notifications-container
-        nuxt
+        nuxt.layout
 </template>
 
 <script lang="ts">
@@ -15,3 +15,12 @@
         }
     })
 </script>
+
+<style lang="sass" scoped>
+    .layout 
+        display: grid
+        grid-template-columns: 1fr 400px 1fr
+        grid-template-rows: 120px 60px 1fr
+        grid-template-areas: ". . ." ". head ." ". panel ."
+    
+</style>

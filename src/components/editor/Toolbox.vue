@@ -10,7 +10,7 @@
 
 <script lang="ts">
     import Vue from 'vue'
-    import { dragDirective } from '~/utils/drag'
+    import { dragDirective } from '~/helpers/drag'
 
     interface VueData {
         x: number

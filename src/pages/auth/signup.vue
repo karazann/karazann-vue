@@ -7,13 +7,13 @@
             div#title
                 h1 Sign Up
                 p or 
-                    n-link(to="/auth/signin") go to sign in
+                    n-link.bold(to="/auth/signin") go to sign in
             v-input(autocomplete="given-name" placeholder="First name" v-model="firstName")
             v-input(autocomplete="family-name" placeholder="Last name" v-model="lastName")
             v-input(autocomplete="email" type="email" placeholder="Email" v-model="email")
             v-input(autocomplete="new-password" type="password" placeholder="Password" v-model="password")
             p#warning By clicking the "Sign Up" button below you agree to the Terms and Conditions
-            v-button(fill type="primary") Sign Up
+            v-button(fill) Sign Up
             p#separator or
             div#social
                 v-button(type="google") Google
@@ -70,7 +70,7 @@
     #warning {
         margin: 28px 0;
         text-align: center;
-        font-size: 13px;
+        font-size: 14px;
         line-height: 21px;
         color: #8192ac;
     }
@@ -107,20 +107,21 @@
         display: flex;
         flex-direction: row;
         justify-content: space-between;
-        margin: 15px 0 35px 0;
+        margin: 15px 0 60px 0;
         height: 30px;
 
         h1 {
-            margin: 0;
             line-height: 30px;
+            margin: 0;
         }
 
         p {
             margin: 0;
             line-height: 30px;
 
-            a {
-                color: #9285f5;
+            .bold {
+                color: #0396ff;
+                font-weight: bold;
             }
         }
     }

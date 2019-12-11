@@ -1,5 +1,7 @@
 export * from './zoom'
 export * from './drag'
+export * from './nodes'
+export * from './validator'
 
 export const createPath = (points: number[], curvature: number) => {
     const [x1, y1, x2, y2] = points

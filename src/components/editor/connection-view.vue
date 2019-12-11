@@ -5,9 +5,8 @@
 <script lang="ts">
     import Vue, { PropType } from 'vue'
 
-    import { pinColorMapping } from '~/utils/nodes'
     import { EditorConnection } from '~/shared/flow'
-    import { createPath } from '~/utils'
+    import { createPath, pinColorMapping  } from '~/helpers'
 
     interface VueData {
         pathData: string
@@ -31,7 +30,6 @@
         },
         mounted() {
             this.$nextTick(() => {
-                console.log(this.editorConnection)
                 this.pathData = createPath(this.editorConnection.getPoints(), 0.6)
                 this.$root.$on('update-connections', () => {
                     this.pathData = createPath(this.editorConnection.getPoints(), 0.6)

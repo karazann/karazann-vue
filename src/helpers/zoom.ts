@@ -70,12 +70,12 @@ export class Zoom {
         this.pointers = this.pointers.map(p => (p.pointerId === e.pointerId ? e : p))
         if (!this.translating) return
 
-        let rect = this.el.getBoundingClientRect()
+        const rect = this.el.getBoundingClientRect()
 
-        let { cx, cy, distance } = this.touches()
+        const { cx, cy, distance } = this.touches()
 
         if (this.previous !== null) {
-            let delta = distance / this.previous.distance - 1
+            const delta = distance / this.previous.distance - 1
 
             const ox = (rect.left - cx) * delta
             const oy = (rect.top - cy) * delta

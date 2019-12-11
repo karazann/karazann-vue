@@ -1,5 +1,5 @@
 <template lang="pug">
-    button.ripple-outer(@mousedown="addRipple" @mouseup="purgeRipples" @lick ref="container" :style="style" :class="this.type")
+    button.ripple-outer.primary(@mousedown="addRipple" @mouseup="purgeRipples" @lick ref="container" :style="style" :class="this.type")
         slot
         transition-group.ripples(name="grow" tag="div" )
             span.ripple(v-for="ripple in ripples" :key="ripple.id" :style="ripple.style")
@@ -89,7 +89,7 @@
         }
     }
 
-    .primary {
+    .secondary {
         box-shadow: 0 8px 16px rgba(255, 94, 91, 0.4);
         background: #fc6b74;
         background: linear-gradient(65deg, #ff5e5b 0%, #f8778d 100%);
@@ -108,7 +108,7 @@
         }
     }
 
-    .google {
+    .primary {
         box-shadow: 0 8px 16px rgba(5, 151, 255, 0.3);
         background: #0396FF;
         color: white;

@@ -1,7 +1,7 @@
 <template lang="pug">
     transition(name="notification")
-        .notification(v-show="notification.showed")
-            .notification-message.notification-success {{ notification.message }}
+        .notification(v-show="notification.showed" )
+            .notification-message(:class="`notification-${notification.type}`") {{ notification.message }}
 </template>
 
 <script lang="ts">
@@ -30,9 +30,17 @@
             font-weight: bold
             padding: 10px 30px 10px 30px
     
+    .notification-error
+        background-color: #e74c3c
+
+    .notification-warn
+        background-color: #ff7f48
+
+    .notification-info
+        background-color: #3ea2ff
+
     .notification-success
         background-color: #64ce83
-
 
     .notification-enter-active 
         animation: notification-show 180ms cubic-bezier(.175,.885,.32,1.27499)

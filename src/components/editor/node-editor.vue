@@ -17,8 +17,8 @@
 <script lang="ts">
     import Vue from 'vue'
 
-    import { Drag, dragDirective } from '~/utils/drag'
-    import { Console, OnStart, Branch, All } from '~/utils/nodes'
+    import { Drag, dragDirective } from '~/helpers'
+    import { Console, OnStart, Branch, All } from '~/helpers/nodes'
     import Toolbox from '~/components/editor/toolbox.vue'
     import AreaView from '~/components/editor/area-view.vue'
     import NodeView from '~/components/editor/node-view.vue'

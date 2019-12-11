@@ -12,7 +12,7 @@
 <script lang="ts">
     import Vue, { PropType } from 'vue'
 
-    import { Zoom } from '~/utils'
+    import { Zoom } from '~/helpers'
     import { Editor } from '~/shared/flow'
 
     interface Position {

@@ -8,8 +8,8 @@
                 p or 
                     n-link.bold(to="/auth/signup") create an account
             form(@submit.prevent="onSubmit")
-                v-input(autocomplete="email" placeholder="Username or email" type="text" v-model="user.identifier" name="identifier" :error="mapError(validationErrors, 'identifier')")
-                v-input(autocomplete="password" placeholder="Password" type="text" v-model="user.password" name="password" :error="mapError(validationErrors, 'password')")
+                v-input(autocomplete="email" placeholder="Username or email" type="text" @input="clear('identifier')" v-model="user.identifier" name="identifier" :error="getError('identifier')")
+                v-input(autocomplete="password" placeholder="Password" type="text" @input="clear('password')" v-model="user.password" name="password" :error="getError('password')")
                 v-button(fill type="submit") Sign in
             p#separator or
             v-button(fill type="google") Google
@@ -17,20 +17,23 @@
 
 <script lang="ts">
     import Vue from 'vue'
+    import mixins from 'vue-typed-mixins'
+
     import AuthPanel from '~/components/auth/AuthPanel.vue'
-    import { validate, mapError } from '~/utils/validator'
+
+    import { formError } from '~/mixins/form-errors.ts'
+    import { validate, mapError } from '~/helpers'
+
     import { ValidationError } from '@bit/szkabaroli.karazann-shared.validator'
     import { SignInValidator } from '@bit/szkabaroli.karazann-shared.validators'
-    import { plainToClass } from 'class-transformer'
     import { ISignInUserRequest, APIErrorResponse, APIError } from '@bit/szkabaroli.karazann-shared.interfaces'
 
     interface VueData {
         loading: boolean
-        validationErrors: ValidationError[]
         user: ISignInUserRequest
     }
 
-    export default Vue.extend({
+    export default mixins(formError).extend({
         name: 'signin-page',
         head: {
             title: 'Sign In'
@@ -39,7 +42,6 @@
         data(): VueData {
             return {
                 loading: false,
-                validationErrors: [],
                 user: {
                     identifier: '',
                     password: ''
@@ -49,33 +51,27 @@
         components: {
             AuthPanel
         },
-        watch: {
-            user(val, oldVal) {
-                this.validationErrors = []
-            }
-        },
         methods: {
-            mapError,
             async onSubmit(e: any) {
-                const errors = validate(SignInValidator, this.user)
+                this.clearAll()
+
+                const errors = validate(SignInValidator, this.user as any)
 
                 if (errors.length > 0) {
-                    this.validationErrors = errors
+                    this.addErrors(errors)
                 } else {
                     this.loading = true
-
+                    
                     try {
-                        await this.$store.dispatch('user/signInInternal', this.user)
+                        this.$store.dispatch('user/signInInternal', this.user)
                     } catch (e) {
-                        const apiError = e.response.data as APIErrorResponse
-                        this.validationErrors = []
-                        if (apiError.errors) {
-                            apiError.errors.forEach((error: APIError) => {
-                                if (error.name === 'ValidationError') {
-                                    this.validationErrors.push(error as ValidationError)
-                                }
-                            })
-                        }
+                        const { response } = e
+
+                        response.data.errors.forEach((error: APIError) => {
+                            if (error.name === 'ValidationError') {
+                                this.addError(error as ValidationError)
+                            }
+                        })
                     }
 
                     this.loading = false

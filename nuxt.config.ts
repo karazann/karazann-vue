@@ -7,6 +7,9 @@ export default {
     buildModules: ['@nuxt/typescript-build'],
     head: {
         titleTemplate: '%s - Karazann',
+        htmlAttrs: {
+            theme: 'dark',
+        },
         meta: [
             {
                 charset: 'utf-8'
@@ -41,10 +44,10 @@ export default {
         offline: true,
         offlineStrategy: 'NetworkFirst'
     },
-    css: ['@assets/global.scss', '@assets/reset.scss'],
+    css: ['@assets/reset.scss', '@assets/themes.scss', '@assets/global.scss'],
     plugins: ['~/plugins/components.ts'],
     styleResources: {
-        sass: ['@assets/grid.scss', '@assets/variables.sass', '@assets/mixins.sass']
+        scss: ['@assets/grid.scss', '@assets/_variables.scss', '@assets/_mixins.scss']
     },
     sitemap: {
         hostname: 'https://karazann.com',
@@ -78,12 +81,12 @@ export default {
         devtool: true,
         extractCSS: true,
         filenames: {
-            app: (c: any) => c.isDev ? '[name].js' : '[name].[chunkhash].js',
-            chunk: (c: any) => c.isDev ? '[name].js' : '[name].[chunkhash].js',
-            css: (c: any) => c.isDev ? '[name].css' : '[contenthash].css',
-            img: (c: any) => c.isDev ? '[path][name].[ext]' : 'img/[hash:7].[ext]',
-            font: (c: any) => c.isDev ? '[path][name].[ext]' : 'fonts/[hash:7].[ext]',
-            video: (c: any) => c.isDev ? '[path][name].[ext]' : 'videos/[hash:7].[ext]'
+            app: (c: any) => (c.isDev ? '[name].js' : '[name].[chunkhash].js'),
+            chunk: (c: any) => (c.isDev ? '[name].js' : '[name].[chunkhash].js'),
+            css: (c: any) => (c.isDev ? '[name].css' : '[contenthash].css'),
+            img: (c: any) => (c.isDev ? '[path][name].[ext]' : 'img/[hash:7].[ext]'),
+            font: (c: any) => (c.isDev ? '[path][name].[ext]' : 'fonts/[hash:7].[ext]'),
+            video: (c: any) => (c.isDev ? '[path][name].[ext]' : 'videos/[hash:7].[ext]')
         },
         extend(this: any, config: any, ctx: any) {
             if (ctx.isClient) config.devtool = '#source-map'

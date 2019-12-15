@@ -1,0 +1,36 @@
+@import 'variables';
+
+@mixin make-card {
+    background: theme-var(surface);
+    border: 1px solid theme-var(secondary-2);
+    border-radius: 12px;
+    box-shadow: $shadow-lg;
+}
+
+@mixin create-tag {
+    background: #ffffff;
+    font-weight: bold;
+    border-radius: $radius-md;
+    box-sizing: border-box;
+    padding: 6px 14px;
+}
+
+@mixin spread-map($map: ()) {
+    @each $key, $value in $map {
+        #{$key}: $value;
+    }
+}
+
+@function theme-var($key, $fallback: null, $map: $theme-map-light) {
+    $prefixed: unquote('--theme-' + $key);
+
+    @if not map-has-key($map, $prefixed) {
+        @error "key: '#{$prefixed}', is not a key in map: #{$map}";
+    }
+
+    @if ($fallback) {
+        @return var($prefixed, $fallback);
+    } @else {
+        @return var($prefixed);
+    }
+}

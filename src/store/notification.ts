@@ -57,16 +57,14 @@ export const mutations = {
 
 async function wait(ms: number) {
     return new Promise(resolve => {
-        resolve(setTimeout(resolve, ms))
+        setTimeout(resolve, ms)
     })
 }
 
 export const actions = {
     async notify(c: ActionContext<NoticicationState, any>, payload: NotifyPayload) {
-        const t = c.state.notifications
         c.commit('SHOW_NOTIFICATION', payload)
-        const timer = await wait(payload.duration || 5000)
-        console.log(timer)
+        await wait(payload.duration || 5000)
         c.commit('HIDE_NOTIFICATION', payload)
     }
 }

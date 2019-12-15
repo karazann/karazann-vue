@@ -104,11 +104,11 @@
         font-weight: bold
         // color: #7c42fe
         color: #0396FF
-        margin-bottom: 20px
+        margin-bottom: 15px
         display: inline-block
         background-color: rgba(3, 150, 255, 0.16)
         border-radius: 6px
-        padding: 10px 14px
+        padding: 8px 12px
         margin-right: 3px
         transition: 0.3s
 

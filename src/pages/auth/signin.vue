@@ -19,8 +19,6 @@
     import Vue from 'vue'
     import mixins from 'vue-typed-mixins'
 
-    import AuthPanel from '~/components/auth/AuthPanel.vue'
-
     import { formError } from '~/mixins/form-errors.ts'
     import { validate, mapError } from '~/helpers'
 
@@ -47,9 +45,6 @@
                     password: ''
                 }
             }
-        },
-        components: {
-            AuthPanel
         },
         methods: {
             async onSubmit() {
@@ -83,9 +78,7 @@
 
 <style lang="scss" scoped>
     .auth-panel {
-        background: #fff;
-        border-radius: 12px;
-        box-shadow: 0px 7px 50px rgba(5, 29, 64, 0.05);
+        @include make-card;
         padding: 30px 40px;
         grid-area: panel;
     }
@@ -100,17 +93,17 @@
         width: 100%;
         text-align: center;
         font-weight: 700;
-        color: #b8bcc2;
+        color: theme-var(secondary);
 
         &::before,
         &::after {
             content: '';
-            display: inline-block;
-            border-top: 1px solid #eaecf0;
             width: 100px;
             margin: 0 10px;
-            font-variant: small-caps;
+            border-top: 1px solid theme-var(secondary-2);
             transform: translateY(-5px);
+            display: inline-block;
+            font-variant: small-caps;
         }
     }
 
@@ -131,7 +124,7 @@
             line-height: 30px;
 
             .bold {
-                color: #0396ff;
+                color: theme-var(primary);
                 font-weight: bold;
             }
         }

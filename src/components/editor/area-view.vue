@@ -2,8 +2,8 @@
     g
         defs
             pattern(id="grid-pattern" :width="`${gridSize}px`" :height="`${gridSize}px`" patternUnits="userSpaceOnUse")
-                line(x1="0" y1="0" x2="0" :y2="`${gridSize}`" stroke-width="1px" shape-rendering="geometricPrecision" stroke="#DFE4EB")
-                line(x1="0" y1="0" :x2="`${gridSize}`" y2="0" stroke-width="1px" shape-rendering="geometricPrecision" stroke="#DFE4EB")
+                line(x1="0" y1="0" x2="0" :y2="`${gridSize}`" stroke-width="1px" shape-rendering="geometricPrecision")
+                line(x1="0" y1="0" :x2="`${gridSize}`" y2="0" stroke-width="1px" shape-rendering="geometricPrecision")
         rect(height="410%" width="410%" x="-10%" y="-10%" fill="url(#grid-pattern)" :style="{ transform: gridStyle, transformOrigin: '0 0' }")
         g.area(ref="area" :style="{ transform: transformStyle, transformOrigin: '0 0' }")
             slot
@@ -116,18 +116,22 @@
     })
 
     /*let z = this.transform.k 
-                        
-                        z = z * (1 + delta)
+                                    
+                                    z = z * (1 + delta)
 
-                        const min = 0.5
-                        const max = 1.4
+                                    const min = 0.5
+                                    const max = 1.4
 
-                        z = z < min ? min : (z > max ? max : z)
+                                    z = z < min ? min : (z > max ? max : z)
 
-                        this.editor.zoomLevel = this.transform.k = z*/
+                                    this.editor.zoomLevel = this.transform.k = z*/
 </script>
 
-<style lang="sass" scoped>
-    .area
-        overflow: hidden
+<style lang="scss" scoped>
+    .area {
+        overflow: hidden;
+    }
+    line {
+        stroke: theme-var(secondary-2);
+    }
 </style>

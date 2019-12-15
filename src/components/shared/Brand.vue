@@ -21,7 +21,7 @@
         }
 
         p {
-            color: #233458;
+            color: theme-var(primary-text);
             margin-left: 8px;
             margin-top: 0;
             margin-bottom: 24px;

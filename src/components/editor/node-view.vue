@@ -2,7 +2,7 @@
     g.node.filter(:style="{ transform: transformStyle }" )
         g.graphics(width="220px" v-drag="{ onStart, onDrag }" )
             rect.back(:height="height")
-            polyline.header(points="1,50 219,50" fill="transparent" stroke="#e6e9ef" stroke-width="1px")
+            polyline.header(points="1,50 219,50")
             text.text(x="110" y="32" text-anchor="middle") {{editorNode.node.builderName}}
             // Output texts
             g.output(v-for='(output, i) in outputs' :key="output.key")
@@ -139,32 +139,51 @@
     })
 </script>
 
-<style lang="sass" scoped>
-    .node
-        overflow: visible
+<style lang="scss" scoped>
+    
 
-    text
-        user-select: none
-        fill: #051D40
+    text {
+        fill: theme-var(primary-text);
+        user-select: none;
+    }
 
-    .graphics
-        .back
-            width: 220px
-            rx: 6px
-            y: 0
-            fill: white
-            stroke: #e6e9ef;
-            filter: url(#filter-black)
-            transition: stroke .1s, filter .1s
-        &:hover
-            .back
-                stroke: #0396FF
-                filter: url(#filter-blue)
+    .graphics {
+        .header {
+            stroke: theme-var(secondary-2);
+            fill: transparent;
+            stroke-width: 1px;
+        }
 
-    .text
-        y: 20
+        .back {
+            fill: theme-var(surface);
+            stroke: theme-var(secondary-2);
+            width: 220px;
+            rx: 6px;
+            y: 0;
+            filter: url(#filter-black);
+            transition: stroke 0.1s, filter 0.1s;
+        }
 
-    .output, .input
-        text
-            font-weight: 400
+        &:hover {
+            .back {
+                stroke: theme-var(primary);
+                filter: url(#filter-blue);
+            }
+        }
+    }
+
+    text {
+        font: bold 15px 'Gilroy';
+    }
+
+    .text {
+        y: 20;
+    }
+
+    .output,
+    .input {
+        text {
+            font-weight: 400;
+        }
+    }
 </style>

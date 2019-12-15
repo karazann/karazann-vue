@@ -1,0 +1,82 @@
+$border: 1px solid theme-var(secondary-2);
+
+//Priamary and secondario colors
+$--theme-primary: --theme-primary;
+$--theme-primary-1: --theme-primary-1;
+$--theme-primary-2: --theme-primary-2;
+$--theme-primary-3: --theme-primary-3;
+
+$--theme-secondary: --theme-secondary;
+$--theme-secondary-1: --theme-secondary-1;
+$--theme-secondary-2: --theme-secondary-2;
+// Element colors
+$--theme-surface: --theme-surface;
+$--theme-background: --theme-background;
+//Text colors
+$--theme-primary-text: --theme-primary-text;
+$--theme-secondary-text: --theme-secondary-text;
+//Basic Colors
+$--theme-color-red: --theme-color-red;
+$--theme-color-red-1: --theme-color-red-1;
+$--theme-color-orange: --theme-color-orange;
+$--theme-color-yellow: --theme-color-yellow;
+$--theme-color-green: --theme-color-green;
+$--theme-color-cyan: --theme-color-cyan;
+$--theme-color-blue: --theme-color-blue;
+$--theme-color-purple: --theme-color-purple;
+
+$theme-map-defaults: (
+    $--theme-primary: #0396ff,
+    $--theme-primary-1: #0396ff10,
+    $--theme-primary-2: #0396ff20,
+    $--theme-primary-3: #0396ff30,
+    $--theme-secondary: #8093ad,
+    $--theme-secondary-1: #8093ad10,
+    $--theme-secondary-2: #8093ad20,
+    $--theme-color-red: #eb5757,
+    $--theme-color-red-1: #eb575710,
+    $--theme-color-orange: #f2994a,
+    $--theme-color-yellow: #f2c94c,
+    $--theme-color-green: #27ae60,
+    $--theme-color-cyan: cyan,
+    $--theme-color-blue: #0396ff,
+    $--theme-color-purple: #9b51e0
+);
+
+// Default theme
+$theme-map-light: map-merge(
+    $theme-map-defaults,
+    (
+        $--theme-surface: #fff,
+        $--theme-background: #f5f7fb,
+        $--theme-primary-text: #233458,
+        $--theme-secondary-text: #8093ad
+    )
+);
+
+// Override the default light theme
+$theme-map-dark: map-merge(
+    $theme-map-defaults,
+    (
+        $--theme-surface: #283042,
+        $--theme-background: #1d2331,
+        $--theme-primary-text: #edeffe,
+        $--theme-secondary-text: #8093ad
+    )
+);
+
+// Borders
+
+$border-radius-lg: 12px;
+$border-radius-md: 6px;
+$border-radius-sm: 3px;
+
+// Shadows
+
+$primary-shadow-sm: 0px 10px 10px theme-var(primary-3);
+$primary-shadow-md: 0px 10px 20px theme-var(primary-2);
+$primary-shadow-lg: 0px 10px 30px theme-var(primary-1);
+
+$shadow-sm: 0px 10px 60px rgba(0, 0, 0, 0.1);
+$shadow-md: 0px 10px 60px rgba(0, 0, 0, 0.08);
+$shadow-lg: 0px 10px 60px rgba(0, 0, 0, 0.06);

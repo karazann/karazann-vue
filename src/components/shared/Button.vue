@@ -68,59 +68,29 @@
         overflow: hidden;
         border: none;
         border-radius: 6px;
-        //&:hover {
-        //	transform: translateY(-3px);
-        //}
-
-        //box-shadow: 0 8px 24px rgba(20,20,20,0.10);
-        //background: white;
-        //color: #334;
 
         &:hover {
-            //box-shadow: 0 8px 24px rgba(20,20,20,0.16);
-            //background: white;
-
-            transform: translateY(-1px);
+            transform: translateY(-2px);
         }
 
         &:active {
             transform: translateY(1px);
-            //box-shadow: 0 8px 24px rgba(20,20,20,0.05);
-        }
-    }
-
-    .secondary {
-        box-shadow: 0 8px 16px rgba(255, 94, 91, 0.4);
-        background: #fc6b74;
-        background: linear-gradient(65deg, #ff5e5b 0%, #f8778d 100%);
-        color: white;
-
-        &:hover {
-            background: #fc7080;
-            box-shadow: 0 10px 20px rgba(255, 94, 91, 0.3);
-            background: linear-gradient(65deg, #ff6360 0, #f87c91 100%);
-        }
-
-        &:active {
-            box-shadow: 0 8px 16px rgba(255, 94, 91, 0.1);
-            background: #fc7080;
-            background: linear-gradient(65deg, #ff6360 0, #f87c91 100%);
         }
     }
 
     .primary {
-        box-shadow: 0 8px 16px rgba(5, 151, 255, 0.3);
-        background: #0396ff;
+        box-shadow: 0 8px 20px theme-var(primary-3);
+        box-shadow: $primary-shadow-md;
+        background: theme-var(primary);
         color: white;
 
         &:hover {
-            box-shadow: 0 8px 16px rgba(5, 151, 255, 0.4);
-            background: l#0396FF;
+            box-shadow: 0 8px 40px theme-var(primary-2);
+            box-shadow: $primary-shadow-lg;
         }
 
         &:active {
-            box-shadow: 0 8px 16px rgba(5, 151, 255, 0.1);
-            background: #0396ff;
+            box-shadow: none;
         }
     }
 

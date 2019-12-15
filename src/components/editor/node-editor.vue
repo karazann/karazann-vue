@@ -1,9 +1,9 @@
 <template lang="pug">
     .node-editor()
         svg(id="svg" ref="view" v-drag="dragOptions" :style="{ height: height-78 + 'px', width: width-17 + 'px' }")
-            filter#filter-black(x='-20%' y='-20%' width='140%' height='140%' filterunits='objectBoundingBox', primitiveunits='userSpaceOnUse' color-interpolation-filters='linearRGB')
+            filter#filter-black(x='-20%' y='-20%' width='140%' height='140%' filterunits='objectBoundingBox', primitiveunits='userSpaceOnUse' color-interpolation-filters='sRGB')
                 feDropShadow(stdDeviation='6' in='SourceGraphic' dx='0' dy='7' flood-color='#051d4008' flood-opacity='1' x='-10%' y='-10%' width='130%' height='130%' result='dropShadow')
-            filter#filter-blue(x='-20%' y='-20%' width='140%' height='140%' filterunits='objectBoundingBox', primitiveunits='userSpaceOnUse' color-interpolation-filters='linearRGB')
+            filter#filter-blue(x='-20%' y='-20%' width='140%' height='140%' filterunits='objectBoundingBox', primitiveunits='userSpaceOnUse' color-interpolation-filters='sRGB')
                 feDropShadow(stdDeviation='6' in='SourceGraphic' dx='0' dy='7' flood-color='#0396FF20' flood-opacity='1' x='-10%' y='-10%' width='130%' height='130%' result='dropShadow')
             area-view(:editor="editor" :svgSize="[width, height]" ref="area")
                 connection-view(v-for="(connection, i) in getConnections" :editorConnection="connection" :key="i")
@@ -167,48 +167,55 @@
     })
 </script>
 
-<style lang="sass" scoped>
-    .node-editor
-        overflow-y: hidden
+<style lang="scss" scoped>
+    .node-editor {
+        overflow-y: hidden;
+    }
 
-    svg
-        overflow-y: hidden
-        position: absolute
-        height: 100%
-        width: 100%
+    svg {
+        overflow-y: hidden;
+        position: absolute;
+        height: 100%;
+        width: 100%;
+    }
 
-    .tool-outer
-        width: 100%
-        heght: auto
-        margin: 15px 0
+    .tool-outer {
+        width: 100%;
+        height: auto;
+        margin: 15px 0;
+    }
 
-    .tool
-        width: 100%
-        height: 50px
-        padding: 15px
-        background: #FFF
-        border: 1px solid rgba(128, 147, 173, 0.2)
-        box-shadow: 0px 10px 20px rgba(5, 29, 64, 0.05)
-        border-radius: 6px
-        text-align: center
-        font-weight: bold
-        font-size: 16px
-        transition: border .2s, box-shadow .2s
-        user-select: none
-        color: #051D40
+    .tool {
+        background: theme-var(surface);
+        color: theme-var(primary);
+        border: 1px solid theme-var(secondary-2);
+        border-radius: 6px;
+        box-shadow: $shadow-lg;
+        width: 100%;
+        height: 50px;
+        padding: 15px;
+        text-align: center;
+        font-weight: bold;
+        font-size: 16px;
+        transition: border 0.2s, box-shadow 0.2s;
+        user-select: none;
 
-        &:hover
-            cursor: pointer
-            border: 1px solid #0396FF
-            box-shadow: 0px 10px 30px rgba(3, 150, 255, 0.1)
+        &:hover {
+            border: 1px solid theme-var(primary);
+            box-shadow: 0px 10px 30px theme-var(primary-2);
+            cursor: pointer;
+        }
 
-        &:active
-            cursor: grab
+        &:active {
+            cursor: grab;
+        }
+    }
 
-    .ghost
-        z-index: 1000
-        width: 220px
-        position: absolute
-        transition: transform .3s
-        cursor: grab !important
+    .ghost {
+        z-index: 1000;
+        width: 220px;
+        position: absolute;
+        transition: transform 0.3s;
+        cursor: grab !important;
+    }
 </style>

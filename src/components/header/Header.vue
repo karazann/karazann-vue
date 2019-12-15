@@ -5,7 +5,7 @@
 
     header(:class="{'shadow': !top || shadow}")
         .container
-            .inner
+            .row.inner
                 v-brand
                 .links
                     nav(v-if='!signedIn')
@@ -42,71 +42,74 @@
     })
 </script>
 
-<style lang="sass" scoped>
-    header 
+<style lang="scss" scoped>
+    header {
+        background: theme-var(surface);
+        border-bottom: 1px solid theme-var(secondary-2);
         top: 0;
         display: flex;
         padding: 20px 0;
-        border-bottom: $border
         justify-content: space-between;
-        background: #fff;
-        position: relative;
         position: fixed;
-        height: 78px
+        height: 78px;
         width: 100%;
         z-index: 1000;
         transition: all 0.4s ease;
-    
-    .shadow
-        box-shadow: $shadow-sm
+    }
 
+    .shadow {
+        box-shadow: $shadow-sm;
+    }
 
-    
-    .inner
-        @include make-col-ready
-        @include make-col(12)
+    .inner {
+        @include make-col-ready;
+        @include make-col(12);
         display: flex;
         justify-content: space-between;
         align-items: center;
-    
-    .horizontal-list 
+    }
+
+    .horizontal-list {
         display: flex;
         list-style: none;
-    
-    .links 
+    }
+
+    .links {
         display: none;
         position: relative;
 
-        @include media-breakpoint-up(md) 
-            // Larger than md: 768px,
+        @include media-breakpoint-up(md) {
             display: flex;
-        
+        }
 
-        a 
-            padding: 9px 17px 9px 17px
-            margin: 0 0 0 5px
-            text-decoration: none
-            font-size: 15px
-            font-weight: bold
-            color: $grey-color
-            display: block
-            transition: all .1s ease-in
+        a {
+            color: theme-var(secondary);
+            padding: 9px 17px 9px 17px;
+            margin: 0 0 0 5px;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: bold;
+            display: block;
+            transition: all 0.1s ease-in;
 
-            &.btn
-                background: $primary-color
-                border-radius: $radius-md
-                color: white
-                box-shadow: $primary-shadow
-                &:hover
-                    box-shadow: none
-                    transform: translateY(1px)
-                    color: white
+            &:hover {
+                color: theme-var(primary);
+            }
 
-            &:hover
-                color: $primary-color
-            
-        
-    
+            &.btn {
+                background: theme-var(primary);
+                color: white;
+                border-radius: $border-radius-md;
+                box-shadow: $primary-shadow-lg;
+
+                &:hover {
+                    color: white;
+                    box-shadow: none;
+                    transform: translateY(1px);
+                }
+            }
+        }
+    }
 </style>
 
 /*

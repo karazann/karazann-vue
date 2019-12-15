@@ -28,9 +28,6 @@
             title: 'Sign Up'
         },
         layout: 'auth',
-        components: {
-            AuthPanel
-        },
         data() {
             return {
                 firstName: '',
@@ -45,9 +42,7 @@
 
 <style lang="scss" scoped>
     .auth-panel {
-        background: #fff;
-        border-radius: 12px;
-        box-shadow: 0px 7px 50px rgba(5, 29, 64, 0.05);
+        @include make-card;
         padding: 30px 40px;
         grid-area: panel;
     }
@@ -93,7 +88,7 @@
             line-height: 30px;
 
             .bold {
-                color: #0396ff;
+                color:  -var(primary);
                 font-weight: bold;
             }
         }

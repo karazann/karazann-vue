@@ -54,26 +54,30 @@
     })
 </script>
 
-<style lang="sass" scoped>
-    .toolbox
-        overflow-y: hidden
-        position: absolute
-        height: 600px
-        width: 280px
-        background: #FFF;
-        border-radius: 12px;
-        box-shadow: 0px 7px 50px rgba(5, 29, 64, 0.05)
-        .header
-            width: 280px
-            height: 50px
-            padding: 12px 30px
-            .handle
-                height: 6px
-                cursor: grab
-                margin: 2px auto
-                width: 60px
-                border-radius: 5px
-                background: #ECEFF3
-        .tools
-            padding: 30px
+<style lang="scss" scoped>
+    .toolbox {
+        @include make-card;
+        position: absolute;
+        height: 600px;
+        width: 280px;
+
+        .header {
+            width: 280px;
+            height: 50px;
+            padding: 12px 30px;
+
+            .handle {
+                height: 6px;
+                cursor: grab;
+                margin: 2px auto;
+                width: 60px;
+                border-radius: 5px;
+                background: theme-var(secondary-2);
+            }
+        }
+
+        .tools {
+            padding: 30px;
+        }
+    }
 </style>

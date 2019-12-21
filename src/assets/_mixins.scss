@@ -4,7 +4,7 @@
     background: theme-var(surface);
     border: 1px solid theme-var(secondary-2);
     border-radius: 12px;
-    box-shadow: $shadow-lg;
+    box-shadow: $shadow-md;
 }
 
 @mixin create-tag {
@@ -32,5 +32,35 @@
         @return var($prefixed, $fallback);
     } @else {
         @return var($prefixed);
+    }
+}
+
+@mixin highlight($tag, $color) {
+    #{$tag} {
+        position: relative;
+    }
+    
+    #{$tag}::before {
+        content: '';
+        position: absolute;
+        display: block;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background: $color;
+        outline: 1px dashed $color;
+        opacity: .4;
+    }
+}
+
+@mixin s {
+    @if $show-semantic == true {
+        @include highlight(header, theme-var(color-yellow));
+        @include highlight(nav, theme-var(color-orange));
+        @include highlight(main, theme-var(color-red));
+        @include highlight(article, theme-var(color-blue));
+        @include highlight(aside, theme-var(color-purple));
+        @include highlight(section, black);
     }
 }

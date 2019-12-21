@@ -17,13 +17,22 @@ $--theme-primary-text: --theme-primary-text;
 $--theme-secondary-text: --theme-secondary-text;
 //Basic Colors
 $--theme-color-red: --theme-color-red;
-$--theme-color-red-1: --theme-color-red-1;
+$--theme-color-red-2: --theme-color-red-2;
+
 $--theme-color-orange: --theme-color-orange;
+$--theme-color-orange-2: --theme-color-orange-2;
+
 $--theme-color-yellow: --theme-color-yellow;
+$--theme-color-yellow-2: --theme-color-yellow-2;
+
 $--theme-color-green: --theme-color-green;
-$--theme-color-cyan: --theme-color-cyan;
+$--theme-color-green-2: --theme-color-green-2;
+
 $--theme-color-blue: --theme-color-blue;
+$--theme-color-blue-2: --theme-color-blue-2;
+
 $--theme-color-purple: --theme-color-purple;
+$--theme-color-purple-2: --theme-color-purple-2;
 
 $theme-map-defaults: (
     $--theme-primary: #0396ff,
@@ -34,13 +43,17 @@ $theme-map-defaults: (
     $--theme-secondary-1: #8093ad10,
     $--theme-secondary-2: #8093ad20,
     $--theme-color-red: #eb5757,
-    $--theme-color-red-1: #eb575710,
+    $--theme-color-red-2: #eb575720,
     $--theme-color-orange: #f2994a,
+    $--theme-color-orange-2: #f2994a20,
     $--theme-color-yellow: #f2c94c,
+    $--theme-color-yellow-2: #f2c94c20,
     $--theme-color-green: #27ae60,
-    $--theme-color-cyan: cyan,
+    $--theme-color-green-2: #27ae6020,
     $--theme-color-blue: #0396ff,
-    $--theme-color-purple: #9b51e0
+    $--theme-color-blue-2: #0396ff20,
+    $--theme-color-purple: #9b51e0,
+    $--theme-color-purple-2: #9b51e020
 );
 
 // Default theme
@@ -50,7 +63,8 @@ $theme-map-light: map-merge(
         $--theme-surface: #fff,
         $--theme-background: #f5f7fb,
         $--theme-primary-text: #233458,
-        $--theme-secondary-text: #8093ad
+        $--theme-secondary-text: #8093ad,
+        $--theme-color-green-2: #27ae6030,
     )
 );
 
@@ -77,6 +91,6 @@ $primary-shadow-sm: 0px 10px 10px theme-var(primary-3);
 $primary-shadow-md: 0px 10px 20px theme-var(primary-2);
 $primary-shadow-lg: 0px 10px 30px theme-var(primary-1);
 
-$shadow-sm: 0px 10px 60px rgba(0, 0, 0, 0.1);
-$shadow-md: 0px 10px 60px rgba(0, 0, 0, 0.08);
-$shadow-lg: 0px 10px 60px rgba(0, 0, 0, 0.06);
+$shadow-sm: 0px 10px 50px rgba(0, 0, 0, 0.08);
+$shadow-md: 0px 10px 60px rgba(0, 0, 0, 0.01);
+$shadow-lg: 0px 10px 60px rgba(0, 0, 0, 0.01);

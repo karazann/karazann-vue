@@ -33,6 +33,14 @@ body {
     @include make-row;
 }
 
+.row-spacer {
+    margin-right: -15px;
+    margin-left: -15px;
+}
+
+$show-semantic: false;
+@include s;
+
 @font-face {
     font-family: 'Pouttu';
     font-weight: normal;
@@ -63,6 +71,13 @@ body {
     src: url('fonts/Feather-Icons.ttf') format('truetype');
 }
 
+.feather {
+    height: 22px;
+    width: 22px;
+    padding: 1px;
+    display: block;
+}
+
 //style guidde
 
 h1 {
@@ -86,7 +101,7 @@ h3 {
 h4 {
     color: theme-var(primary-text);
     font-weight: bold;
-    font-size: 18.666667; // 14pt
+    font-size: 18px; // 14pt
 }
 
 p,

@@ -1,5 +1,5 @@
 <template lang="pug">
-    button.ripple-outer.primary(@mousedown="addRipple" @mouseup="purgeRipples" @lick ref="container" :style="style" :class="this.type")
+    button.ripple-outer(@mousedown="addRipple" @mouseup="clickHandle" ref="container" :style="style" :class="`${this.type} ${large ? 'large': ''}`")
         slot
         transition-group.ripples(name="grow" tag="div" )
             span.ripple(v-for="ripple in ripples" :key="ripple.id" :style="ripple.style")
@@ -17,7 +17,8 @@
         props: {
             fill: Boolean,
             type: String,
-            onClick: Function
+            onClick: Function,
+            large: Boolean
         },
         computed: {
             style() {
@@ -29,6 +30,8 @@
             const height = this.$refs.container.offsetHeight
             this.rippleWidth = width > height ? width : height
             this.halfRippleWidth = this.rippleWidth / 2
+
+            window.addEventListener('pointerup', () => this.ripples = [])
         },
         methods: {
             addRipple(e) {
@@ -44,8 +47,7 @@
                     id: rippleId
                 })
             },
-            async purgeRipples(e) {
-                this.ripples = []
+            async clickHandle(e) {
                 this.onClick ? await this.onClick(e) : null
             }
         }
@@ -55,27 +57,31 @@
 <style lang="scss" scoped>
     button {
         top: 0;
-        background: #0396ff;
-        padding: 12px 20px;
+        background: black;
+        padding: 7px 25px;
         line-height: 24px;
         color: #fff;
         position: relative;
         font-size: 16px;
-        font-weight: 500;
+        font-weight: bold;
         display: inline-block;
-        transition: all 0.15s ease;
+        transition: all 0.1s ease;
         cursor: pointer;
         overflow: hidden;
         border: none;
-        border-radius: 6px;
+        border-radius: $border-radius-md;
 
         &:hover {
-            transform: translateY(-2px);
+            transform: translateY(-1px);
         }
 
         &:active {
-            transform: translateY(1px);
+            transform: translateY(2px);
         }
+    }
+
+    .large {
+        padding: 12px 20px;
     }
 
     .primary {
@@ -92,6 +98,14 @@
         &:active {
             box-shadow: none;
         }
+    }
+
+    .secondary {
+        @include make-card();
+        padding: 7px;
+        border-radius: $border-radius-md;
+        color: theme-var(primary);
+        display:flex;
     }
 
     .ripple-outer {
@@ -133,17 +147,17 @@
 
     .grow-enter {
         transform: scale(0);
-        opacity: 0.2;
+        opacity: 0.1;
     }
 
     .grow-enter-to {
         transform: scale(4);
-        opacity: 0.2;
+        opacity: 0.1;
     }
 
     .grow-leave {
         transform: scale(4);
-        opacity: 0.2;
+        opacity: 0.1;
     }
 
     .grow-leave-to {

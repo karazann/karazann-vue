@@ -13,9 +13,9 @@
             v-input(autocomplete="email" type="email" placeholder="Email" v-model="email")
             v-input(autocomplete="new-password" type="password" placeholder="Password" v-model="password")
             p.warning By clicking the "Sign Up" button below you agree to the Terms and Conditions
-            v-button(fill) Sign Up
+            v-button(fill large) Sign Up
             p.separator or
-            v-button(type="google" fill) Google
+            v-button(type="google" fill large) Google
 </template>
 
 <script lang="ts">
@@ -88,7 +88,7 @@
             line-height: 30px;
 
             .bold {
-                color:  -var(primary);
+                color: -var(primary);
                 font-weight: bold;
             }
         }

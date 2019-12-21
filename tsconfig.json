@@ -16,7 +16,8 @@
             "@nuxt/types",
             "@nuxtjs/axios",
             "node",
-            "jest"
+            "jest",
+            "@types/feather-icons"
         ],
         "paths": {
             "@/*": [

@@ -10,9 +10,9 @@
             form(@submit.prevent="onSubmit")
                 v-input(autocomplete="email" placeholder="Username or email" type="text" @input="clear('identifier')" v-model="user.identifier" name="identifier" :error="getError('identifier')")
                 v-input(autocomplete="password" placeholder="Password" type="text" @input="clear('password')" v-model="user.password" name="password" :error="getError('password')")
-                v-button(fill type="submit") Sign in
+                v-button(fill type="submit" large) Sign in
             p.separator or
-            v-button(fill type="google") Google
+            v-button(fill type="google" large) Google
 </template>
 
 <script lang="ts">

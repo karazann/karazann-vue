@@ -1,0 +1,54 @@
+<template lang="pug">
+    .add-story
+        .input type
+        .controls
+            .elements
+                v-button.secondary(v-html="iconImage")
+                v-button.secondary(v-html="iconLink")
+            .add-button
+                v-button.primary Post
+</template>
+
+<script lang="ts">
+    import Vue, { PropType } from 'vue'
+    import feather from 'feather-icons'
+
+    export default Vue.extend({
+        computed: {
+            iconImage(): string {
+                return feather.icons['image'].toSvg()
+            },
+            iconLink(): string {
+                return feather.icons['link'].toSvg()
+            }
+        }
+    })
+</script>
+
+<style lang="scss" scoped>
+    .add-story {
+        @include make-card;
+        padding: 20px;
+
+        .input {
+            height: 80px;
+            @include make-card;
+            border-radius: $border-radius-md;
+            padding: 10px;
+        }
+
+        .controls {
+            margin-top: 15px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .elements {
+            display: flex;
+
+            & > button {
+                margin-right: 10px;
+            }
+        }
+    }
+</style>

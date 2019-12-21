@@ -1,13 +1,17 @@
 import 'reflect-metadata'
+import 'css-vars-ponyfill'
+
 import Vue from 'vue'
 import VueCompositionApi from '@vue/composition-api'
 
 import Header from '~/components/header/Header.vue'
 import Input from '~/components/shared/Input.vue'
 import Button from '~/components/shared/Button.vue'
+import Tag from '~/components/shared/Tag.vue'
 import Brand from '~/components/shared/Brand.vue'
 import TitleBar from '~/components/shared/TitleBar.vue'
 
+Vue.config.productionTip = true
 Vue.use(VueCompositionApi)
 
 Vue.directive('scroll', {
@@ -25,4 +29,5 @@ Vue.component('v-header', Header)
 Vue.component('v-brand', Brand)
 Vue.component('v-input', Input)
 Vue.component('v-button', Button)
+Vue.component('v-tag', Tag)
 Vue.component('v-title', TitleBar)

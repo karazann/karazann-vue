@@ -6,23 +6,23 @@
     header(:class="{'shadow': !top || shadow}")
         .container
             .row.inner
-                v-brand
-                .links
-                    nav(v-if='!signedIn')
-                        .horizontal-list
-                            +menu-item('/flow', 'Flows')
-                            +menu-item('/blog', 'Blog')
-                            +menu-item('/faq', 'FAQ')
-                            +menu-item('/roadmap', 'Roadmap')
-                            +menu-item('/auth/signin', 'Sign in')
-                            +menu-item('/auth/signup', 'Sign up')(class='btn')
-                    nav(v-if='signedIn')
-                        .horizontal-list
-                            +menu-item('/', 'Hello')
-                            +menu-item('/', 'Test')
-                        .horizontal-list
-                            li
-                                profile-menu(:user='user')
+                .brand
+                    v-brand
+                    v-tag.tag BETA
+                nav(v-if='!signedIn')
+                    .horizontal-list
+                        +menu-item('/feed', 'Feed')
+                        +menu-item('/profile/me', 'Me')
+                        +menu-item('/boards/123', 'Roadmap')
+                        +menu-item('/auth/signin', 'Sign in')
+                        +menu-item('/auth/signup', 'Sign up')(class='btn')
+                nav(v-if='signedIn')
+                    .horizontal-list
+                        +menu-item('/', 'Hello')
+                        +menu-item('/', 'Test')
+                    .horizontal-list
+                        li
+                            profile-menu(:user='user')
 </template>
 
 <script lang="ts">
@@ -57,16 +57,23 @@
         transition: all 0.4s ease;
     }
 
+    .brand {
+        display: flex;
+        align-items: center;
+
+        .tag {
+            margin-left: 8px;
+        }
+    }
+
     .shadow {
         box-shadow: $shadow-sm;
     }
 
     .inner {
         @include make-col-ready;
-        @include make-col(12);
-        display: flex;
+        @include make-col(24);
         justify-content: space-between;
-        align-items: center;
     }
 
     .horizontal-list {
@@ -74,7 +81,7 @@
         list-style: none;
     }
 
-    .links {
+    nav {
         display: none;
         position: relative;
 

@@ -7,6 +7,7 @@
 <style lang="scss" scoped>
     .brand {
         display: flex;
+        align-items: center;
         height: 35px;
         font-size: 15px;
         width: 142px;
@@ -22,9 +23,7 @@
 
         p {
             color: theme-var(primary-text);
-            margin-left: 8px;
-            margin-top: 0;
-            margin-bottom: 24px;
+            margin-left: 10px;
             font-family: 'Pouttu';
             font-size: 15px;
             font-weight: 500;

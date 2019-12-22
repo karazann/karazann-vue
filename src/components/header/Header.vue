@@ -9,24 +9,24 @@
                 .brand
                     v-brand
                     v-tag.tag BETA
-                nav(v-if='!signedIn')
+                nav(v-if='!loggedIn')
                     .horizontal-list
-                        +menu-item('/feed', 'Feed')
-                        +menu-item('/profile/me', 'Me')
                         +menu-item('/boards/123', 'Roadmap')
                         +menu-item('/auth/signin', 'Sign in')
                         +menu-item('/auth/signup', 'Sign up')(class='btn')
-                nav(v-if='signedIn')
+                nav(v-if='loggedIn')
                     .horizontal-list
-                        +menu-item('/', 'Hello')
-                        +menu-item('/', 'Test')
+                        +menu-item('/feed', 'Feed')
+                        li
+                            n-link(:to="`/profile/${currentUser.userId}`") Me
                     .horizontal-list
                         li
-                            profile-menu(:user='user')
+                            //profile-menu(:user='user')
 </template>
 
 <script lang="ts">
     import Vue from 'vue'
+    import { mapState, Store } from 'vuex'
     import ProfileMenu from './ProfileMenu.vue'
 
     export default Vue.extend({
@@ -36,8 +36,16 @@
         },
         props: {
             top: Boolean,
-            signedIn: Boolean,
             shadow: Boolean
+        },
+        methods: {
+            log(d: any) {
+                console.log(d)
+            }
+        },
+        computed: {
+            ...mapState('user', ['loggedIn']),
+            ...mapState('user', ['currentUser'])
         }
     })
 </script>
@@ -118,65 +126,3 @@
         }
     }
 </style>
-
-/*
-header
-        top: 0
-        display: flex
-        padding: 20px 0
-        justify-content: space-between
-        background: #fff
-        position: fixed
-        width: 100%
-        z-index: 1000
-        transition: all 0.4s ease
-
-    .header-wrapper
-        @include create-container
-        .header
-            height: 38px
-            display: flex
-            justify-content: space-between
-            align-items: center
-            grid-area: container
-
-    .shadow
-        box-shadow: $shadow-sm
-
-
-    .horizontal-list
-        display: flex
-        list-style: none
-
-    .links
-        display: none
-        position: relative
-
-        @include md
-            // Larger than md: 768px,
-            display: flex
-
-        a
-            padding: 9px 17px 9px 17px
-            margin: 0 0 0 5px
-            text-decoration: none
-            font-size: 15px
-            font-weight: bold
-            color: $grey-color
-            display: block
-            transition: all .1s ease-in
-
-            &.btn
-                background: $primary-color
-                border-radius: $radius-md
-                color: white
-                box-shadow: $primary-shadow
-                &:hover
-                    box-shadow: none
-                    transform: translateY(1px)
-                    color: white
-
-            &:hover
-                color: $primary-color
-
-*/

@@ -1,9 +1,7 @@
 // tslint:disable: no-shadowed-variable
-
-import axios from 'axios'
-import * as Api from '~/api'
+import jwtDecode from 'jwt-decode'
 import { ActionContext, MutationTree } from 'vuex/types/index'
-import { APIErrorResponse, APIError, ISignInUserRequest, ICurrentUser } from '@bit/szkabaroli.karazann-shared.interfaces'
+import { ISignInUserRequest, ICurrentUser } from '@bit/szkabaroli.karazann-shared.interfaces'
 
 interface UserState {
     currentUser: ICurrentUser | undefined
@@ -21,36 +19,17 @@ export const mutations: MutationTree<UserState> = {
         state.loggedIn = true
         state.currentUser = user
     },
-    REMOVE_CURRENT_USER(state: UserState) {
+    LOGOUT_USER(state: UserState) {
         state.currentUser = undefined
         state.loggedIn = false
     }
 }
 
 export const actions = {
-    async signInInternal({ dispatch, commit }: ActionContext<UserState, any>, req: ISignInUserRequest) {
-        try {
-            const { data } = await Api.signInInternal(req)
-            localStorage.setItem('jwt_token', data.token)
-            axios.defaults.headers.common = { Authorization: `Bearer ${data.token}` }
-            commit('SET_CURRENT_USER', data)
-        } catch (error) {
-            if (!error.response) {
-                dispatch('notification/notify', { key: 'networkError' }, { root: true })
-            } else {
-                const { response } = error
-                const apiError: APIErrorResponse = response.data
-                console.log(response.data)
-
-                if (apiError.errors.length === 1) {
-                    if (apiError.errors[0].name !== 'ValidationError') {
-                        dispatch('notification/notify', { key: 'apiError', overrideMsg: apiError.errors[0].message }, { root: true })
-                        console.log('after api error')
-                    }
-                }
-
-                throw error
-            }
-        }
+    async signInInternal({ commit }: ActionContext<UserState, any>, req: ISignInUserRequest) {
+        const { data } = await this.$axios.post<ICurrentUser>('/user/signin', req)
+        localStorage.setItem('jwt_token', data.token)
+        this.$router.push({ path: '/profile/me' })
+        commit('SET_CURRENT_USER', jwtDecode(data.token))
     }
 }

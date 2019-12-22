@@ -24,6 +24,7 @@ export const formError = Vue.extend({
             errors.forEach((error: ValidationError) => {
                 this.addError(error)
             })
+            this.$forceUpdate()
         },
         addError(error: ValidationError) {
             if (this.errors[error.property]) {
@@ -32,6 +33,7 @@ export const formError = Vue.extend({
                 this.errors[error.property] = []
                 this.errors[error.property].push(error)
             }
+            this.$forceUpdate()
         },
         getError(field: string) {
             return this.errors[field] ? this.errors[field][0].message : undefined

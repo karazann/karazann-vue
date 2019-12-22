@@ -5,33 +5,66 @@
                 profile-image
             .title
                 p 
-                    strong {{ story.author }}
-                    |  posted a {{ story.type }}.
-                v-tag.type-tag(:color="mapType(story.type)") {{ story.type }}
+                    strong {{ story.displayName }}
+                    |  posted a {{ story.storyType }}.
+                v-tag.type-tag(:color="mapType(story.storyType)") {{ story.storyType }}
         section
-            slot
+            p.content {{ story.content }}
+            story-card-attachment(v-for="(attachment, index) in story.attachments" :attachment="attachment" :key="index")
         footer
             div.test(v-html="hearthIcon")
             div(v-html="commentsIcon")
-            div(v-html="shareIcon")
 </template>
 
 <script lang="ts">
     import Vue, { PropType } from 'vue'
     import ProfileImage from '~/components/profile/ProfileImage.vue'
+    import StoryCardAttachment from './StoryCardAttachment.vue'
     import feather from 'feather-icons'
 
     interface Types {
         [key: string]: string
     }
 
+    enum StoryType {
+        Job = 'job',
+        Story = 'story',
+        Document = 'document'
+    }
+
+    export interface IStoryImage {
+        url: string
+    }
+
+    export enum StoryAttachmentType {
+        Link = 0,
+        Image = 1,
+        Document = 2,
+        Job = 3
+    }
+
+    export interface IStoryAttachment {
+        tp: StoryAttachmentType
+        tl: string
+        url: string
+        img?: IStoryImage
+    }
+
+    export interface IStory {
+        storyType: StoryType
+        displayName: string
+        content: string
+        attachments: IStoryAttachment[]
+    }
+
     export default Vue.extend({
         components: {
-            ProfileImage
+            ProfileImage,
+            StoryCardAttachment
         },
         props: {
             story: {
-                type: Object as PropType<any>
+                type: Object as PropType<IStory>
             }
         },
         computed: {
@@ -40,9 +73,6 @@
             },
             commentsIcon() {
                 return feather.icons['message-square'].toSvg({ color: 'var(--theme-color-blue)' })
-            },
-            shareIcon() {
-                return feather.icons['share-2'].toSvg({ color: 'var(--theme-color-blue)' })
             }
         },
         methods: {
@@ -89,6 +119,11 @@
         section {
             border-bottom: 1px solid theme-var(secondary-2);
             padding: 20px;
+
+            .content {
+                color: theme-var(primary-text);
+                padding-bottom: 20px;
+            }
         }
 
         footer {

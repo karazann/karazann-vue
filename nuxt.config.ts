@@ -33,7 +33,7 @@ export default {
         ]
     },
     axios: {
-        prefix: '/api',
+        prefix: '/',
         host: 'localhost',
         port: 8080,
         progress: false,
@@ -45,7 +45,7 @@ export default {
         offlineStrategy: 'NetworkFirst'
     },
     css: ['@assets/reset.scss', '@assets/themes.scss', '@assets/global.scss'],
-    plugins: ['~/plugins/components.ts'],
+    plugins: ['~/plugins/components.ts', '~/plugins/axios', '~/plugins/initStore'],
     styleResources: {
         scss: ['@assets/grid.scss', '@assets/_variables.scss', '@assets/_mixins.scss']
     },

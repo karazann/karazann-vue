@@ -1,6 +1,6 @@
 import { APIErrorResponse } from '@bit/szkabaroli.karazann-shared.interfaces'
 
-export default ({ store, app: { $axios } }: any) => {
+export default ({ store, app: { $axios }, redirect }: any) => {
     $axios.interceptors.request.use(
         (config: any) => {
             const token = localStorage.getItem('jwt_token')
@@ -24,13 +24,16 @@ export default ({ store, app: { $axios } }: any) => {
 
             const { response } = error
             const apiError: APIErrorResponse = response.data
-
+            
+            
+            
             if (apiError.errors.length === 1) {
-                console.log(apiError.errors[0])
-                if (apiError.errors[0].name !== 'ValidationError') {
+                if (apiError.errors[0].name !== 'ValidationError' && apiError.errors[0].name !== 'NotFoundError') {
                     store.dispatch('notification/notify', { key: 'apiError', overrideMsg: apiError.errors[0].message }, { root: true })
                 }
-            } else return Promise.reject(error)
+            }
+            
+            return Promise.reject(error)
         }
     )
 }

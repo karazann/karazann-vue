@@ -13,7 +13,7 @@
             story-card-attachment(v-for="(attachment, index) in story.attachments" :attachment="attachment" :key="index")
         footer
             div.test(v-html="hearthIcon")
-            div(v-html="commentsIcon")
+            div.test2(v-html="commentsIcon")
 </template>
 
 <script lang="ts">
@@ -157,8 +157,25 @@
         }
     }
 
+    @keyframes rot {
+        0% {
+            transform: scale(1);
+        }
+        50% {
+            transform: scale(1.25);
+        }
+        100% {
+            transform: scale(1);
+        }
+    }
+
     .test:hover {
         cursor: pointer;
         animation: heartbeat 1s infinite;
+    }
+
+    .test2:hover {
+        cursor: pointer;
+        animation: rot .5s infinite;
     }
 </style>

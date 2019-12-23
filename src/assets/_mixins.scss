@@ -4,7 +4,7 @@
     background: theme-var(surface);
     border: 1px solid theme-var(secondary-2);
     border-radius: 12px;
-    box-shadow: $shadow-md;
+    box-shadow: $shadow-lg;
 }
 
 @mixin create-tag {

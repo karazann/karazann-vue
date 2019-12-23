@@ -74,7 +74,7 @@
         opacity: 1;
         border-radius: 6px;
         border: 1px solid theme-var(secondary-2);
-        box-shadow: 0px 10px 20px rgba(5, 29, 64, 0.05);
+        box-shadow: $shadow-md;
 
         & + span {
             position: absolute;
@@ -99,6 +99,13 @@
                 border-radius: 15px;
                 background: rgba(159, 148, 240, 0.2);
             }
+        }
+
+        &:-webkit-autofill,
+        &:-webkit-autofill:hover,
+        &:-webkit-autofill:focus,
+        &:-webkit-autofill:active {
+            transition: background-color 5000s ease-in-out 0s, color 5000s ease-in-out 0s;
         }
 
         &.error {

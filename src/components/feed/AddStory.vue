@@ -1,5 +1,5 @@
 <template lang="pug">
-    form.add-story(@submit.prevent="addStory")
+    form.add-story(@submit.prevent="postStory")
         v-input(type="textarea" placeholder="Type..."  v-model="story.content") type
         .controls
             .elements
@@ -36,9 +36,12 @@
             }
         },
         methods: {
-            addStory() {
-                this.$store.dispatch('story/postStory', this.story)
-                console.log('add')
+            postStory() {
+                try {
+                    this.$store.dispatch('story/postStory', this.story)
+                } catch(e) {
+                    console.error(e)
+                }
             }
         }
     })

@@ -53,7 +53,7 @@ $theme-map-defaults: (
     $--theme-color-blue: #0396ff,
     $--theme-color-blue-2: #0396ff20,
     $--theme-color-purple: #9b51e0,
-    $--theme-color-purple-2: #9b51e020
+    $--theme-color-purple-2: #9b51e030
 );
 
 // Default theme
@@ -91,6 +91,7 @@ $primary-shadow-sm: 0px 10px 10px theme-var(primary-3);
 $primary-shadow-md: 0px 10px 20px theme-var(primary-2);
 $primary-shadow-lg: 0px 10px 30px theme-var(primary-1);
 
-$shadow-sm: 0px 10px 50px rgba(0, 0, 0, 0.08);
-$shadow-md: 0px 10px 60px rgba(0, 0, 0, 0.01);
-$shadow-lg: 0px 10px 60px rgba(0, 0, 0, 0.01);
+$shadow-sm: 0px 10px 10px rgba(5,29,64, 0.08);
+$shadow-md: 0px 10px 15px rgba(5,29,64, 0.04);
+$shadow-lg: 0px 10px 30px rgba(5,29,64, 0.01);
+

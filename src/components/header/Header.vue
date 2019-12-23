@@ -18,7 +18,9 @@
                     .horizontal-list
                         +menu-item('/feed', 'Feed')
                         li
-                            n-link(:to="`/profile/${currentUser.userId}`") Me
+                            n-link(:to="`/profile/@${currentUser.username}`") Me
+                        li
+                            a.btn(@click="logout") Logout
                     .horizontal-list
                         li
                             //profile-menu(:user='user')
@@ -38,14 +40,14 @@
             top: Boolean,
             shadow: Boolean
         },
-        methods: {
-            log(d: any) {
-                console.log(d)
-            }
-        },
         computed: {
             ...mapState('user', ['loggedIn']),
             ...mapState('user', ['currentUser'])
+        },
+        methods: {
+            logout() {
+                this.$store.dispatch('user/logout')
+            }
         }
     })
 </script>
@@ -75,7 +77,7 @@
     }
 
     .shadow {
-        box-shadow: $shadow-sm;
+        box-shadow: $shadow-lg;
     }
 
     .inner {

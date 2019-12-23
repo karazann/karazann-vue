@@ -1,17 +1,17 @@
 <template lang="pug">
     .wrapper
         header
-            img(src="https://images.unsplash.com/photo-1538291323976-37dcaafccb12?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80")
+            img(:src="profile.coverImageUrl ? profile.coverImageUrl : '/no-image.jpg'")
             .profile
                 .profile-image
-                    profile-image(image="test" :size="144")
+                    profile-image(:avatarImage="profile.avatarImageUrl" :size="144")
                 .profile-details
                     .name
-                        h2 Jack H Bryan
+                        h2 {{`${profile.firstName} ${profile.lastName}`}}
                         v-tag.tag(color="green") Freelancer
-                    p @jackbryan
+                    p @{{profile.username}}
                 .follow
-                    v-button.primary(color="red") Follow
+                    v-button.primary(v-if="!isMe") Follow
             nav 
                 a(href="#") Feed
                 a(href="#") Skills
@@ -20,11 +20,18 @@
 </template>
 
 <script lang="ts">
+    // https://images.unsplash.com/photo-1538291323976-37dcaafccb12?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80
     import Vue from 'vue'
     import ProfileImage from './ProfileImage.vue'
+    import { PropType } from '@vue/composition-api'
+    import { IUser } from '@bit/szkabaroli.karazann-shared.interfaces'
 
     export default Vue.extend({
         name: 'profile-header',
+        props: {
+            profile: Object as PropType<IUser>,
+            isMe: Boolean as PropType<boolean>
+        },
         components: {
             ProfileImage
         }
@@ -68,7 +75,6 @@
                     display: flex;
                     align-items: center;
                     h1 {
-                        
                         line-height: 38px;
                     }
                     .tag {

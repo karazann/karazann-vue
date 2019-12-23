@@ -32,11 +32,17 @@ export default {
             }
         ]
     },
+    loading: {
+        color: '#0396ff',
+        throttle: 500,
+        height: '3px',
+        failedColor: '#eb5757'
+    },
     axios: {
         prefix: '/',
         host: 'localhost',
         port: 8080,
-        progress: false,
+        progress: true,
         credentials: false,
         debug: true
     },

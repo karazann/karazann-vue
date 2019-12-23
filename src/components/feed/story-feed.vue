@@ -5,7 +5,7 @@
 
 <script lang="ts">
     import Vue, { PropType } from 'vue'
-    import StoryCard from './StoryCard.vue'
+    import StoryCard from './story-card.vue'
 
 
     interface IStory {

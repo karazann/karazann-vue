@@ -29,7 +29,7 @@
 <script lang="ts">
     import Vue from 'vue'
     import { mapState, Store } from 'vuex'
-    import ProfileMenu from './ProfileMenu.vue'
+    import ProfileMenu from './profile-menu.vue'
 
     export default Vue.extend({
         name: 'v-header',

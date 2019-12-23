@@ -18,8 +18,8 @@
 
 <script lang="ts">
     import Vue, { PropType } from 'vue'
-    import ProfileImage from '~/components/profile/ProfileImage.vue'
-    import StoryCardAttachment from './StoryCardAttachment.vue'
+    import ProfileImage from '~/components/profile/profile-image.vue'
+    import StoryCardAttachment from './story-card-attachment.vue'
     import feather from 'feather-icons'
 
     interface Types {
@@ -176,6 +176,6 @@
 
     .test2:hover {
         cursor: pointer;
-        animation: rot .5s infinite;
+        animation: rot 0.5s infinite;
     }
 </style>

@@ -7,7 +7,7 @@
 
 <script lang="ts">
     import Vue from 'vue'
-    import NotificationsContainer from '~/components/notifications/NotificationsContainer.vue'
+    import NotificationsContainer from '~/components/notifications/notifications-container.vue'
 
     export default Vue.extend({
         name: 'default-layout',

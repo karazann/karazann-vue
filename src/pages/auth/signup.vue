@@ -19,7 +19,6 @@
 </template>
 
 <script lang="ts">
-    import AuthPanel from '@/components/auth/AuthPanel.vue'
     import { mapState } from 'vuex'
 
     export default {

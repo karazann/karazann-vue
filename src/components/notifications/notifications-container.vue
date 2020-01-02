@@ -1,10 +1,10 @@
 <template lang="pug">
-    .notification-container
+    .notification-container(:style="{ top: `${top}px`}")
         notification(v-for="notification in notifications" :key="notification.key" :notification="notification")
 </template>
 
 <script lang="ts">
-    import Vue from 'vue'
+    import Vue, { PropType } from 'vue'
     import Notification from './Notification.vue'
 
     export default Vue.extend({
@@ -12,8 +12,11 @@
         components: {
             Notification
         },
+        props: {
+            top: String as PropType<string>
+        },
         computed: {
-            notifications() {
+            notifications(): any {
                 return this.$store.state.notification.notifications
             }
         }
@@ -23,7 +26,6 @@
 <style lang="sass" scoped>
     .notification-container
         pointer-events: none
-        top: 20px
         right: 0
         bottom: auto
         left: 0

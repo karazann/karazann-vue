@@ -2,7 +2,6 @@ import 'reflect-metadata'
 import 'css-vars-ponyfill'
 
 import Vue from 'vue'
-import linkify from 'vue-linkify'
 import VueCompositionApi from '@vue/composition-api'
 
 import Header from '~/components/header/header.vue'
@@ -27,7 +26,6 @@ Vue.directive('scroll', {
 })
 
  
-Vue.directive('linkified', linkify)
 Vue.component('v-header', Header)
 Vue.component('v-brand', Brand)
 Vue.component('v-input', Input)

@@ -1,5 +1,5 @@
 <template lang="pug">
-    a.story-card-attachment(:href="attachment.url" target="_blank")
+    a.link-attachment(:href="attachment.url" target="_blank")
         section
             img(v-if="attachment.img" :src="attachment.img")
             .content
@@ -28,7 +28,7 @@
 </script>
 
 <style lang="scss" scoped>
-    .story-card-attachment {
+    .link-attachment {
         section {
             @include make-card;
             margin-top: 15px;

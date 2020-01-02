@@ -18,12 +18,9 @@
                     .horizontal-list
                         +menu-item('/feed', 'Feed')
                         li
-                            n-link(:to="`/profile/@${currentUser.username}`") Me
+                            n-link(:to="`/profile/@${currentUser.username}/feed`") Me
                         li
-                            a.btn(@click="logout") Logout
-                    .horizontal-list
-                        li
-                            //profile-menu(:user='user')
+                            v-button.primary(@onClick="logout") Logout
 </template>
 
 <script lang="ts">

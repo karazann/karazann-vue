@@ -1,5 +1,5 @@
 <template lang="pug">
-    .node-editor()
+    .node-editor
         svg(id="svg" ref="view" v-drag="dragOptions" :style="{ height: height-78 + 'px', width: width-17 + 'px' }")
             filter#filter-black(x='-20%' y='-20%' width='140%' height='140%' filterunits='objectBoundingBox', primitiveunits='userSpaceOnUse' color-interpolation-filters='sRGB')
                 feDropShadow(stdDeviation='6' in='SourceGraphic' dx='0' dy='7' flood-color='#051d4008' flood-opacity='1' x='-10%' y='-10%' width='130%' height='130%' result='dropShadow')
@@ -8,9 +8,11 @@
             area-view(:editor="editor" :svgSize="[width, height]" ref="area")
                 connection-view(v-for="(connection, i) in getConnections" :editorConnection="connection" :key="i")
                 node-view(v-for="(node, i) in getNodes" :editorNode="node" :key="node.index")
-        v-toolbox
+        
+        v-toolbox(title="Toolbox")
             div.tool-outer(v-for="(builder, i) in getBuilders" :key="builder.name" )
                 .tool(v-drag="{ onStart, onDrag, onEnd }" :data-id="builder.name") {{builder.name}}
+        
         .tool.ghost(v-if="ghost" :style="{ top: ghost.pos[1] + 'px', left: ghost.pos[0]+ 'px', transform: `scale(${ghost.scale})` }") {{ ghost.builder }}
 </template>
 

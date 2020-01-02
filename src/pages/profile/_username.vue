@@ -1,15 +1,8 @@
 <template lang="pug">
     main.container
         .row.spacing
-            profile-header(:profile="profile" :isMe="isMe")
-        .row
-            aside.side-wrapper
-                skills-panel(:skills="skills")
-            .center-wrapper
-                post-story
-                story-feed(:stories="$store.state.story.stories")
-            aside.side-wrapper
-                p side
+            profile-header.header-spacing(:profile="profile" :isMe="isMe")
+        nuxt-child(keep-alive :profile="profile" :isMe="isMe")
 </template>
 
 <script lang="ts">
@@ -17,59 +10,31 @@
     import { mapState } from 'vuex'
     import { IUser } from '@bit/szkabaroli.karazann-shared.interfaces'
     import ProfileHeader from '~/components/profile/profile-header.vue'
-    import SkillsPanel from '~/components/profile/skills-panel.vue'
-    import PostStory from '~/components/feed/post-story.vue'
-    import StoryFeed from '~/components/feed/story-feed.vue'
 
     interface VueData {
-        profile: IUser | undefined,
-        skills: any
+        profile: IUser | undefined
     }
 
     export default Vue.extend({
         middleware: 'auth',
         components: {
-            ProfileHeader,
-            SkillsPanel,
-            PostStory,
-            StoryFeed
+            ProfileHeader
         },
         async asyncData ({ store, params, $axios, app, error }) {
             try {
-                const profile = await $axios.$get<IUser>(`user/${params.username}`)
-                const isMe = profile.username === store.state.user.currentUser.username
-                await store.dispatch('story/getProfileFeed', { userId: profile._id })
+                const { payload } = await app.$api.getUser(params.username)
+                const isMe = payload.username === store.state.user.currentUser.username
                 return {
-                    profile,
+                    profile: payload,
                     isMe
                 }
             } catch(e) {
-
-                error({ statusCode: 404, message: 'Post not found' })
+                error({ statusCode: 404 })
             }
-
         },
         data(): VueData {
             return {
-                profile: undefined,
-                skills: [
-                    {
-                        text: 'React.js',
-                        color: 'blue'
-                    },
-                    {
-                        text: 'Node.js',
-                        color: 'orange'
-                    },
-                    {
-                        text: 'WebDevelopment',
-                        color: 'red'
-                    },
-                    {
-                        text: 'Test',
-                        color: 'green'
-                    }
-                ]
+                profile: undefined
             }
         },
         computed: {
@@ -82,19 +47,9 @@
     .spacing {
         padding-top: 80px;
     }
-
-    .center-wrapper {
-        @include make-col-ready;
-        @include make-col(12);
-        margin-top: 30px;
+    .header-spacing {
+        padding-bottom: 30px;
     }
-
-    .side-wrapper {
-        @include make-col-ready;
-        @include make-col(6);
-        margin-top: 30px;
-    }
-
     p {
         background: theme-var(color-red);
     }

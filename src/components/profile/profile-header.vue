@@ -13,10 +13,12 @@
                 .follow
                     v-button.primary(v-if="!isMe") Follow
             nav 
-                a(href="#") Feed
-                a(href="#") Skills
-                nuxt-link(to="/flow") Flows
-                a(href="#") Followers
+                n-link(:to="`/profile/@${profile.username}/feed`") Feed
+                n-link(to="/") Skills
+                n-link(to="/flow") Flows
+                n-link(to="/document") Docs
+                n-link(v-if="isMe" :to="`/profile/@${profile.username}/followings`") Followings
+                n-link(v-if="isMe" :to="`/profile/@${profile.username}/followers`") Followers
 </template>
 
 <script lang="ts">
@@ -52,12 +54,12 @@
             height: 210px;
             width: 100%;
             object-fit: cover;
-            border-top-left-radius: 12px;
-            border-top-right-radius: 12px;
+            border-top-left-radius: $border-radius-lg;
+            border-top-right-radius: $border-radius-lg;
         }
 
         .profile {
-            margin: 25px 30px;
+            margin: 15px 30px 30px 30px;
             display: flex;
             flex-direction: row;
             position: relative;
@@ -69,7 +71,8 @@
             }
 
             .profile-details {
-                margin-left: 146px + 30px;
+                margin-left: 146px + 10px;
+                padding-bottom: 15px;
 
                 .name {
                     display: flex;
@@ -94,12 +97,16 @@
 
         nav {
             padding: 25px 30px;
-            border-top: 1px solid theme-var(secondary-2);
+            border-top: $border;
 
             a {
                 font-weight: bold;
                 margin: 0 20px 0 0;
                 color: theme-var(secondary) !important;
+
+                &.active {
+                    color: theme-var(primary) !important;
+                }
 
                 &:hover {
                     color: theme-var(primary) !important;

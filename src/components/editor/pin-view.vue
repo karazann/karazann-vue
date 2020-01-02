@@ -84,9 +84,13 @@
         mounted() {
             let el: SVGCircleElement | SVGPathElement
 
-            if (this.$refs.circle) el = this.$refs.circle as SVGCircleElement
-            else el = this.$refs.arrow as SVGPathElement
-            ;((this as any).foo as WeakMap<SVGElement, EditorPin>).set(el, this.editorPin)
+            if (this.$refs.circle) {
+                el = this.$refs.circle as SVGCircleElement
+            } else {
+                el = this.$refs.arrow as SVGPathElement
+            }
+
+            ((this as any).foo as WeakMap<SVGElement, EditorPin>).set(el, this.editorPin)
 
             this.updatePinPosition()
             this.$root.$on('update-connections', () => {

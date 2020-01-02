@@ -8,7 +8,7 @@ export default {
     head: {
         titleTemplate: '%s - Karazann',
         htmlAttrs: {
-            theme: 'dark',
+            theme: 'dark'
         },
         meta: [
             {
@@ -32,6 +32,9 @@ export default {
             }
         ]
     },
+    router: {
+        linkExactActiveClass: 'active'
+    },
     loading: {
         color: '#0396ff',
         throttle: 500,
@@ -42,7 +45,7 @@ export default {
         prefix: '/',
         host: 'localhost',
         port: 8080,
-        progress: true,
+        progress: false,
         credentials: false,
         debug: true
     },
@@ -51,7 +54,7 @@ export default {
         offlineStrategy: 'NetworkFirst'
     },
     css: ['@assets/reset.scss', '@assets/themes.scss', '@assets/global.scss'],
-    plugins: ['~/plugins/components.ts', '~/plugins/axios', '~/plugins/initStore'],
+    plugins: ['~/plugins/components.ts', '~/plugins/axios', '~/plugins/init-store'],
     styleResources: {
         scss: ['@assets/grid.scss', '@assets/_variables.scss', '@assets/_mixins.scss']
     },

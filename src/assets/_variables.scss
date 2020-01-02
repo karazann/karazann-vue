@@ -41,7 +41,7 @@ $theme-map-defaults: (
     $--theme-primary-3: #0396ff30,
     $--theme-secondary: #8093ad,
     $--theme-secondary-1: #8093ad10,
-    $--theme-secondary-2: #8093ad20,
+    $--theme-secondary-2: #8093ad30,
     $--theme-color-red: #eb5757,
     $--theme-color-red-2: #eb575720,
     $--theme-color-orange: #f2994a,
@@ -64,7 +64,7 @@ $theme-map-light: map-merge(
         $--theme-background: #f5f7fb,
         $--theme-primary-text: #233458,
         $--theme-secondary-text: #8093ad,
-        $--theme-color-green-2: #27ae6030,
+        $--theme-color-green-2: #27ae6030
     )
 );
 
@@ -81,9 +81,9 @@ $theme-map-dark: map-merge(
 
 // Borders
 
-$border-radius-lg: 12px;
-$border-radius-md: 6px;
-$border-radius-sm: 3px;
+$border-radius-lg: 8px; //12
+$border-radius-md: 4px; //6
+$border-radius-sm: 2px; //3
 
 // Shadows
 
@@ -91,7 +91,8 @@ $primary-shadow-sm: 0px 10px 10px theme-var(primary-3);
 $primary-shadow-md: 0px 10px 20px theme-var(primary-2);
 $primary-shadow-lg: 0px 10px 30px theme-var(primary-1);
 
-$shadow-sm: 0px 10px 10px rgba(5,29,64, 0.08);
-$shadow-md: 0px 10px 15px rgba(5,29,64, 0.04);
-$shadow-lg: 0px 10px 30px rgba(5,29,64, 0.01);
+$border: 1px solid var(--theme-secondary-2);
 
+$shadow-sm: 0px 10px 10px rgba(5, 29, 64, 0.08);
+$shadow-md: 0px 10px 15px rgba(5, 29, 64, 0.04);
+$shadow-lg: 0px 10px 30px rgba(5, 29, 64, 0.01);

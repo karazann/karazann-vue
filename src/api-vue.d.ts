@@ -1,0 +1,1 @@
+import { apiFactory } from './plugins/axios'

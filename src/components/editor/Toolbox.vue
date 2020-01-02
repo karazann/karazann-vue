@@ -2,14 +2,14 @@
     .toolbox(:style="{ top: `${y}px`, left: `${x}px` }")
         .header
             .handle(v-drag="{ onStart, onDrag }")
-            h2.title Toolbox
+            h2.title {{ title }}
         div.tools
             slot
                 h4 fdsa
 </template>
 
 <script lang="ts">
-    import Vue from 'vue'
+    import Vue, { PropType } from 'vue'
     import { dragDirective } from '~/helpers/drag'
 
     interface VueData {
@@ -19,15 +19,21 @@
     }
 
     export default Vue.extend({
+        directives: {
+            drag: dragDirective()
+        },
+        props: {
+            title: {
+                type: String as PropType<string>,
+                default: 'Toolbox'
+            }
+        },
         data(): VueData {
             return {
                 x: 60,
                 y: 160,
                 startPosition: [0, 0]
             }
-        },
-        directives: {
-            drag: dragDirective()
         },
         methods: {
             onStart(e: PointerEvent) {
@@ -39,7 +45,7 @@
                 let y = this.startPosition[1] + dy
 
                 const minX = 0
-                const maxX = window.window.innerWidth - 270 - 17
+                const maxX = window.window.innerWidth - 270 - 28
 
                 const minY = 78
                 const maxY = window.window.innerHeight - 600
@@ -57,7 +63,7 @@
 <style lang="scss" scoped>
     .toolbox {
         @include make-card;
-        position: absolute;
+        position: fixed;
         height: 600px;
         width: 280px;
 

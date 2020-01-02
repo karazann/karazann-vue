@@ -1,6 +1,6 @@
 <template lang="pug">
     div(v-scroll="onScroll")
-        notifications-container
+        notifications-container(top="100")
         v-header(:signedIn="false" :top="top")
         nuxt.top
 </template>

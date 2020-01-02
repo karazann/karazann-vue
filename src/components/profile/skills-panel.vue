@@ -41,6 +41,8 @@
     .skills-panel {
         @include make-card;
         padding: 20px 25px 0 25px;
+        position: sticky;
+        top: 108px;
 
         .skill-tags {
             padding: 20px 0;

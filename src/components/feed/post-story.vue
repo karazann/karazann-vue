@@ -37,11 +37,7 @@
         },
         methods: {
             postStory() {
-                try {
-                    this.$store.dispatch('story/postStory', this.story)
-                } catch(e) {
-                    console.error(e)
-                }
+                this.$store.dispatch('story/postStory', this.story)
             }
         }
     })
@@ -51,6 +47,7 @@
     .add-story {
         @include make-card;
         padding: 20px;
+        margin-bottom: 20px;
 
         .input {
             height: 80px;

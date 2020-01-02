@@ -1,5 +1,5 @@
 <template lang="pug">
-    button.ripple-outer(@mousedown="addRipple" @mouseup="clickHandle" ref="container" :style="style" :class="`${this.type} ${large ? 'large': ''}`")
+    button.ripple-outer(@mousedown="addRipple" @click.stop="clickHandle" ref="container" :style="style" :class="`${this.type} ${large ? 'large': ''}`")
         slot
         transition-group.ripples(name="grow" tag="div" )
             span.ripple(v-for="ripple in ripples" :key="ripple.id" :style="ripple.style")
@@ -48,7 +48,8 @@
                 })
             },
             async clickHandle(e) {
-                this.onClick ? await this.onClick(e) : null
+                e.stopPropagation()
+                this.$emit('onClick', e)
             }
         }
     }

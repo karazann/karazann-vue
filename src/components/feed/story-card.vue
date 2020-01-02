@@ -2,7 +2,7 @@
     article.story-card
         header 
             .image
-                profile-image
+                profile-image(:size="60")
             .title
                 p 
                     strong {{ story.displayName }}
@@ -10,16 +10,19 @@
                 v-tag.type-tag(:color="mapType(story.storyType)") {{ story.storyType }}
         section
             p.content {{ story.content }}
-            story-card-attachment(v-for="(attachment, index) in story.attachments" :attachment="attachment" :key="index")
+            .attachment(v-for="(attachment, index) in story.attachments" :key="index")
+                link-attachment(v-if="attachment.tp === 0" :attachment="attachment")
+                job-attachment(v-if="attachment.tp === 1" :attachment="attachment")
         footer
-            div.test(v-html="hearthIcon")
-            div.test2(v-html="commentsIcon")
+            div.test(:style="{ 'color': 'red' }" v-html="hearthIcon")
+            div.test2(:style="{ 'color': 'red' }" v-html="commentsIcon")
 </template>
 
 <script lang="ts">
     import Vue, { PropType } from 'vue'
     import ProfileImage from '~/components/profile/profile-image.vue'
-    import StoryCardAttachment from './story-card-attachment.vue'
+    import LinkAttachment from './story-card-attachments/link-attachment.vue'
+    import JobAttachment from './story-card-attachments/job-attachment.vue'
     import feather from 'feather-icons'
 
     interface Types {
@@ -60,7 +63,8 @@
     export default Vue.extend({
         components: {
             ProfileImage,
-            StoryCardAttachment
+            LinkAttachment,
+            JobAttachment
         },
         props: {
             story: {
@@ -68,18 +72,18 @@
             }
         },
         computed: {
-            hearthIcon() {
-                return feather.icons['heart'].toSvg({ color: 'var(--theme-color-blue)' })
+            hearthIcon(): string {
+                return feather.icons['heart'].toSvg({ color: `var(--theme-color-${this.mapType(this.story.storyType)})` })
             },
-            commentsIcon() {
-                return feather.icons['message-square'].toSvg({ color: 'var(--theme-color-blue)' })
+            commentsIcon(): string {
+                return feather.icons['message-square'].toSvg({ color: `var(--theme-color-${this.mapType(this.story.storyType)})` })
             }
         },
         methods: {
             mapType(type: string) {
                 const typeMap: Types = {
                     job: 'green',
-                    story: 'purple',
+                    story: 'blue',
                     document: 'orange'
                 }
                 return typeMap[type as any]
@@ -91,15 +95,15 @@
 <style lang="scss" scoped>
     .story-card {
         @include make-card;
-        margin-top: 20px;
+        margin-bottom: 15px;
 
         header {
-            padding: 20px;
-            border-bottom: 1px solid theme-var(secondary-2);
+            padding: 15px;
+            border-bottom: $border;
             display: flex;
 
             .title {
-                margin: 7px 15px;
+                margin: 0px 15px;
 
                 p {
                     color: theme-var(primary-text);
@@ -110,19 +114,18 @@
                 }
 
                 .type-tag {
-                    margin-top: 10px;
+                    margin-top: 6px;
                     text-transform: capitalize;
                 }
             }
         }
 
         section {
-            border-bottom: 1px solid theme-var(secondary-2);
+            border-bottom: $border;
             padding: 20px;
 
             .content {
                 color: theme-var(primary-text);
-                padding-bottom: 20px;
             }
         }
 

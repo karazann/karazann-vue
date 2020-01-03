@@ -5,14 +5,14 @@ steps:
 
     # Install deps
     - name: "gcr.io/cloud-builders/npm"
-      args: ["install", "-t"]
+      args: ["install"]
 
     - name: 'gcr.io/cloud-builders/gcloud'
       entrypoint: 'bash'
       args: [ '-c', 'ls -la']
 
     # Build nuxt project
-    - name: "gcr.io/cloud-builders/nodejs"
+    - name: "gcr.io/cloud-builders/npm"
       args: ["run", "build:gen"]
 
     # Deploy to Cloud Storage

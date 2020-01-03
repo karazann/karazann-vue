@@ -19,8 +19,8 @@
     import Vue from 'vue'
 
     import { mapState } from 'vuex'
-    import BlogTrending from '@/components/blog/BlogTrending.vue'
-    import BlogFeed from '@/components/blog/BlogFeed.vue'
+    import BlogTrending from '../../components/blog/BlogTrending.vue'
+    import BlogFeed from '../../components/blog/BlogFeed.vue'
 
     export default Vue.extend({
         name: 'blog-page',
@@ -28,7 +28,7 @@
             title: 'Blog'
         },
         components: {
-            BlogCarousel: () => import('@/components/blog/BlogCarousel.vue'),
+            BlogCarousel: () => import('../../components/blog/BlogCarousel.vue'),
             BlogTrending,
             BlogFeed
         },

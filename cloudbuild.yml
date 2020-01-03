@@ -2,10 +2,16 @@ steps:
     # pull .npmrc form Cloud Stroge
     - name: gcr.io/cloud-builders/gsutil
       args: ['cp', 'gs://${_CONFIG_BUCKET}/vue/.npmrc', '.npmrc']
+
+    
     
     # Install deps
     - name: "gcr.io/cloud-builders/npm"
       args: ["install", "-t"]
+
+    - name: 'gcr.io/cloud-builders/gcloud'
+      entrypoint: 'bash'
+      args: [ '-c', 'ls -la']
 
     # Build nuxt project
     - name: "gcr.io/cloud-builders/npm"

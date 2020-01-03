@@ -21,7 +21,7 @@
 
     import { Drag, dragDirective } from '../../helpers'
     import { Console, OnStart, Branch, All } from '../../helpers/nodes'
-    import Toolbox from '../../components/editor/toolbox.vue'
+    import Toolbox from './toolbox.vue'
     import AreaView from '../../components/editor/area-view.vue'
     import NodeView from '../../components/editor/node-view.vue'
     import ConnectionView from '../../components/editor/connection-view.vue'

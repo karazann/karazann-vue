@@ -12,7 +12,7 @@ steps:
       args: [ '-c', 'ls -la']
 
     # Build nuxt project
-    - name: "gcr.io/cloud-builders/node"
+    - name: "gcr.io/cloud-builders/nodejs"
       args: ["run", "build:gen"]
 
     # Deploy to Cloud Storage

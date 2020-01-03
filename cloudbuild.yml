@@ -1,4 +1,8 @@
 steps:
+    # pull .npmrc form Cloud Stroge
+    - name: gcr.io/cloud-builders/gsutil
+      args: ['cp', 'gs://${_CONFIG_BUCKET}/vue/.npmrc', '.npmrc']
+    
     # Install deps
     - name: "gcr.io/cloud-builders/npm"
       args: ["install", "-t"]

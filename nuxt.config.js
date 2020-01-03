@@ -4,9 +4,6 @@ export default {
     mode: 'spa',
     srcDir: 'src',
     dev: (process.env.NODE_ENV !== 'production'),
-    env: {
-        baseURL: process.env.BASE_URL
-    },
     modules: ['@nuxtjs/style-resources', '@nuxtjs/sitemap', '@nuxtjs/axios'],
     buildModules: ['@nuxt/typescript-build'],
     head: {
@@ -46,7 +43,7 @@ export default {
         failedColor: '#eb5757'
     },
     axios: {
-        baseURL: this.dev ? 'https://localhost:3000/' : this.env.baseURL,
+        baseURL: this.dev ? 'https://localhost:3000/' : 'https://api.karazann.com',
         prefix: '/',
         progress: false,
         credentials: false,
@@ -77,7 +74,7 @@ export default {
                 cacheGroups: {
                     vendor: {
                         test: /[\\/]node_modules[\\/]/,
-                        name(module: any) {
+                        name(module) {
                             // get the name. E.g. node_modules/packageName/not/this/part.js
                             // or node_modules/packageName
                             const packageName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)[1]
@@ -93,14 +90,14 @@ export default {
         devtool: true,
         extractCSS: true,
         filenames: {
-            app: (c: any) => (c.isDev ? '[name].js' : '[name].[chunkhash].js'),
-            chunk: (c: any) => (c.isDev ? '[name].js' : '[name].[chunkhash].js'),
-            css: (c: any) => (c.isDev ? '[name].css' : '[contenthash].css'),
-            img: (c: any) => (c.isDev ? '[path][name].[ext]' : 'img/[hash:7].[ext]'),
-            font: (c: any) => (c.isDev ? '[path][name].[ext]' : 'fonts/[hash:7].[ext]'),
-            video: (c: any) => (c.isDev ? '[path][name].[ext]' : 'videos/[hash:7].[ext]')
+            app: (c) => (c.isDev ? '[name].js' : '[name].[chunkhash].js'),
+            chunk: (c) => (c.isDev ? '[name].js' : '[name].[chunkhash].js'),
+            css: (c) => (c.isDev ? '[name].css' : '[contenthash].css'),
+            img: (c) => (c.isDev ? '[path][name].[ext]' : 'img/[hash:7].[ext]'),
+            font: (c) => (c.isDev ? '[path][name].[ext]' : 'fonts/[hash:7].[ext]'),
+            video: (c) => (c.isDev ? '[path][name].[ext]' : 'videos/[hash:7].[ext]')
         },
-        extend(this: any, config: any, ctx: any) {
+        extend(config, ctx) {
             if (ctx.isClient) config.devtool = '#source-map'
             const alias = (config.resolve.alias = config.resolve.alias || {})
             alias['@'] = path.join(this.buildContext.options.rootDir, 'src')

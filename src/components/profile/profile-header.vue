@@ -23,9 +23,8 @@
 
 <script lang="ts">
     // https://images.unsplash.com/photo-1538291323976-37dcaafccb12?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80
-    import Vue from 'vue'
+    import Vue, { PropType } from 'vue'
     import ProfileImage from './profile-image.vue'
-    import { PropType } from '@vue/composition-api'
     import { IUser } from '@bit/szkabaroli.karazann-shared.interfaces'
 
     export default Vue.extend({

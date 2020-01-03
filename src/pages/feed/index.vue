@@ -12,7 +12,7 @@
 
 <script lang="ts">
     import Vue from 'vue'
-    import StoryFeed from '@/components/feed/story-feed.vue'
+    import StoryFeed from '../../components/feed/story-feed.vue'
 
     export default Vue.extend({
         components: {

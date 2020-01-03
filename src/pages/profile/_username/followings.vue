@@ -5,7 +5,7 @@
 
 <script lang="ts">
     import Vue from 'vue'
-    import ProfileCard from '@/components/profile/profile-card.vue'
+    import ProfileCard from '../../../components/profile/profile-card.vue'
     import { IOtherUser } from '@bit/szkabaroli.karazann-shared.interfaces'
 
     interface VueData {

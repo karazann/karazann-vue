@@ -5,7 +5,6 @@
 
 <script lang="ts">
     import Vue from 'vue'
-    import axios from 'axios'
 
     export default Vue.extend({
         name: 'flow-page',
@@ -13,7 +12,7 @@
             title: 'Flow'
         },
         components: {
-            'node-editor': () => import('@/components/editor/node-editor.vue')
+            'node-editor': () => import('../../components/editor/node-editor.vue')
         }
     })
 </script>

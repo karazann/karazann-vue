@@ -53,10 +53,10 @@ export default {
         offline: true,
         offlineStrategy: 'NetworkFirst'
     },
-    css: ['@assets/reset.scss', '@assets/themes.scss', '@assets/global.scss'],
-    plugins: ['~/plugins/components.ts', '~/plugins/axios', '~/plugins/init-store'],
+    css: ['assets/reset.scss', 'assets/themes.scss', 'assets/global.scss'],
+    plugins: ['plugins/components.ts', 'plugins/axios', 'plugins/init-store'],
     styleResources: {
-        scss: ['@assets/grid.scss', '@assets/_variables.scss', '@assets/_mixins.scss']
+        scss: ['assets/grid.scss', 'assets/_variables.scss', 'assets/_mixins.scss']
     },
     sitemap: {
         hostname: 'https://karazann.com',

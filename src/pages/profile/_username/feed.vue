@@ -11,9 +11,10 @@
 
 <script lang="ts">
     import Vue, { PropType } from 'vue'
-    import SkillsPanel from '@/components/profile/skills-panel.vue'
-    import PostStory from '@/components/feed/post-story.vue'
-    import StoryFeed from '@/components/feed/story-feed.vue'
+    
+    import SkillsPanel from '../../../components/profile/skills-panel.vue'
+    import PostStory from '../../../components/feed/post-story.vue'
+    import StoryFeed from '../../../components/feed/story-feed.vue'
 
     export default Vue.extend({
         components: {

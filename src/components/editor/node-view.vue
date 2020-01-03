@@ -24,8 +24,8 @@
     import Vue, { PropType } from 'vue'
 
     import PinView from './pin-view.vue'
-    import { dragDirective } from '~/helpers'
-    import { EditorNode, IO, Input, EditorPin } from '~/shared/flow'
+    import { dragDirective } from '@/helpers'
+    import { EditorNode, IO, Input, EditorPin } from '@/shared/flow'
 
     interface VueData {
         startPosition: number[]

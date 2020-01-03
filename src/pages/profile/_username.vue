@@ -9,7 +9,7 @@
     import Vue from 'vue'
     import { mapState } from 'vuex'
     import { IUser } from '@bit/szkabaroli.karazann-shared.interfaces'
-    import ProfileHeader from '~/components/profile/profile-header.vue'
+    import ProfileHeader from '@/components/profile/profile-header.vue'
 
     interface VueData {
         profile: IUser | undefined

@@ -1,4 +1,4 @@
-import { NodeBuilder, PinType, Pin, Output, Node, Input } from '~/shared/flow'
+import { NodeBuilder, PinType, Pin, Output, Node, Input } from '@/shared/flow'
 
 interface ColorMapping {
     [key: string]: string

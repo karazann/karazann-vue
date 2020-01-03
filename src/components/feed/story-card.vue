@@ -20,7 +20,7 @@
 
 <script lang="ts">
     import Vue, { PropType } from 'vue'
-    import ProfileImage from '~/components/profile/profile-image.vue'
+    import ProfileImage from '@/components/profile/profile-image.vue'
     import LinkAttachment from './story-card-attachments/link-attachment.vue'
     import JobAttachment from './story-card-attachments/job-attachment.vue'
     import feather from 'feather-icons'

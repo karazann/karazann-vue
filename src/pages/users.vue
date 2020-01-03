@@ -8,7 +8,7 @@
 
 <script lang="ts">
     import Vue from 'vue'
-    import ProfileCard from '~/components/profile/profile-card.vue'
+    import ProfileCard from '@/components/profile/profile-card.vue'
 
     export default Vue.extend({
         components: {

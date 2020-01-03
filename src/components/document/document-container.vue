@@ -7,7 +7,7 @@
 
 <script lang="ts">
     import Vue from 'vue'
-    import DocumentPage from '~/components/document/document-page.vue'
+    import DocumentPage from '@/components/document/document-page.vue'
 
     export default Vue.extend({
         components: {

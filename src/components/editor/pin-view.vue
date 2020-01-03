@@ -11,8 +11,8 @@
 <script lang="ts">
     import Vue, { PropType } from 'vue'
 
-    import { EditorPin, Input, Output } from '~/shared/flow'
-    import { dragDirective, createPath, pinColorMapping } from '~/helpers'
+    import { EditorPin, Input, Output } from '@/shared/flow'
+    import { dragDirective, createPath, pinColorMapping } from '@/helpers'
 
     interface VueData {
         ghostPath: string

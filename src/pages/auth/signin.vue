@@ -19,8 +19,8 @@
     import Vue from 'vue'
     import mixins from 'vue-typed-mixins'
 
-    import { formError } from '~/mixins/form-errors.ts'
-    import { validate, mapError } from '~/helpers'
+    import { formError } from '@/mixins/form-errors.ts'
+    import { validate, mapError } from '@/helpers'
 
     import { ValidationError } from '@bit/szkabaroli.karazann-shared.validator'
     import { SignInValidator } from '@bit/szkabaroli.karazann-shared.validators'

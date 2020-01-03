@@ -12,13 +12,13 @@
 
 <script lang="ts">
     import Vue from 'vue'
-    import StoryFeed from '~/components/feed/story-feed.vue'
-    
+    import StoryFeed from '@/components/feed/story-feed.vue'
+
     export default Vue.extend({
         components: {
             StoryFeed
         },
-        async asyncData({app}) {
+        async asyncData({ app }) {
             const { payload } = await app.$api.getFeed()
 
             return {

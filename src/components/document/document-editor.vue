@@ -13,8 +13,8 @@
 
 <script lang="ts">
     import Vue from 'vue'
-    import Toolbox from '~/components/editor/toolbox.vue'
-    import DocumentContainer from '~/components/document/document-container.vue'
+    import Toolbox from '@/components/editor/toolbox.vue'
+    import DocumentContainer from '@/components/document/document-container.vue'
 
     export default Vue.extend({
         components: {

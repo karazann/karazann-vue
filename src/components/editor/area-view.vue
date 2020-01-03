@@ -12,8 +12,8 @@
 <script lang="ts">
     import Vue, { PropType } from 'vue'
 
-    import { Zoom } from '~/helpers'
-    import { Editor } from '~/shared/flow'
+    import { Zoom } from '@/helpers'
+    import { Editor } from '@/shared/flow'
 
     interface Position {
         x: number

@@ -8,7 +8,7 @@
 
     export default Vue.extend({
         components: {
-            'document-editor': () => import('~/components/document/document-editor.vue')
+            'document-editor': () => import('@/components/document/document-editor.vue')
         }
     })
 </script>

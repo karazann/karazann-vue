@@ -2,7 +2,7 @@
 import { MutationTree, ActionContext, ActionTree } from 'vuex/types/index'
 import { RootState } from '.'
 import { IStory } from '@bit/szkabaroli.karazann-shared.interfaces'
- 
+
 export interface StoryState {
     stories: any[]
 }
@@ -12,21 +12,21 @@ export const state = (): StoryState => ({
 })
 
 export const mutations: MutationTree<StoryState> = {
-    SET_PROFILE_STORIES(state: StoryState, data: any) {
+    SET_PROFILE_STORIES(state: StoryState, data: IStory[]) {
         state.stories = data
     },
-    POST_PROFILE_STORY(state: StoryState, data: any) {
+    POST_PROFILE_STORY(state: StoryState, data: IStory) {
         state.stories.unshift(data)
     }
 }
 
 export const actions: ActionTree<StoryState, RootState> = {
-    async getProfileFeed({ commit, rootState }, payload: { userId: string}) {
-        const { data } = await this.$axios.get<IStory[]>(`/user/${payload.userId}/feed`)
-        commit('SET_PROFILE_STORIES', data)
+    async getProfileFeed({ commit }, profile: { userId: string}) {
+        const { payload } = await this.$api.getUserStories(profile.userId)
+        commit('SET_PROFILE_STORIES', payload)
     },
     async postStory({ commit }: ActionContext<StoryState, any>, story: any) {
-        const { data } = await this.$axios.post<any>(`/story`, story)
-        commit('POST_PROFILE_STORY', data)
+        const { payload } = await this.$api.postStory(story)
+        commit('POST_PROFILE_STORY', payload)
     }
 }

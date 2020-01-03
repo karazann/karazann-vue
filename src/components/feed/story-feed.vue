@@ -1,6 +1,5 @@
 <template lang="pug">
     .story-feed
-        story-card(:story="test")
         story-card(v-for="story in stories" :key="story.id" :story="story")
 </template>
 
@@ -21,21 +20,6 @@
         },
         props: {
             stories: Array as PropType<IStory[]>
-        },
-        data() {
-            return {
-                test: {
-                    storyType: 'job',
-                    displayName: 'fadf',
-                    content: 'this maybe help',
-                    attachments: [
-                        {
-                            tp: 1,
-                            id: ''
-                        }
-                    ]
-                }
-            }
         }
     })
 </script>

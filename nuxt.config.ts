@@ -3,7 +3,11 @@ import path from 'path'
 export default {
     mode: 'spa',
     srcDir: 'src',
-    modules: ['@nuxtjs/pwa', '@nuxtjs/style-resources', '@nuxtjs/sitemap', '@nuxtjs/axios'],
+    dev: (process.env.NODE_ENV !== 'production'),
+    env: {
+        baseURL: process.env.BASE_URL
+    },
+    modules: ['@nuxtjs/style-resources', '@nuxtjs/sitemap', '@nuxtjs/axios'],
     buildModules: ['@nuxt/typescript-build'],
     head: {
         titleTemplate: '%s - Karazann',
@@ -42,9 +46,8 @@ export default {
         failedColor: '#eb5757'
     },
     axios: {
+        baseURL: this.dev ? 'https://localhost:3000/' : this.env.baseURL,
         prefix: '/',
-        host: 'localhost',
-        port: 8080,
         progress: false,
         credentials: false,
         debug: true

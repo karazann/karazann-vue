@@ -31,14 +31,14 @@ export const mutations: MutationTree<UserState> = {
 
 export const actions: ActionTree<UserState, RootState> = {
     async signInInternal({ commit }, req: ISignInUserRequest) {
-        const { payload } = await this.$axios.$post<any>('/user/signin', req)
+        const { payload } = await this.$api.signInInternal(req)
         localStorage.setItem('jwt_token', payload.token)
         
         const setUser: ISetCurrentUserPayload = {
             user: jwtDecode(payload.token)
         }
+        
         commit('SET_CURRENT_USER', setUser)
-
         this.$router.push({ path: `/profile/@${setUser.user.username}/feed` })
     },
     logout({ commit }) { 

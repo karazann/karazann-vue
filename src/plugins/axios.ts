@@ -1,11 +1,6 @@
-import { APIErrorResponse } from '@bit/szkabaroli.karazann-shared.interfaces'
+import { APIErrorResponse, IOtherUser, APIResponse, IUser, ISignInUserRequest, IStory } from '@bit/szkabaroli.karazann-shared.interfaces'
 import { Context } from '@nuxt/types'
 import { NuxtAxiosInstance } from '@nuxtjs/axios'
-
-interface APIResponse {
-    success: boolean
-    payload: any
-}
 
 /** Declare types for vue and vuex */
 
@@ -35,17 +30,29 @@ export const apiFactory = ($axios: NuxtAxiosInstance) => ({
         return $axios.$delete<APIResponse>(`/follows/${userId}`)
     },
     getUser(username: string) {
-        return $axios.$get<APIResponse>(`/user/${username}`)
+        return $axios.$get<APIResponse<IUser>>(`/user/${username}`)
     },
     getFollowers() {
-        return $axios.$get<APIResponse>(`/follows/followers`)
+        return $axios.$get<APIResponse<IOtherUser[]>>(`/follows/followers`)
     },
     getFollowings() {
-        return $axios.$get<APIResponse>(`/follows/followings`)
+        return $axios.$get<APIResponse<IOtherUser[]>>(`/follows/followings`)
+    },
+    signInInternal(req: ISignInUserRequest) { 
+        return $axios.$post<any>('/user/signin', req)
+    },
+    getFeed() { 
+        return $axios.$get<APIResponse<IStory[]>>(`/user/feed`)
+    },
+    getUserStories(userId: string) { 
+        return $axios.$get<APIResponse<IStory[]>>(`/user/${userId}/feed`)
+    },
+    postStory(story: any) { 
+        return $axios.$post<APIResponse<IStory>>(`/story`, story)
     }
 })
 
-export default ({ store, redirect, app }: Context, inject: any) => {
+export default ({ store, app }: Context, inject: any) => {
     app.$axios.interceptors.request.use(
         config => {
             const token = localStorage.getItem('jwt_token')

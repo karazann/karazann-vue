@@ -15,11 +15,11 @@
 <script lang="ts">
     import Vue, { PropType } from 'vue'
     import ProfileImage from './profile-image.vue'
-    import { IUser } from '@bit/szkabaroli.karazann-shared.interfaces'
+    import { IOtherUser } from '@bit/szkabaroli.karazann-shared.interfaces'
 
     export default Vue.extend({
         props: {
-            profile: Object as PropType<IUser>
+            profile: Object as PropType<IOtherUser>
         },
         components: {
             ProfileImage
@@ -29,14 +29,13 @@
                 this.$router.push({ path: `/profile/@${this.profile.username}/feed` })
             },
             async follow() {
-                if(this.profile.following) {
-                    const res = await this.$api.followUser(this.profile.userId)
-                    if(res.success === true) this.profile.following = false
+                if (this.profile.following) {
+                    const res = await this.$api.unfollowUser(this.profile.userId)
+                    if (res.success === true) this.profile.following = false
                     this.$emit('unfollow', this.profile.userId)
                 } else {
-                    const res = await this.$api.unfollowUser(this.profile.userId)
-                    if(res.success === true) this.profile.following = true
-                    this.$emit('content-block-remove', this.uniqueId)
+                    const res = await this.$api.followUser(this.profile.userId)
+                    if (res.success === true) this.profile.following = true
                     this.$emit('follow', this.profile.userId)
                 }
             }
@@ -53,10 +52,10 @@
 
     .profile-card {
         @include make-card;
-        transition: transform .3s;
+        transition: transform 0.3s;
 
         &:hover {
-            transform: translateY(-2px)
+            transform: translateY(-2px);
         }
 
         img {

@@ -1,0 +1,16 @@
+steps:
+    # Install deps
+    - name: "gcr.io/cloud-builders/npm"
+      args: ["install", "-t"]
+
+    # Build nuxt project
+    - name: "gcr.io/cloud-builders/npm"
+      args: ["run", "build:gen"]
+
+    # Deploy to Cloud Storage
+    - name: "gcr.io/cloud-builders/gsutil"
+      args: [
+        'rsync',
+        'dist',
+        'gs://${_BUCKET_DESTINATION}/'
+      ]

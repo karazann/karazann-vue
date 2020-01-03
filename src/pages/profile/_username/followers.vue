@@ -1,6 +1,6 @@
 <template lang="pug">
     .row
-        profile-card(v-for="user in users" :profile="user")
+        profile-card(v-for="user in users" :profile="user" :key="user.userId")
 </template>
 
 <script lang="ts">
@@ -12,7 +12,7 @@
             ProfileCard
         },
         async asyncData({ store, params, $axios, app, error }) {
-            const { payload } = await this.$api.getFollowers()
+            const { payload } = await app.$api.getFollowers()
             return {
                 users: payload
             }

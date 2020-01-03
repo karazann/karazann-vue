@@ -8,7 +8,7 @@
             .row.inner
                 .brand
                     v-brand
-                    v-tag.tag BETA
+                    v-tag.tag ALPHA
                 nav(v-if='!loggedIn')
                     .horizontal-list
                         +menu-item('/boards/123', 'Roadmap')

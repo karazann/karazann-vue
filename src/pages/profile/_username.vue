@@ -20,15 +20,15 @@
         components: {
             ProfileHeader
         },
-        async asyncData ({ store, params, $axios, app, error }) {
+        async asyncData({ store, params, $axios, app, error }) {
             try {
                 const { payload } = await app.$api.getUser(params.username)
-                const isMe = payload.username === store.state.user.currentUser.username
+                const isMe = payload!.username === store.state.user.currentUser.username
                 return {
-                    profile: payload,
+                    profile: payload!,
                     isMe
                 }
-            } catch(e) {
+            } catch (e) {
                 error({ statusCode: 404 })
             }
         },
@@ -49,8 +49,5 @@
     }
     .header-spacing {
         padding-bottom: 30px;
-    }
-    p {
-        background: theme-var(color-red);
     }
 </style>

@@ -53,6 +53,9 @@ export default {
         offline: true,
         offlineStrategy: 'NetworkFirst'
     },
+    typescript: {
+        typeCheck: this.dev ? true : false
+    },
     css: ['assets/reset.scss', 'assets/themes.scss', 'assets/global.scss'],
     plugins: ['plugins/components.ts', 'plugins/axios', 'plugins/init-store'],
     styleResources: {

@@ -3,7 +3,7 @@ import 'css-vars-ponyfill'
 
 import Vue from 'vue'
 
-import Header from '../../src/components/header/header.vue'
+import Header from '../../src/components/header/index.vue'
 import Input from '../../src/components/shared/input.vue'
 import Button from '../../src/components/shared/button.vue'
 import Tag from '../../src/components/shared/tag.vue'

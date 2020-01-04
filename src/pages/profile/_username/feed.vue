@@ -15,6 +15,7 @@
     import SkillsPanel from '../../../components/profile/skills-panel.vue'
     import PostStory from '../../../components/feed/post-story.vue'
     import StoryFeed from '../../../components/feed/story-feed.vue'
+    import { IUser } from '@bit/szkabaroli.karazann-shared.interfaces'
 
     export default Vue.extend({
         head(this: { profile: IUser }) {
@@ -32,7 +33,6 @@
             isMe: Boolean as PropType<boolean>
         },
         async mounted() {
-            console.log('mouunt')
             await this.$store.dispatch('story/getProfileFeed', { userId: this.profile.userId })
         },
         data() {

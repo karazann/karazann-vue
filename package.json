@@ -43,8 +43,8 @@
     },
     "devDependencies": {
         "@nuxt/types": "^0.5.7",
-        "@nuxt/typescript-build": "^0.5.2",
-        "@nuxt/typescript-runtime": "^0.3.3",
+        "@nuxt/typescript-build": "0.5.2",
+        "@nuxt/typescript-runtime": "0.3.3",
         "@nuxtjs/axios": "^5.9.0",
         "@nuxtjs/pwa": "^3.0.0-beta.19",
         "@nuxtjs/sitemap": "^2.0.1",
@@ -55,6 +55,7 @@
         "@vue/test-utils": "^1.0.0-beta.30",
         "babel-core": "^6.26.3",
         "babel-jest": "^24.9.0",
+        "core-js": "^2.6.11",
         "jest": "^24.9.0",
         "jest-vue-preprocessor": "^1.7.0",
         "node-sass": "^4.13.0",

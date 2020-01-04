@@ -5,7 +5,7 @@
 
 <script lang="ts">
     import Vue, { PropType } from 'vue'
-    import Notification from './Notification.vue'
+    import Notification from './notification.vue'
 
     export default Vue.extend({
         name: 'notifications-container',

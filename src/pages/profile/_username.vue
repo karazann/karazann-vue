@@ -1,7 +1,7 @@
 <template lang="pug">
     main.container
         .row.spacing
-            profile-header.header-spacing(:profile="profile" :isMe="isMe")
+            profile-header.header-spacing(:profile="profile" :isMe="isMe" :parentTitle="title")
         nuxt-child(keep-alive :profile="profile" :isMe="isMe")
 </template>
 
@@ -16,6 +16,11 @@
     }
 
     export default Vue.extend({
+        head(this: { profile: IUser }) {
+            return {
+                title: `${this.profile.lastName} ${this.profile.firstName} (@${this.profile.username})`
+            }
+        },
         middleware: 'auth',
         components: {
             ProfileHeader
@@ -32,7 +37,7 @@
                 error({ statusCode: 404 })
             }
         },
-        data(): VueData {
+        data() {
             return {
                 profile: undefined
             }
@@ -45,7 +50,7 @@
 
 <style lang="scss" scoped>
     .spacing {
-        padding-top: 80px;
+        padding-top: 40px;
     }
     .header-spacing {
         padding-bottom: 30px;

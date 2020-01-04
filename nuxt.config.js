@@ -1,9 +1,14 @@
 import path from 'path'
 
+const development = process.env.NODE_ENV !== 'production'
+
 export default {
     mode: 'spa',
     srcDir: 'src',
-    dev: (process.env.NODE_ENV !== 'production'),
+    generate: {
+        fallback: true
+    },
+    dev: development,
     modules: ['@nuxtjs/style-resources', '@nuxtjs/sitemap', '@nuxtjs/axios'],
     buildModules: ['@nuxt/typescript-build'],
     head: {
@@ -43,7 +48,7 @@ export default {
         failedColor: '#eb5757'
     },
     axios: {
-        baseURL: this.dev ? 'https://localhost:3000/' : 'https://api.karazann.com',
+        baseURL: development ? 'http://localhost:8080/' : 'https://api.karazann.com',
         prefix: '/',
         progress: false,
         credentials: false,
@@ -54,7 +59,7 @@ export default {
         offlineStrategy: 'NetworkFirst'
     },
     typescript: {
-        typeCheck: this.dev ? true : false
+        typeCheck: development ? true : false
     },
     css: ['assets/reset.scss', 'assets/themes.scss', 'assets/global.scss'],
     plugins: ['plugins/components.ts', 'plugins/axios', 'plugins/init-store'],

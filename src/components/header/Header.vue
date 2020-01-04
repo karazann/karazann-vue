@@ -55,10 +55,10 @@
         border-bottom: 1px solid theme-var(secondary-2);
         top: 0;
         display: flex;
-        padding: 20px 0;
+        padding: 15px 0;
         justify-content: space-between;
         position: fixed;
-        height: 78px;
+        height: 69px;
         width: 100%;
         z-index: 1000;
         transition: all 0.4s ease;

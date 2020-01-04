@@ -18,21 +18,8 @@
     }
 
     export default Vue.extend({
-        data(): VueData {
-            return {
-                username: 'Roland'
-            }
-        },
-        head() {
-            return {
-                title: (this as any).username
-            }
-        },
         props: {
             skills: Array as PropType<ISkill[]>
-        },
-        mounted() {
-            setTimeout(() => this.username = 'fadsf', 2000)
         }
     })
 </script>
@@ -42,7 +29,7 @@
         @include make-card;
         padding: 20px 25px 0 25px;
         position: sticky;
-        top: 108px;
+        top: 98px;
 
         .skill-tags {
             padding: 20px 0;

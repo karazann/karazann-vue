@@ -13,6 +13,9 @@
     }
 
     export default Vue.extend({
+        head: {
+            title: ''
+        },
         components: {
             ProfileCard
         },

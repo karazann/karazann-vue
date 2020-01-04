@@ -17,6 +17,11 @@
     import StoryFeed from '../../../components/feed/story-feed.vue'
 
     export default Vue.extend({
+        head(this: { profile: IUser }) {
+            return {
+                title: `${this.profile.lastName} ${this.profile.firstName} (@${this.profile.username})`
+            }
+        },
         components: {
             SkillsPanel,
             PostStory,
@@ -24,9 +29,10 @@
         },
         props: {
             profile: Object as PropType<any>,
-            isMe: Boolean as PropType<boolean>,
+            isMe: Boolean as PropType<boolean>
         },
         async mounted() {
+            console.log('mouunt')
             await this.$store.dispatch('story/getProfileFeed', { userId: this.profile.userId })
         },
         data() {
@@ -50,7 +56,7 @@
                     }
                 ]
             }
-        }
+        },
     })
 </script>
 

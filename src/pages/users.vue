@@ -11,6 +11,9 @@
     import ProfileCard from '../components/profile/profile-card.vue'
 
     export default Vue.extend({
+        head: {
+            title: 'Users'
+        },
         components: {
             ProfileCard
         },

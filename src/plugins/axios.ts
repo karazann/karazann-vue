@@ -1,10 +1,10 @@
-import { APIErrorResponse, IOtherUser, APIResponse, IUser, ISignInUserRequest, IStory } from '@bit/szkabaroli.karazann-shared.interfaces'
+import { APIErrorResponse, IOtherUser, APIResponse, IUser, ISignInUserRequest, IStory, IJob } from '@bit/szkabaroli.karazann-shared.interfaces'
 import { Context } from '@nuxt/types'
 import { NuxtAxiosInstance } from '@nuxtjs/axios'
 
 /** Declare types for vue and vuex */
 
-declare module 'vue/types/vue' {
+/*declare module 'vue/types/vue' {
     interface Vue {
         $api: ReturnType<typeof apiFactory>
     }
@@ -20,7 +20,7 @@ declare module 'vuex/types/index' {
     interface Store<S> {
         $api: ReturnType<typeof apiFactory>
     }
-}
+}*/
 
 export const apiFactory = ($axios: NuxtAxiosInstance) => ({
     followUser(userId: string) {
@@ -49,6 +49,9 @@ export const apiFactory = ($axios: NuxtAxiosInstance) => ({
     },
     postStory(story: any) { 
         return $axios.$post<APIResponse<IStory>>(`/story`, story)
+    },
+    getUserJobs(userId: string) { 
+        return $axios.$get<APIResponse<IJob[]>>(`/jobs?user_id=${userId}&fields=userId,title,jobId,type`)
     }
 })
 

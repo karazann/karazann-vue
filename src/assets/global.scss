@@ -33,6 +33,15 @@ body {
     @include make-row;
 }
 
+.col {
+    @include make-col-ready;
+    @include make-col(24);
+}
+
+.spacer-b {
+    margin-bottom: 30px;
+}
+
 .row-spacer {
     margin-right: -15px;
     margin-left: -15px;
@@ -41,35 +50,6 @@ body {
 $show-semantic: false;
 @include s;
 
-@font-face {
-    font-family: 'Pouttu';
-    font-weight: normal;
-    src: url('fonts/Pouttu.ttf') format('truetype');
-}
-
-@font-face {
-    font-family: 'Gilroy';
-    font-weight: normal;
-    src: url('fonts/Gilroy-Regular.ttf') format('truetype');
-}
-
-@font-face {
-    font-family: 'Gilroy';
-    font-weight: bold;
-    src: url('fonts/Gilroy-Bold.ttf') format('truetype');
-}
-
-@font-face {
-    font-family: 'MaterialIcons';
-    font-weight: normal;
-    src: url('fonts/Material-Icons.ttf') format('truetype');
-}
-
-@font-face {
-    font-family: 'Feather-Icons';
-    font-weight: normal;
-    src: url('fonts/Feather-Icons.ttf') format('truetype');
-}
 
 .feather {
     height: 22px;

@@ -1,6 +1,6 @@
 <template lang="pug">
     .profile-image(:style="style")
-        img(:src="avatarImage")
+        img(:src="avatarImage" @error="onError")
 </template>
 
 
@@ -15,9 +15,14 @@
                 type: Number as PropType<number>,
                 default: 70
             },
-            avatarImage: {
-                type: String as PropType<string>,
-                default: '/no-image.jpg'
+            userId: {
+                type: String as PropType<string>
+            }
+        },
+        methods: {
+            onError(e: Event) {
+                const t = e.target as HTMLImageElement
+                t.src = `${process.env.staticUrl}/avatars/no-image.jpg`
             }
         },
         computed: {
@@ -28,6 +33,9 @@
                     width: `${realSize}px`,
                     height: `${realSize}px`
                 }
+            },
+            avatarImage(): string {
+                return `${process.env.staticUrl}/avatars/${this.userId}.jpg`
             }
         }
     })

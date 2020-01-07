@@ -1,6 +1,10 @@
 <template lang="pug">
-    .row
-        profile-card(v-for="user in users" :profile="user" :key="user.userId")
+    div
+        .row.spacer-b
+            .col
+                h2 Followers
+        .row
+            profile-card(v-for="user in users" :profile="user" :key="user.userId")
 </template>
 
 <script lang="ts">
@@ -11,7 +15,7 @@
     export default Vue.extend({
         head() {
             return {
-                title: `${this.profile.lastName} ${this.profile.firstName} (@${this.profile.username})`
+                title: `${this.profile.lastName} ${this.profile.firstName} (@${this.profile.username}) - Followers`
             }
         },
         props: {
@@ -24,17 +28,6 @@
             const { payload } = await app.$api.getFollowers()
             return {
                 users: payload
-            }
-        },
-        data() {
-            return {
-                profile: {
-                    firstName: 'Don',
-                    lastName: 'Jon',
-                    username: 'donjohn',
-                    coverImageUrl: 'https://images.unsplash.com/photo-1538291323976-37dcaafccb12?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80',
-                    avatarImageUrl: 'https://avatars0.githubusercontent.com/u/22996412?s=460&v=4'
-                }
             }
         }
     })

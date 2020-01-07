@@ -3,14 +3,20 @@ import 'css-vars-ponyfill'
 
 import Vue from 'vue'
 
-import Header from '../../src/components/header/index.vue'
-import Input from '../../src/components/shared/input.vue'
-import Button from '../../src/components/shared/button.vue'
-import Tag from '../../src/components/shared/tag.vue'
-import Brand from '../../src/components/shared/brand.vue'
-import TitleBar from '../../src/components/shared/title-bar.vue'
+import Header from '../components/header/index.vue'
+import Input from '../components/shared/input.vue'
+import Button from '../components/shared/button.vue'
+import Tag from '../components/shared/tag.vue'
+import Brand from '../components/shared/brand.vue'
+import TitleBar from '../components/shared/title-bar.vue'
+
+import { Plugin } from 'vue-fragment'
 
 Vue.config.productionTip = true
+
+import VueCompositionApi from '@vue/composition-api'
+Vue.use(VueCompositionApi)
+
 
 Vue.directive('scroll', {
 
@@ -24,7 +30,9 @@ Vue.directive('scroll', {
     }
 })
 
- 
+
+Vue.use(Plugin)
+
 Vue.component('v-header', Header)
 Vue.component('v-brand', Brand)
 Vue.component('v-input', Input)

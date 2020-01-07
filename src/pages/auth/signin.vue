@@ -9,7 +9,7 @@
                     n-link.bold(to="/auth/signup") create an account
             form(@submit.prevent="onSubmit")
                 v-input(autocomplete="email" placeholder="Username or email" type="text" @input="clear('identifier')" v-model="user.identifier" name="identifier" :error="getError('identifier')")
-                v-input(autocomplete="password" placeholder="Password" type="text" @input="clear('password')" v-model="user.password" name="password" :error="getError('password')")
+                v-input(autocomplete="password" placeholder="Password" type="password" @input="clear('password')" v-model="user.password" name="password" :error="getError('password')")
                 v-button.primary(fill type="submit" large) Sign in
             p.separator or
             v-button.primary(fill type="google" large) Google

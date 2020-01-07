@@ -4,14 +4,14 @@
             skills-panel(:skills="skills")
         .center-wrapper
             post-story(v-if="isMe")
-            story-feed(:stories="$store.state.story.stories")
+            story-feed(:stories="$store.state.story.stories" :loadingStories="$store.state.story.loadingStories")
         aside.side-wrapper
             p side
 </template>
 
 <script lang="ts">
     import Vue, { PropType } from 'vue'
-    
+
     import SkillsPanel from '../../../components/profile/skills-panel.vue'
     import PostStory from '../../../components/feed/post-story.vue'
     import StoryFeed from '../../../components/feed/story-feed.vue'
@@ -56,7 +56,7 @@
                     }
                 ]
             }
-        },
+        }
     })
 </script>
 

@@ -5,12 +5,16 @@ const development = process.env.NODE_ENV !== 'production'
 export default {
     mode: 'spa',
     srcDir: 'src',
+    env: {
+        staticUrl: development ? 'https://localhost:4443/download/storage/v1/b/static/o/' : 'https://static.karazann.com'
+    },
     generate: {
         fallback: true
     },
     dev: development,
     modules: ['@nuxtjs/style-resources', '@nuxtjs/sitemap', '@nuxtjs/axios'],
     buildModules: ['@nuxt/typescript-build'],
+    plugins: ['plugins/components.ts', 'plugins/axios', 'plugins/init-store'],
     head: {
         titleTemplate: '%s - Karazann',
         htmlAttrs: {
@@ -48,7 +52,7 @@ export default {
         failedColor: '#eb5757'
     },
     axios: {
-        baseURL: development ? 'http://localhost:8080/' : 'https://api.karazann.com',
+        baseURL: development ? 'http://localhost:8080/' : 'https://api.karazann.com/',
         prefix: '/',
         progress: false,
         credentials: false,
@@ -61,8 +65,7 @@ export default {
     typescript: {
         typeCheck: development ? true : false
     },
-    css: ['assets/reset.scss', 'assets/themes.scss', 'assets/global.scss'],
-    plugins: ['plugins/components.ts', 'plugins/axios', 'plugins/init-store'],
+    css: ['assets/reset.scss', 'assets/themes.scss', 'assets/global.scss', 'assets/_fonts.scss'],
     styleResources: {
         scss: ['assets/grid.scss', 'assets/_variables.scss', 'assets/_mixins.scss']
     },
@@ -73,6 +76,7 @@ export default {
         routes: []
     },
     build: {
+        extractCSS: true,
         analyze: true,
         optimization: {
             splitChunks: {
@@ -98,12 +102,12 @@ export default {
         devtool: true,
         extractCSS: true,
         filenames: {
-            app: (c) => (c.isDev ? '[name].js' : '[name].[chunkhash].js'),
-            chunk: (c) => (c.isDev ? '[name].js' : '[name].[chunkhash].js'),
-            css: (c) => (c.isDev ? '[name].css' : '[contenthash].css'),
-            img: (c) => (c.isDev ? '[path][name].[ext]' : 'img/[hash:7].[ext]'),
-            font: (c) => (c.isDev ? '[path][name].[ext]' : 'fonts/[hash:7].[ext]'),
-            video: (c) => (c.isDev ? '[path][name].[ext]' : 'videos/[hash:7].[ext]')
+            app: c => (c.isDev ? '[name].js' : '[name].[chunkhash].js'),
+            chunk: c => (c.isDev ? '[name].js' : '[name].[chunkhash].js'),
+            css: c => (c.isDev ? '[name].css' : '[contenthash].css'),
+            img: c => (c.isDev ? '[path][name].[ext]' : 'img/[hash:7].[ext]'),
+            font: c => (c.isDev ? '[path][name].[ext]' : 'fonts/[hash:7].[ext]'),
+            video: c => (c.isDev ? '[path][name].[ext]' : 'videos/[hash:7].[ext]')
         },
         extend(config, ctx) {
             if (ctx.isClient) config.devtool = '#source-map'

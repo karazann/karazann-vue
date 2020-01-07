@@ -25,6 +25,7 @@
         font-weight: bold !important;
         font-size: 14px !important;
         font-family: 'Gilroy', sans-serif;
+        height: 28px;
 
         &.red {
             color: theme-var(color-red);

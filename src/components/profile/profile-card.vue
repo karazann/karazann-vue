@@ -2,7 +2,7 @@
     .col
         .profile-card(@click="click")
             img(:src="profile.coverImageUrl ? profile.coverImageUrl : '/no-image.jpg'")
-            profile-image.profile(:size="100" :image="profile.avatarImageUrl")
+            profile-image.profile(:size="100" :userId="profile.userId")
             .profile-details
                 h3 {{ `${profile.firstName} ${profile.lastName}` }}
                 p {{ `@${profile.username}` }}

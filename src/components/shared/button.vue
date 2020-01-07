@@ -101,6 +101,21 @@
         }
     }
 
+    .green {
+        box-shadow: 0 8px 20px theme-var(color-green-2);
+        background: theme-var(color-green);
+        color: white;
+
+        &:hover {
+            box-shadow: 0 8px 40px theme-var(color-green-2);
+        }
+
+        &:active {
+            box-shadow: none;
+        }
+    }
+
+
     .secondary {
         @include make-card();
         padding: 7px;

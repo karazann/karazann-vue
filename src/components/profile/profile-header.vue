@@ -4,7 +4,7 @@
             img(:src="profile.coverImageUrl ? profile.coverImageUrl : '/no-image.jpg'")
             .profile
                 .profile-image
-                    profile-image(:avatarImage="profile.avatarImageUrl" :size="144")
+                    profile-image(:userId="profile.userId" :size="144")
                 .profile-details
                     .name
                         h2 {{`${profile.firstName} ${profile.lastName}`}}
@@ -15,8 +15,9 @@
             nav 
                 n-link(:to="`/profile/@${profile.username}/feed`") Feed
                 n-link(to="/") Skills
-                n-link(to="/flow") Flows
-                n-link(to="/document") Docs
+                // n-link(to="/flow") Flows
+                // n-link(to="/document") Docs
+                n-link(:to="`/profile/@${profile.username}/jobs`") Jobs
                 n-link(v-if="isMe" :to="`/profile/@${profile.username}/followings`") Followings
                 n-link(v-if="isMe" :to="`/profile/@${profile.username}/followers`") Followers
 </template>

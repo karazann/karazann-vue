@@ -37,7 +37,7 @@
     },
     "include": [
         "src/**/*.ts",
-        "src/**/*.vue", "api-vue.d.ts", "shims-vue.d.ts",
+        "src/**/*.vue", "src/api-vue.d.tssrc/shims-vue.d.tsd.ts",
     ],
     "exclude": [
         "node_modules"

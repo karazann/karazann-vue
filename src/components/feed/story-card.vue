@@ -1,25 +1,29 @@
 <template lang="pug">
-    article.story-card
+    article.story-card.loading
+        
         header 
             .image
-                profile-image(:size="60")
+                profile-image(:size="60" :userId="story.userId")
             .title
                 p 
                     strong {{ story.displayName }}
                     |  posted a {{ story.storyType }}.
                 v-tag.type-tag(:color="mapType(story.storyType)") {{ story.storyType }}
-        section
+        section(v-if="!loading")
             p.content {{ story.content }}
             .attachment(v-for="(attachment, index) in story.attachments" :key="index")
                 link-attachment(v-if="attachment.tp === 0" :attachment="attachment")
                 job-attachment(v-if="attachment.tp === 1" :attachment="attachment")
-        footer
+        footer(v-if="!loading")
             div.test(:style="{ 'color': 'red' }" v-html="hearthIcon")
             div.test2(:style="{ 'color': 'red' }" v-html="commentsIcon")
+        footer.loading(v-else)
+            p loading...
 </template>
 
 <script lang="ts">
     import Vue, { PropType } from 'vue'
+    import { IStory } from '@bit/szkabaroli.karazann-shared.interfaces'
     import ProfileImage from '../../components/profile/profile-image.vue'
     import LinkAttachment from './story-card-attachments/link-attachment.vue'
     import JobAttachment from './story-card-attachments/job-attachment.vue'
@@ -29,37 +33,6 @@
         [key: string]: string
     }
 
-    enum StoryType {
-        Job = 'job',
-        Story = 'story',
-        Document = 'document'
-    }
-
-    export interface IStoryImage {
-        url: string
-    }
-
-    export enum StoryAttachmentType {
-        Link = 0,
-        Image = 1,
-        Document = 2,
-        Job = 3
-    }
-
-    export interface IStoryAttachment {
-        tp: StoryAttachmentType
-        tl: string
-        url: string
-        img?: IStoryImage
-    }
-
-    export interface IStory {
-        storyType: StoryType
-        displayName: string
-        content: string
-        attachments: IStoryAttachment[]
-    }
-
     export default Vue.extend({
         components: {
             ProfileImage,
@@ -67,8 +40,10 @@
             JobAttachment
         },
         props: {
-            story: {
-                type: Object as PropType<IStory>
+            story: Object as PropType<IStory>,
+            loading: {
+                type: Boolean as PropType<boolean>,
+                default: false
             }
         },
         computed: {
@@ -96,6 +71,18 @@
     .story-card {
         @include make-card;
         margin-bottom: 15px;
+        position: relative;
+
+        &.loading {
+            header::before, section::before, footer::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                right: 0;
+                left: 0;
+            }
+        }
 
         header {
             padding: 15px;

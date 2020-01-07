@@ -1,5 +1,6 @@
 <template lang="pug">
     .story-feed
+        story-card(v-for="(story, index) in loadingStories" :key="index" :story="story" :loading="true")
         story-card(v-for="story in stories" :key="story.id" :story="story")
 </template>
 
@@ -19,7 +20,8 @@
             StoryCard
         },
         props: {
-            stories: Array as PropType<IStory[]>
+            stories: Array as PropType<IStory[]>,
+            loadingStories: Array as PropType<Array<Partial<IStory>>>
         }
     })
 </script>

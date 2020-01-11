@@ -6,7 +6,8 @@
                 h2 Jobs
         .row
             aside.left-wrapper
-                job-card(v-for="job in jobs" :job="job" :key="job.jobId")
+                nuxt-link(v-for="job in jobs" :to="{ params: { id: job.jobId }}" :key="job.jobId")
+                    job-card(:job="job")
             .center-wrapper
                 job-details(:job="currentJob")
             aside.right-wrapper
@@ -14,8 +15,7 @@
 </template>
 
 <script lang="ts">
-    import Vue from 'vue'
-    import { createComponent, ref, PropType } from '@vue/composition-api'
+    import Vue, { PropType } from 'vue'
     import { IJob, IUser } from '@bit/szkabaroli.karazann-shared.interfaces'
     import JobCard from '~/components/job/job-card.vue'
     import JobDetails from '~/components/job/job-details.vue'
@@ -40,26 +40,32 @@
         props: {
             profile: Object as PropType<IUser>
         },
-        computed: {
-            currentJob() {
-                return this.jobs.find()
-            }
-        },
         data(): VueData {
             return {
                 jobs: [],
                 selectedJob: ''
             }
         },
-        async mounted() {
-            
-            try {
-                const { payload } = await this.$api.getUserJobs(this.profile.userId)
-                this.jobs = payload!
-                this.currentJob = payload[0].jobId
-            } catch (e) {
-                console.log(e.name)
+        computed: {
+            currentJob(): Partial<IJob> {
+                return this.jobs.filter(j => j.jobId === this.$route.params.id)[0]
             }
+        },
+        methods: {
+            selectJob(node: any) {
+                this.selectedJob = node.key as string
+            }
+        },
+        activated() {
+            if(this.jobs.length > 0) {
+                const id = this.jobs[0].jobId
+                if(id) this.$router.replace({ params: { id: this.jobs![0].jobId! } })
+            }
+        },
+        async mounted() {
+            const { data } = await this.$api.getUserJobs(this.profile.userId)
+            this.jobs = data
+            this.$router.replace({ params: { id: data[0].jobId } })
         }
     })
 </script>

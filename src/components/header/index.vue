@@ -5,33 +5,37 @@
 
     header(:class="{'shadow': !top || shadow}")
         .container
-            .row.inner
-                .brand
-                    v-brand
-                    v-tag.tag ALPHA
-                nav(v-if='!loggedIn')
-                    .horizontal-list
-                        +menu-item('/boards/123', 'Roadmap')
-                        +menu-item('/auth/signin', 'Sign in')
-                        +menu-item('/auth/signup', 'Sign up')(class='btn')
-                nav(v-if='loggedIn')
-                    .horizontal-list
-                        +menu-item('/feed', 'Feed')
-                        li
-                            n-link(:to="`/profile/@${currentUser.username}/feed`") Me
-                        li
-                            v-button.primary(@onClick="logout") Logout
+            .row
+                .col.inner
+                    .brand
+                        v-brand
+                        v-tag.tag ALPHA
+                    nav(v-if='!loggedIn')
+                        .horizontal-list
+                            +menu-item('/boards/123', 'Roadmap')
+                            +menu-item('/auth/signin', 'Sign in')
+                            +menu-item('/auth/signup', 'Sign up')(class='btn')
+                    nav(v-if='loggedIn')
+                        .horizontal-list
+                            li
+                                n-link(:to="`/feed`") Feed
+                            li
+                                n-link.profile(:to="`/profile/@${currentUser.username}/feed`")
+                                    profile-image(:size="45" :style="{ marginTop: '-5px' }" :profile="currentUser")
+                                    p Hi, {{ currentUser.firstName }}
 </template>
 
 <script lang="ts">
     import Vue from 'vue'
     import { mapState, Store } from 'vuex'
     import ProfileMenu from './profile-menu.vue'
+    import ProfileImage from '~/components/profile/profile-image.vue'
 
     export default Vue.extend({
         name: 'v-header',
         components: {
-            ProfileMenu
+            ProfileMenu,
+            ProfileImage
         },
         props: {
             top: Boolean,
@@ -73,19 +77,27 @@
         }
     }
 
-    .shadow {
-        box-shadow: $shadow-lg;
+    .profile {
+        display: flex;
+
+        p {
+            margin-left: 10px;
+            color: theme-var(primary-text)
+        }
     }
 
-    .inner {
-        @include make-col-ready;
-        @include make-col(24);
-        justify-content: space-between;
+    .shadow {
+        box-shadow: $shadow-lg;
     }
 
     .horizontal-list {
         display: flex;
         list-style: none;
+    }
+
+    .inner {
+        display: flex;
+        justify-content: space-between;
     }
 
     nav {
@@ -98,9 +110,9 @@
 
         a {
             color: theme-var(secondary);
-            padding: 9px 17px 9px 17px;
+            padding: 0 0px 0 30px;
             margin: 0 0 0 5px;
-            text-decoration: none;
+            line-height: 38px;
             font-size: 15px;
             font-weight: bold;
             display: block;

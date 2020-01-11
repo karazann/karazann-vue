@@ -1,7 +1,7 @@
 <template lang="pug">    
-    .job-card
+    .job-card(@click="$emit('on-select', $vnode)")
         .left
-            profile-image.profile(:size="80" :userId="job.userId")
+            profile-image.profile(:size="70" :profile="{ userId: job.userId,  }")
             .details
                 h4 {{ job.title }}
                 v-tag(color="green") {{ getTag }}
@@ -48,19 +48,26 @@
         justify-content: space-between;
         position: relative;
         margin-bottom: 15px;
+        transition: all .3s;
+        cursor: pointer;
+
+        &:hover {
+            transform: translateY(-1px);
+        }
 
         .left {
             display: flex;
 
             .details {
                 right: 40px;
-                left: 100px;
+                left: 90px;
                 position: absolute;
                 margin-left: 15px;
 
                 word-wrap: break-word;
 
                 h4 {
+                    font-size: 18px;
                     margin-bottom: 6px;
                 }
             }

@@ -10,8 +10,6 @@ import Tag from '../components/shared/tag.vue'
 import Brand from '../components/shared/brand.vue'
 import TitleBar from '../components/shared/title-bar.vue'
 
-import { Plugin } from 'vue-fragment'
-
 Vue.config.productionTip = true
 
 import VueCompositionApi from '@vue/composition-api'
@@ -29,9 +27,6 @@ Vue.directive('scroll', {
         window.addEventListener('scroll', f)
     }
 })
-
-
-Vue.use(Plugin)
 
 Vue.component('v-header', Header)
 Vue.component('v-brand', Brand)

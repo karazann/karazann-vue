@@ -1,8 +1,9 @@
 <template lang="pug">
     .col
         .profile-card(@click="click")
-            img(:src="profile.coverImageUrl ? profile.coverImageUrl : '/no-image.jpg'")
-            profile-image.profile(:size="100" :userId="profile.userId")
+            img.cover(v-if="profile.hasCover" :src="coverImage")
+            div.cover(v-else)
+            profile-image.profile(:size="100" :profile="profile")
             .profile-details
                 h3 {{ `${profile.firstName} ${profile.lastName}` }}
                 p {{ `@${profile.username}` }}
@@ -23,6 +24,11 @@
         },
         components: {
             ProfileImage
+        },
+        computed: {
+            coverImage(): string {
+                return `${process.env.staticUrl}/covers/${this.profile.userId}.jpg`
+            }
         },
         methods: {
             click(e: PointerEvent) {
@@ -58,12 +64,17 @@
             transform: translateY(-2px);
         }
 
-        img {
-            width: 100%;
+        .cover {
+            display: block;
             height: 90px;
-            object-fit: cover;
+            width: 100%;
             border-top-left-radius: $border-radius-lg;
             border-top-right-radius: $border-radius-lg;
+            border-bottom: $border;
+        }
+
+        img.cover {
+            object-fit: cover;
         }
 
         .profile {
@@ -81,6 +92,9 @@
             padding: 15px 0 10px 0;
             * {
                 text-align: center;
+            }
+            p {
+                margin-top: 4px;
             }
         }
 

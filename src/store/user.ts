@@ -1,7 +1,7 @@
 // tslint:disable: no-shadowed-variable
 import jwtDecode from 'jwt-decode'
 import { MutationTree, ActionTree } from 'vuex/types/index'
-import { ISignInUserRequest, ICurrentUser, IAuthResponse, IUser } from '@bit/szkabaroli.karazann-shared.interfaces'
+import { ISignInUserRequest, ICurrentUser, IUser } from '@bit/szkabaroli.karazann-shared.interfaces'
 import { RootState } from '.'
 
 export interface UserState {
@@ -14,8 +14,8 @@ export const state = (): UserState => ({
     loggedIn: false
 })
 
-interface ISetCurrentUserPayload { 
-    user: ICurrentUser
+interface ISetCurrentUserPayload {
+    user: IUser
 }
 
 export const mutations: MutationTree<UserState> = {
@@ -31,17 +31,21 @@ export const mutations: MutationTree<UserState> = {
 
 export const actions: ActionTree<UserState, RootState> = {
     async signInInternal({ commit }, req: ISignInUserRequest) {
-        const { payload } = await this.$api.signInInternal(req)
-        localStorage.setItem('jwt_token', payload.token)
-        
+        const { data } = await this.$api.signInInternal(req)
+        localStorage.setItem('jwt_token', data.token)
+
         const setUser: ISetCurrentUserPayload = {
-            user: jwtDecode(payload.token)
+            user: {
+                ...jwtDecode(data.token),
+                hasAvatar: data.hasAvatar,
+                hasCover: data.hasCover
+            }
         }
-        
+
         commit('SET_CURRENT_USER', setUser)
         this.$router.push({ path: `/profile/@${setUser.user.username}/feed` })
     },
-    logout({ commit }) { 
+    logout({ commit }) {
         commit('LOGOUT_CURRENT_USER')
         this.$router.push({ path: '/' })
     }

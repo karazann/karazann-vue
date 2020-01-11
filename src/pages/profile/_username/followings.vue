@@ -30,9 +30,9 @@
             ProfileCard
         },
         async asyncData({ app }): Promise<VueData> {
-            const { payload } = await app.$api.getFollowings()
+            const { data } = await app.$api.getFollowings()
             return {
-                users: payload!
+                users: data
             }
         },
         data(): VueData {

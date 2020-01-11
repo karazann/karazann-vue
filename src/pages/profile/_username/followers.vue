@@ -25,9 +25,9 @@
             ProfileCard
         },
         async asyncData({ store, params, $axios, app, error }) {
-            const { payload } = await app.$api.getFollowers()
+            const { data } = await app.$api.getFollowers()
             return {
-                users: payload
+                users: data
             }
         }
     })

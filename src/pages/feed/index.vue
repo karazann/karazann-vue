@@ -19,10 +19,10 @@
             StoryFeed
         },
         async asyncData({ app }) {
-            const { payload } = await app.$api.getFeed()
+            const { data } = await app.$api.getFeed()
 
             return {
-                stories: payload
+                stories: data
             }
         }
     })

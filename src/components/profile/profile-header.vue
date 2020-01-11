@@ -1,10 +1,11 @@
 <template lang="pug">
     .wrapper
         header
-            img(:src="profile.coverImageUrl ? profile.coverImageUrl : '/no-image.jpg'")
+            img.cover(v-if="profile.hasCover" :src="coverImage")
+            div.cover(v-else)
             .profile
                 .profile-image
-                    profile-image(:userId="profile.userId" :size="144")
+                    profile-image(:profile="profile" :size="144")
                 .profile-details
                     .name
                         h2 {{`${profile.firstName} ${profile.lastName}`}}
@@ -15,15 +16,14 @@
             nav 
                 n-link(:to="`/profile/@${profile.username}/feed`") Feed
                 n-link(to="/") Skills
-                // n-link(to="/flow") Flows
                 // n-link(to="/document") Docs
                 n-link(:to="`/profile/@${profile.username}/jobs`") Jobs
+                n-link(v-if="isMe" :to="`/profile/@${profile.username}/flows`") Flows
                 n-link(v-if="isMe" :to="`/profile/@${profile.username}/followings`") Followings
                 n-link(v-if="isMe" :to="`/profile/@${profile.username}/followers`") Followers
 </template>
 
 <script lang="ts">
-    // https://images.unsplash.com/photo-1538291323976-37dcaafccb12?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80
     import Vue, { PropType } from 'vue'
     import ProfileImage from './profile-image.vue'
     import { IUser } from '@bit/szkabaroli.karazann-shared.interfaces'
@@ -33,6 +33,11 @@
         props: {
             profile: Object as PropType<IUser>,
             isMe: Boolean as PropType<boolean>
+        },
+        computed: {
+            coverImage(): string {
+                return `${process.env.staticUrl}/covers/${this.profile.userId}.jpg`
+            }
         },
         components: {
             ProfileImage
@@ -49,13 +54,17 @@
     header {
         @include make-card;
 
-        img {
+        .cover {
             display: block;
             height: 210px;
             width: 100%;
-            object-fit: cover;
             border-top-left-radius: $border-radius-lg;
             border-top-right-radius: $border-radius-lg;
+            border-bottom: $border;
+        }
+
+        img.cover {
+            object-fit: cover;
         }
 
         .profile {
@@ -71,7 +80,7 @@
             }
 
             .profile-details {
-                margin-left: 146px + 10px;
+                margin-left: 146px + 20px;
                 padding-bottom: 15px;
 
                 .name {
@@ -86,6 +95,7 @@
                 }
 
                 p {
+                    margin-top: 4px;
                     color: theme-var(primary);
                 }
             }

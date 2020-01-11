@@ -41,11 +41,11 @@
             }
 
             img {
-                height: 120px;
-                width: 140px;
+                height: auto;
+                max-width: 140px !important;
                 object-fit: cover;
-                border-top-left-radius: $border-radius-md;
-                border-bottom-left-radius: $border-radius-md;
+                border-top-left-radius: $border-radius-lg;
+                border-bottom-left-radius: $border-radius-lg;
             }
 
             .content {

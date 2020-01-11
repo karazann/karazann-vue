@@ -18,9 +18,9 @@
             ProfileCard
         },
         async asyncData({ store, params, $axios, app, error }) {
-            const { payload } = await $axios.$get<any>(`/user`)
+            const { data } = await app.$api.getUsers()
             return {
-                users: payload
+                users: data
             }
         },
         data() {

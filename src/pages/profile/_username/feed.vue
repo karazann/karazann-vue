@@ -4,7 +4,7 @@
             skills-panel(:skills="skills")
         .center-wrapper
             post-story(v-if="isMe")
-            story-feed(:stories="$store.state.story.stories" :loadingStories="$store.state.story.loadingStories")
+            story-feed(:stories="stories" :loadingStories="$store.state.story.loadingStories")
         aside.side-wrapper
             p side
 </template>
@@ -15,7 +15,12 @@
     import SkillsPanel from '../../../components/profile/skills-panel.vue'
     import PostStory from '../../../components/feed/post-story.vue'
     import StoryFeed from '../../../components/feed/story-feed.vue'
-    import { IUser } from '@bit/szkabaroli.karazann-shared.interfaces'
+    import { IUser, IStory } from '@bit/szkabaroli.karazann-shared.interfaces'
+
+    interface VueData {
+        stories: IStory[],
+        skills: any
+    }
 
     export default Vue.extend({
         head(this: { profile: IUser }) {
@@ -33,9 +38,11 @@
             isMe: Boolean as PropType<boolean>
         },
         async mounted() {
-            await this.$store.dispatch('story/getProfileFeed', { userId: this.profile.userId })
+            const { data } = await this.$api.getUserStories(this.profile.userId)
+            this.stories = data
+            // await this.$store.dispatch('story/getProfileFeed', { userId: this.profile.userId })
         },
-        data() {
+        data(): VueData {
             return {
                 skills: [
                     {
@@ -54,7 +61,8 @@
                         text: 'Test',
                         color: 'green'
                     }
-                ]
+                ],
+                stories: []
             }
         }
     })

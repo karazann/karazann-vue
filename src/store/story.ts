@@ -30,8 +30,8 @@ export const mutations: MutationTree<StoryState> = {
 
 export const actions: ActionTree<StoryState, RootState> = {
     async getProfileFeed({ commit }, profile: { userId: string}) {
-        const { payload } = await this.$api.getUserStories(profile.userId)
-        commit('SET_PROFILE_STORIES', payload)
+        const { data } = await this.$api.getUserStories(profile.userId)
+        commit('SET_PROFILE_STORIES', data)
     },
     async postStory({ commit, rootState }: ActionContext<StoryState, RootState>, story: IStory) {
         const loadingStory: ILoadingStory = {
@@ -42,7 +42,7 @@ export const actions: ActionTree<StoryState, RootState> = {
         }
         commit('POST_STORY_LOADING', loadingStory)
 
-        const { payload } = await this.$api.postStory(story)
-        commit('POST_STORY', payload)
+        const { data } = await this.$api.postStory(story)
+        commit('POST_STORY', data)
     }
 }

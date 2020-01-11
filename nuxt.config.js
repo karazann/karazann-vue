@@ -6,7 +6,7 @@ export default {
     mode: 'spa',
     srcDir: 'src',
     env: {
-        staticUrl: development ? 'https://localhost:4443/download/storage/v1/b/static/o/' : 'https://static.karazann.com'
+        staticUrl: development ? 'https://storage.cloud.google.com/static-ra0pc18m' : 'https://static.karazann.com'
     },
     generate: {
         fallback: true
@@ -77,7 +77,7 @@ export default {
     },
     build: {
         extractCSS: true,
-        analyze: true,
+        analyze: false,
         optimization: {
             splitChunks: {
                 chunks: 'all',

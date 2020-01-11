@@ -1,7 +1,7 @@
 <template lang="pug">
     main.container
         .row.spacing
-            profile-header.header-spacing(:profile="profile" :isMe="isMe" :parentTitle="title")
+            profile-header.header-spacing(:profile="profile" :isMe="isMe")
         nuxt-child(keep-alive :profile="profile" :isMe="isMe")
 </template>
 
@@ -27,10 +27,10 @@
         },
         async asyncData({ store, params, $axios, app, error }) {
             try {
-                const { payload } = await app.$api.getUser(params.username)
-                const isMe = payload!.username === store.state.user.currentUser.username
+                const { data } = await app.$api.getUser(params.username)
+                const isMe = data.username === store.state.user.currentUser.username
                 return {
-                    profile: payload!,
+                    profile: data,
                     isMe
                 }
             } catch (e) {

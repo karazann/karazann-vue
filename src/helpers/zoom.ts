@@ -47,18 +47,16 @@ export class Zoom {
     wheel(e: WheelEvent) {
         e.preventDefault()
 
-        const rect = this.el.getBoundingClientRect()
-        const wheelDelta = ((e as unknown) as DeltaWheelEvent).wheelDelta
-        const delta = (wheelDelta ? wheelDelta / 120 : -e.deltaY / 3) * this.intensity
-
         const rP = this.mousePos(e)
-        const oX = rP.x * delta
-        const oY = rP.y * delta
+        const oX = rP.x
+        const oY = rP.y
 
-        const ox = (rect.left - e.clientX) * delta
-        const oy = (rect.top - e.clientY) * delta
+        const delta = e.deltaY
 
-        this.onzoom(delta, oX, oY, 'wheel')
+        // Compute the new scale
+        const d = (1 * -e.deltaY) / 1000
+
+        this.onzoom(d, oX, oY, 'wheel')
     }
 
     mousePos(e: any) {

@@ -72,32 +72,35 @@
                 // if (this.zoom.translating) return; // lock translation while zoom on multitouch
                 if (this.startPosition) this.translate(this.startPosition.x + dx, this.startPosition.y + dy)
             },
-            onZoom(delta: number, ox: number, oy: number, source: ZoomSource) {
-                this.zoom(this.transform.k * (1 + delta), ox, oy, source)
+            onZoom(d: number, oX: number, oY: number, source: ZoomSource) {
+                // this.zoom(this.transform.k * (1 + delta), ox, oy, source)
+                
+
+                const tr = this.transform
+                const z = tr.k + tr.k * d
+
+                if (z > 2) return
+                if (z < 0.4) return
+
+                this.editor.zoomLevel = z
+
+                    // Get the current x, y
+                const currentX = tr.x
+                const currentY = tr.y
+                const scaleD = z / tr.k
+
+                    // Compute the final x, y
+                const x = scaleD * (currentX - oX) + oX
+                const y = scaleD * (currentY - oY) + oY
+                
+
+                this.transform.x = x
+                this.transform.y = y
+                this.transform.k = z
 
                 this.update()
             },
             translate(x: number, y: number) {
-                this.transform.x = x
-                this.transform.y = y
-
-                this.update()
-            },
-            zoom(zoom: number, ox = 0, oy = 0, source: ZoomSource) {
-                if (zoom > 2) return
-                if (zoom < 0.4) return
-                this.editor.zoomLevel = zoom
-
-                const area = this.$refs.area as SVGGElement
-                const bb = area.getBBox()
-
-                this.transform.k = zoom || 1
-                this.transform.x += ox
-                this.transform.y += oy
-
-                const x = (this.transform.x - ox) + ox
-                const y = (this.transform.y - oy) + oy
-
                 this.transform.x = x
                 this.transform.y = y
 

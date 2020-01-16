@@ -1,6 +1,6 @@
 {
   "name": "@bit/szkabaroli.karazann-shared.flow",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "homepage": "https://bit.dev/szkabaroli/karazann-shared/flow",
   "main": "index.ts",
   "dependencies": {

@@ -1,10 +1,10 @@
 <template lang="pug">
-    g
+    v-frag
         defs
             pattern(id="grid-pattern" :width="`${gridSize}px`" :height="`${gridSize}px`" patternUnits="userSpaceOnUse")
                 line(x1="0" y1="0" x2="0" :y2="`${gridSize}`" stroke-width="1px" shape-rendering="geometricPrecision")
                 line(x1="0" y1="0" :x2="`${gridSize}`" y2="0" stroke-width="1px" shape-rendering="geometricPrecision")
-        rect(height="410%" width="410%" x="-10%" y="-10%" fill="url(#grid-pattern)" :style="{ transform: gridStyle, transformOrigin: '0 0' }")
+        rect(height="410%" width="410%" x="-10%" y="-10%" fill="url(#grid-pattern)" :style="{ transform: gridStyle , transformOrigin: '0 0' }")
         g.area(ref="area" :style="{ transform: transformStyle, transformOrigin: '0 0' }")
             slot
 </template>
@@ -14,6 +14,7 @@
 
     import { Zoom } from '../../helpers'
     import { Editor } from '../../shared/flow'
+    import { Fragment } from 'vue-fragment'
 
     interface Position {
         x: number
@@ -34,10 +35,14 @@
         transformStyle: string
         gridStyle: string
         startPosition?: Transform
+        to: string
     }
 
     export default Vue.extend({
         name: 'area-view',
+        components: {
+            'v-frag': Fragment
+        },
         props: {
             editor: {
                 type: Object as PropType<Editor>
@@ -55,7 +60,8 @@
                 mouse: { x: 0, y: 0 },
                 transform: { k: 1, x: 0, y: 0 },
                 transformStyle: `translate(0px, 0px) scale(0)`,
-                gridStyle: `translate(0px, 0px) scale(0)`
+                gridStyle: `translate(0px, 0px) scale(0)`,
+                to: '0px 0px'
             }
         },
         methods: {
@@ -82,13 +88,18 @@
                 if (zoom < 0.4) return
                 this.editor.zoomLevel = zoom
 
-                const k = this.transform.k
-
-                const d = (k - zoom) / (k - zoom || 1)
+                const area = this.$refs.area as SVGGElement
+                const bb = area.getBBox()
 
                 this.transform.k = zoom || 1
-                this.transform.x += ox * d
-                this.transform.y += oy * d
+                this.transform.x += ox
+                this.transform.y += oy
+
+                const x = (this.transform.x - ox) + ox
+                const y = (this.transform.y - oy) + oy
+
+                this.transform.x = x
+                this.transform.y = y
 
                 this.update()
             },
@@ -96,6 +107,14 @@
                 const t = this.transform
                 this.transformStyle = `translate(${t.x}px, ${t.y}px) scale(${t.k})`
                 this.gridStyle = `translate(${t.x % (this.gridSize * t.k)}px,${t.y % (this.gridSize * t.k)}px) scale(${t.k})`
+
+                const el = this.$refs.area as SVGGElement
+                const rect = el.getBoundingClientRect()
+                const bb = el.getBBox()
+
+                this.$emit('updateArea', rect.left - bb.x, rect.top - bb.y)
+
+                const m = `matrix(transform.scaleX, 0, 0, transform.scaleY, transform.x, transform.y)`
             }
         },
         mounted() {
@@ -116,15 +135,15 @@
     })
 
     /*let z = this.transform.k 
-                                    
-                                    z = z * (1 + delta)
+                                        
+                                        z = z * (1 + delta)
 
-                                    const min = 0.5
-                                    const max = 1.4
+                                        const min = 0.5
+                                        const max = 1.4
 
-                                    z = z < min ? min : (z > max ? max : z)
+                                        z = z < min ? min : (z > max ? max : z)
 
-                                    this.editor.zoomLevel = this.transform.k = z*/
+                                        this.editor.zoomLevel = this.transform.k = z*/
 </script>
 
 <style lang="scss" scoped>

@@ -1,4 +1,5 @@
 import { Input, Output, Connection } from './io'
+import { INode, IOutputs, IInputs } from './interfaces'
 
 interface IOData {
     data: any
@@ -33,6 +34,7 @@ export class Node {
     id!: number
     builderName!: string
     processed: boolean = false
+    
     metadata: NodeMetadata = {}
 
     inputs = new Map<string, Input>()
@@ -77,8 +79,8 @@ export class Node {
         return connections
     }
 
-    /*toJSON(): NodeData {
-        const transformIO = <T extends any>(list: Map<string, Input | Output>) => {
+    toJSON(): INode {
+        const reduceIO = <T extends any>(list: Map<string, Input | Output>) => {
             return Array.from(list).reduce<T>((obj, [key, io]) => {
                 obj[key] = io.toJSON()
                 return obj
@@ -87,12 +89,12 @@ export class Node {
 
         return {
             id: this.id,
-            name: this.builderName,
-            metadata: this.metadata,
-            inputs: transformIO<InputsData>(this.inputs),
-            outputs: transformIO<OutputsData>(this.outputs)
+            inputs: reduceIO<IInputs>(this.inputs),
+            outputs: reduceIO<IOutputs>(this.outputs),
+            position: this.metadata.position!,
+            builderName: this.builderName
         }
-    }*/
+    }
 
     private _add<T extends any>(list: Map<string, T>, item: T, prop: string): void {
         if (list.has(item.key)) throw new Error(`Item with key '${item.key}' already been added to the node`)

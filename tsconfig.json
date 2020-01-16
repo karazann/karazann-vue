@@ -17,6 +17,7 @@
             "@nuxt/types",
             "@nuxtjs/axios",
             "@types/feather-icons",
+            "@types/socket.io-client",
             "node",
             "jest",
         ],

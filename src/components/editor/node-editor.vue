@@ -1,15 +1,17 @@
 <template lang="pug">
     .node-editor
-        svg(id="svg" ref="view" v-drag="dragOptions" :style="{ height: height-78 + 'px', width: width-17 + 'px' }")
+        svg(id="svg" ref="view" v-drag="dragOptions" :style="{ height: height-68 + 'px', width: width-17 + 'px' }")
             filter#filter-black(x='-20%' y='-20%' width='140%' height='140%' filterunits='objectBoundingBox', primitiveunits='userSpaceOnUse' color-interpolation-filters='sRGB')
                 feDropShadow(stdDeviation='6' in='SourceGraphic' dx='0' dy='7' flood-color='#051d4008' flood-opacity='1' x='-10%' y='-10%' width='130%' height='130%' result='dropShadow')
             filter#filter-blue(x='-20%' y='-20%' width='140%' height='140%' filterunits='objectBoundingBox', primitiveunits='userSpaceOnUse' color-interpolation-filters='sRGB')
                 feDropShadow(stdDeviation='6' in='SourceGraphic' dx='0' dy='7' flood-color='#0396FF20' flood-opacity='1' x='-10%' y='-10%' width='130%' height='130%' result='dropShadow')
-            area-view(:editor="editor" :svgSize="[width, height]" ref="area")
+            area-view(:editor="editor" :svgSize="[width, height]" ref="area" @updateArea="onUpdateArea")
                 connection-view(v-for="(connection, i) in getConnections" :editorConnection="connection" :key="i")
                 node-view(v-for="(node, i) in getNodes" :editorNode="node" :key="node.index")
+            circle.pin(:cx="debugX" :cy="debugY" r="5" fill="red" )
         
         v-toolbox(title="Toolbox")
+            v-button.primary(fill @onClick="toJSON") 123
             div.tool-outer(v-for="(builder, i) in getBuilders" :key="builder.name" )
                 .tool(v-drag="{ onStart, onDrag, onEnd }" :data-id="builder.name") {{builder.name}}
         
@@ -42,7 +44,9 @@
         isDragging: boolean
         ghost?: GhostNodeTool
         dragOptions: any
-        editorConnections?: any
+        editorConnections?: any,
+        debugX: number,
+        debugY: number
     }
 
     export default Vue.extend({
@@ -71,7 +75,9 @@
                 dragOptions: {
                     onStart: undefined,
                     onDrag: undefined
-                }
+                },
+                debugX: 0,
+                debugY: 0
             }
         },
         computed: {
@@ -90,7 +96,6 @@
                 this.width = window.innerWidth
                 this.height = window.innerHeight
             },
-
             onStart(e: PointerEvent) {
                 const z = this.editor!.zoomLevel
 
@@ -136,6 +141,14 @@
 
                 this.editor!.addNode(node)
                 this.ghost = undefined
+            },
+            toJSON() {
+                console.debug(this.editor!.toJSON())
+            },
+            onUpdateArea(x: number, y: number) {
+                
+                this.debugX = x
+                this.debugY = y
             }
         },
         created() {
@@ -149,6 +162,8 @@
                     onDrag: (this.$refs.area as any).onDrag
                 }
             })
+
+            console.log((this.$refs.area as any).to)
 
             this.editor = new Editor(this.$refs.view as SVGElement)
 

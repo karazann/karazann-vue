@@ -29,5 +29,5 @@
 
 <style lang="sass" scoped>
     .top 
-        margin-top: 78px
+        margin-top: 68px
 </style>

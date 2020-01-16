@@ -1,4 +1,4 @@
-function listenWindow<K extends keyof WindowEventMap>(event: K, handler: (e: WindowEventMap[K]) => void) {
+export function listenWindow<K extends keyof WindowEventMap>(event: K, handler: (e: WindowEventMap[K]) => void) {
     window.addEventListener(event, handler)
 
     return () => {
@@ -10,24 +10,33 @@ interface DeltaWheelEvent {
     wheelDelta: number
 }
 
-interface TouchData {
-    cx: number
-    cy: number
-    distance: number
-}
-
 export class Zoom {
-    pointers: PointerEvent[] = []
-    previous: TouchData | null = null
+    el: SVGGElement
+    intensity: number
+    onzoom: any
+    previous: { cx: number; cy: number; distance: number } | null = null
 
-    constructor(private root: SVGElement, private el: SVGElement, private intensity: number, private onZoom: (...args: any) => void | undefined) {
-        root.addEventListener('wheel', this.wheel.bind(this))
-        root.addEventListener('pointerdown', this.down.bind(this))
-        root.addEventListener('dblclick', this.dblclick.bind(this))
+    pointers: PointerEvent[] = []
+    destroy: () => void
+
+    constructor(container: SVGElement, el: SVGGElement, intensity: number, onzoom: any) {
+        this.el = el
+        this.intensity = intensity
+        this.onzoom = onzoom
+
+        container.addEventListener('wheel', this.wheel.bind(this))
+        container.addEventListener('pointerdown', this.down.bind(this))
+        container.addEventListener('dblclick', this.dblclick.bind(this))
 
         const destroyMove = listenWindow('pointermove', this.move.bind(this))
         const destroyUp = listenWindow('pointerup', this.end.bind(this))
         const destroyCancel = listenWindow('pointercancel', this.end.bind(this))
+
+        this.destroy = () => {
+            destroyMove()
+            destroyUp()
+            destroyCancel()
+        }
     }
 
     get translating() {
@@ -42,10 +51,26 @@ export class Zoom {
         const wheelDelta = ((e as unknown) as DeltaWheelEvent).wheelDelta
         const delta = (wheelDelta ? wheelDelta / 120 : -e.deltaY / 3) * this.intensity
 
+        const rP = this.mousePos(e)
+        const oX = rP.x * delta
+        const oY = rP.y * delta
+
         const ox = (rect.left - e.clientX) * delta
         const oy = (rect.top - e.clientY) * delta
 
-        this.onZoom(delta, ox, oy, 'wheel')
+        this.onzoom(delta, oX, oY, 'wheel')
+    }
+
+    mousePos(e: any) {
+        const bbox = this.el.parentElement!.getBoundingClientRect()
+        const abs = {
+            x: e.clientX || e.touches[0].pageX,
+            y: e.clientY || e.touches[0].pageY
+        }
+        return {
+            x: abs.x - bbox.left,
+            y: abs.y - bbox.top
+        }
     }
 
     touches() {
@@ -80,7 +105,7 @@ export class Zoom {
             const ox = (rect.left - cx) * delta
             const oy = (rect.top - cy) * delta
 
-            this.onZoom(delta, ox - (this.previous.cx - cx), oy - (this.previous.cy - cy), 'touch')
+            this.onzoom(delta, ox - (this.previous.cx - cx), oy - (this.previous.cy - cy), 'touch')
         }
         this.previous = { cx, cy, distance }
     }
@@ -99,6 +124,6 @@ export class Zoom {
         const ox = (rect.left - e.clientX) * delta
         const oy = (rect.top - e.clientY) * delta
 
-        this.onZoom(delta, ox, oy, 'dblclick')
+        this.onzoom(delta, ox, oy, 'dblclick')
     }
 }

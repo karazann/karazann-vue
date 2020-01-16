@@ -1,5 +1,6 @@
 import { Context } from '../core/context'
 import { NodeBuilder, Node, Connection, Input, Output, IO } from '..'
+import { IData } from '../interfaces'
 
 export class EditorPin {
     position: [number, number] = [0, 0]
@@ -68,6 +69,12 @@ export class Editor extends Context {
         super()
     }
 
+    toJSON() {
+        const data: IData = { nodes: {} }
+        this.nodes.forEach(node => data.nodes[node.id] = node.toJSON())
+        return data
+    }
+
     addNode(node: Node) {
         this.nodes.push(node)
 
@@ -118,7 +125,7 @@ export class Editor extends Context {
     }
 
     clear() {
-        ;[...this.nodes].forEach(node => this.removeNode(node))
+        [...this.nodes].forEach(node => this.removeNode(node))
     }
 
     private addConnectionEditor(connection: Connection) {

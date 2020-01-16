@@ -5,6 +5,7 @@
 import { Node } from './node'
 import { Pin } from './pin'
 import { EditorConnection } from '.'
+import { IInput, IOutput } from './interfaces'
 
 export class Connection {
     editorConnection!: EditorConnection
@@ -53,7 +54,7 @@ export class Input extends IO {
         this.connections.push(connection)
     }
 
-    /*toJSON(): IInputData {
+    toJSON(): IInput {
         return {
             connections: this.connections.map(c => {
                 if (!c.output.node) throw new Error('Node not added to Output')
@@ -65,7 +66,7 @@ export class Input extends IO {
                 }
             })
         }
-    }*/
+    }
 }
 
 export class Output extends IO {
@@ -90,7 +91,7 @@ export class Output extends IO {
         })
     }
 
-    /*toJSON(): IOutputData {
+    toJSON(): IOutput {
         return {
             connections: this.connections.map(c => {
                 if (!c.input.node) throw new Error('Node not added to Input')
@@ -102,5 +103,5 @@ export class Output extends IO {
                 }
             })
         }
-    }*/
+    }
 }

@@ -51,12 +51,11 @@ export class Zoom {
         const oX = rP.x
         const oY = rP.y
 
-        const delta = e.deltaY
+        // Compute the delta
+        const wheelDelta = ((e as unknown) as DeltaWheelEvent).wheelDelta
+        const delta = (wheelDelta ? wheelDelta / 120 : -e.deltaY / 3) * this.intensity
 
-        // Compute the new scale
-        const d = (1 * -e.deltaY) / 1000
-
-        this.onzoom(d, oX, oY, 'wheel')
+        this.onzoom(delta, oX, oY, 'wheel')
     }
 
     mousePos(e: any) {

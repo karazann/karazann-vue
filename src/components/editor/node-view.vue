@@ -1,14 +1,14 @@
 <template lang="pug">
-    g.node.filter(:style="{ transform: transformStyle }" )
-        g.graphics(width="220px" v-drag="{ onStart, onDrag }" )
+    g.node.filter(:style="{ transform: transformStyle }")
+        g.graphics(width="220px" v-drag="{ onStart, onDrag }" @click="test")
             rect.back(:height="height")
             polyline.header(points="1,50 219,50")
             text.text(x="110" y="32" text-anchor="middle") {{editorNode.node.builderName}}
             // Output texts
-            g.output(v-for='(output, i) in outputs' :key="output.key")
+            g.output-text(v-for='(output, i) in outputs' :key="output.key")
                 text(:y="output.pinY+5" x="200" width="110px" text-anchor="end") {{output.io.name}}
             // Input text
-            g.input(v-for='(input, i) in inputs' :key="input.key")
+            g.input-text(v-for='(input, i) in inputs' :key="input.key")
                 text(:y="input.pinY+5" x="20" width="110px" ) {{input.io.name}}
 
         // Outputs
@@ -91,6 +91,9 @@
             }
         },
         methods: {
+            test() {
+                console.log(123)
+            },
             getPinX(isOutput: boolean) {
                 if (isOutput) return -20
                 else return 240
@@ -110,7 +113,11 @@
 
                 const x = this.startPosition[0] + dx / z
                 const y = this.startPosition[1] + dy / z
-                this.translate(x, y, e)
+
+                const tx = Math.round(x / 11)*11
+                const ty = Math.round(y / 11)*11
+
+                this.translate(tx, ty, e)
             },
             translate(x: number, y: number, e: PointerEvent) {
                 const node = this.editorNode.node
@@ -180,8 +187,8 @@
         y: 20;
     }
 
-    .output,
-    .input {
+    .output-text,
+    .input-text {
         text {
             font-weight: 400;
         }

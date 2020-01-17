@@ -25,13 +25,13 @@ export const state = (): NotificationState => ({
             timer: undefined
         },
         networkError: {
-            message: 'Network error!',
+            message: 'Our services not available!',
             type: 'error',
             showed: false,
             timer: undefined
         },
         apiError: {
-            message: 'Api error!',
+            message: 'Unhandled api error!',
             type: 'error',
             showed: false,
             timer: undefined

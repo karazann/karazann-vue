@@ -11,7 +11,7 @@ function listenWindow<K extends keyof WindowEventMap>(event: K, handler: (e: Win
 export const dragDirective = (): DirectiveOptions => {
     const dragHandlers: Map<any, Drag> = new Map()
     return {
-        bind(el, bind, vnode) {
+        bind(el, bind) {
             const cbs = bind.value
             if (!cbs.onStart && !cbs.onDrag && !cbs.onEnd) {
                 return
@@ -51,8 +51,9 @@ export class Drag {
     }
 
     down(e: PointerEvent) {
-        if ((e.pointerType === 'mouse') && (e.button !== 0)) return
+        e.preventDefault()
         e.stopPropagation()
+        if ((e.pointerType === 'mouse') && (e.button !== 0)) return
         this.pointerStart = [e.pageX, e.pageY]
 
         if (this.onStart) this.onStart(e)

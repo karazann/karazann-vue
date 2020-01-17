@@ -96,6 +96,18 @@ export class Node {
         }
     }
 
+    static fromJSON(json: INode) {
+        const node = new Node()
+        const [x, y] = json.position
+        
+        node.id = json.id
+        node.metadata.position = [x, y]
+        node.builderName = json.builderName
+        Node.latestId = Math.max(node.id, Node.latestId)
+
+        return node
+    }
+
     private _add<T extends any>(list: Map<string, T>, item: T, prop: string): void {
         if (list.has(item.key)) throw new Error(`Item with key '${item.key}' already been added to the node`)
         if (item[prop] !== null) throw new Error('Item has already been added to some node')

@@ -26,6 +26,7 @@ $--theme-color-yellow: --theme-color-yellow;
 $--theme-color-yellow-2: --theme-color-yellow-2;
 
 $--theme-color-green: --theme-color-green;
+$--theme-color-green-1: --theme-color-green-1;
 $--theme-color-green-2: --theme-color-green-2;
 
 $--theme-color-blue: --theme-color-blue;
@@ -49,6 +50,7 @@ $theme-map-defaults: (
     $--theme-color-yellow: #f2c94c,
     $--theme-color-yellow-2: #f2c94c20,
     $--theme-color-green: #27ae60,
+    $--theme-color-green-1: #27ae6010,
     $--theme-color-green-2: #27ae6020,
     $--theme-color-blue: #0396ff,
     $--theme-color-blue-2: #0396ff20,
@@ -64,7 +66,7 @@ $theme-map-light: map-merge(
         $--theme-background: #f5f7fb,
         $--theme-primary-text: #233458,
         $--theme-secondary-text: #8093ad,
-        $--theme-color-green-2: #27ae6030
+        $--theme-color-green-2: #27ae6020
     )
 );
 

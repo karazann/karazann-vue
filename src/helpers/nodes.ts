@@ -91,3 +91,38 @@ export class All extends NodeBuilder {
         control['control']()
     }
 }
+
+export class Add extends NodeBuilder {
+    constructor() {
+        super('Add')
+    }
+
+    build(node: Node) {
+        node.addInput(new Input('inNumber1', 'InNumber', numberPin))
+        node.addInput(new Input('inNumber2', 'InNumber', numberPin))
+
+        node.addOutput(new Output('outNumber1', 'Number', numberPin))
+    }
+
+    async worker(node: Node, inputs: any, outputs: any, control: any) {
+        node.processed = true
+        control['control']()
+    }
+}
+
+export class Cast extends NodeBuilder {
+    constructor() {
+        super('Cast')
+    }
+
+    build(node: Node) {
+        node.addInput(new Input('inNumber1', 'Number', numberPin))
+
+        node.addOutput(new Output('outString1', 'Text', textPin))
+    }
+
+    async worker(node: Node, inputs: any, outputs: any, control: any) {
+        node.processed = true
+        control['control']()
+    }
+}

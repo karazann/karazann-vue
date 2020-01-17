@@ -4,7 +4,7 @@
             pattern(id="grid-pattern" :width="`${gridSize}px`" :height="`${gridSize}px`" patternUnits="userSpaceOnUse")
                 line(x1="0" y1="0" x2="0" :y2="`${gridSize}`" stroke-width="1px" shape-rendering="geometricPrecision")
                 line(x1="0" y1="0" :x2="`${gridSize}`" y2="0" stroke-width="1px" shape-rendering="geometricPrecision")
-        rect(height="410%" width="410%" x="-10%" y="-10%" fill="url(#grid-pattern)" :style="{ transform: gridStyle , transformOrigin: '0 0' }")
+        rect(v-if="gridEnabled" height="410%" width="410%" x="-10%" y="-10%" fill="url(#grid-pattern)" :style="{ transform: gridStyle , transformOrigin: '0 0' }")
         g.area(ref="area" :style="{ transform: transformStyle, transformOrigin: '0 0' }")
             slot
 </template>
@@ -35,7 +35,8 @@
         transformStyle: string
         gridStyle: string
         startPosition?: Transform
-        to: string
+        to: string,
+        gridEnabled: boolean
     }
 
     export default Vue.extend({
@@ -61,7 +62,8 @@
                 transform: { k: 1, x: 0, y: 0 },
                 transformStyle: `translate(0px, 0px) scale(0)`,
                 gridStyle: `translate(0px, 0px) scale(0)`,
-                to: '0px 0px'
+                to: '0px 0px',
+                gridEnabled: true
             }
         },
         methods: {
@@ -82,18 +84,23 @@
                 if (z > 2) return
                 if (z < 0.4) return
 
+                console.log()
+
+                if(z < 0.8) this.gridEnabled = false
+                if(z > 0.8) this.gridEnabled = true
+
                 this.editor.zoomLevel = z
 
-                    // Get the current x, y
+                // Get the current x, y
                 const currentX = tr.x
                 const currentY = tr.y
                 const scaleD = z / tr.k
 
-                    // Compute the final x, y
+                // Compute the final x, y
                 const x = scaleD * (currentX - oX) + oX
                 const y = scaleD * (currentY - oY) + oY
                 
-
+                // apply transform
                 this.transform.x = x
                 this.transform.y = y
                 this.transform.k = z

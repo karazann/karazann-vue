@@ -1,14 +1,14 @@
 <template lang="pug">
-    .node-editor
+    .node-editor(oncontextmenu="return false;")
         svg(id="svg" ref="view" v-drag="dragOptions" :style="{ height: height-68 + 'px', width: width-17 + 'px' }")
             filter#filter-black(x='-20%' y='-20%' width='140%' height='140%' filterunits='objectBoundingBox', primitiveunits='userSpaceOnUse' color-interpolation-filters='sRGB')
                 feDropShadow(stdDeviation='6' in='SourceGraphic' dx='0' dy='7' flood-color='#051d4008' flood-opacity='1' x='-10%' y='-10%' width='130%' height='130%' result='dropShadow')
             filter#filter-blue(x='-20%' y='-20%' width='140%' height='140%' filterunits='objectBoundingBox', primitiveunits='userSpaceOnUse' color-interpolation-filters='sRGB')
                 feDropShadow(stdDeviation='6' in='SourceGraphic' dx='0' dy='7' flood-color='#0396FF20' flood-opacity='1' x='-10%' y='-10%' width='130%' height='130%' result='dropShadow')
             area-view(:editor="editor" :svgSize="[width, height]" ref="area" @updateArea="onUpdateArea")
+                rect(width="660" height="440" rx="12" ry="12" class="comment")
                 connection-view(v-for="(connection, i) in getConnections" :editorConnection="connection" :key="i")
                 node-view(v-for="(node, i) in getNodes" :editorNode="node" :key="node.index")
-            circle.pin(:cx="debugX" :cy="debugY" r="5" fill="red" )
         
         v-toolbox(title="Toolbox")
             v-button.primary(fill @onClick="toJSON") 123
@@ -22,12 +22,12 @@
     import Vue from 'vue'
 
     import { Drag, dragDirective } from '../../helpers'
-    import { Console, OnStart, Branch, All } from '../../helpers/nodes'
+    import { Console, OnStart, Branch, All, Add, Cast } from '../../helpers/nodes'
     import Toolbox from './toolbox.vue'
     import AreaView from '../../components/editor/area-view.vue'
     import NodeView from '../../components/editor/node-view.vue'
     import ConnectionView from '../../components/editor/connection-view.vue'
-    import { Editor, EditorNode, NodeBuilder, EditorConnection } from '../../shared/flow'
+    import { Editor, EditorNode, NodeBuilder, EditorConnection, FlowEngine } from '../../shared/flow'
 
     interface GhostNodeTool {
         startPos: [number, number]
@@ -44,9 +44,7 @@
         isDragging: boolean
         ghost?: GhostNodeTool
         dragOptions: any
-        editorConnections?: any,
-        debugX: number,
-        debugY: number
+        editorConnections?: any
     }
 
     export default Vue.extend({
@@ -75,9 +73,7 @@
                 dragOptions: {
                     onStart: undefined,
                     onDrag: undefined
-                },
-                debugX: 0,
-                debugY: 0
+                }
             }
         },
         computed: {
@@ -143,12 +139,11 @@
                 this.ghost = undefined
             },
             toJSON() {
+                const nodes = this.editor!.nodes
+                console.debug(nodes)
+                const engine = new FlowEngine()
+                //engine.startPorcessing
                 console.debug(this.editor!.toJSON())
-            },
-            onUpdateArea(x: number, y: number) {
-                
-                this.debugX = x
-                this.debugY = y
             }
         },
         created() {
@@ -163,11 +158,16 @@
                 }
             })
 
-            console.log((this.$refs.area as any).to)
-
             this.editor = new Editor(this.$refs.view as SVGElement)
 
-            const builders = [new OnStart(), new Console(), new Branch(), new All()]
+            const builders = [
+                new OnStart(), 
+                new Console(), 
+                new Branch(), 
+                new All(), 
+                new Add(), 
+                new Cast()
+            ]
             builders.forEach((b: NodeBuilder) => {
                 this.editor!.register(b)
             })
@@ -200,6 +200,16 @@
         width: 100%;
         height: auto;
         margin: 15px 0;
+    }
+
+    .comment {
+        fill: theme-var(color-green-2);
+        stroke: theme-var(color-green);
+
+        &:hover {
+            
+            stroke: theme-var(color-green);
+        }
     }
 
     .tool {

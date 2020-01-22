@@ -1,16 +1,10 @@
 @import 'variables';
 @import 'mixins';
 
-:root[theme="light"] {
+:root[theme='light'] {
     @include spread-map($theme-map-light);
 }
 
-:root[theme="dark"] {
+:root[theme='dark'] {
     @include spread-map($theme-map-dark);
-}
-
-:root,
-:root * {
-    transition: all 1000ms !important, fill 1000ms !important;
-    transition-delay: 0s !important;
 }

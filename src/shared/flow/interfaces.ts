@@ -1,3 +1,5 @@
+import { PinType } from '.'
+
 /** Data interfaces */
 
 export interface IConnection {
@@ -31,9 +33,11 @@ export interface IOutputs {
 export interface INode {
     id: number
     builderName: string
-    inputs: IInputs
+    // inputs: IInputs
     outputs: IOutputs
-    position: [number, number]
+    metadata: {
+        [key: string]: any
+    }
 }
 
 export interface INodes {

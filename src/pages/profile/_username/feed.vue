@@ -1,11 +1,11 @@
 <template lang="pug">
     .row
-        aside.side-wrapper
+        aside.left-wrapper
             skills-panel(:skills="skills")
         .center-wrapper
             post-story(v-if="isMe")
             story-feed(:stories="stories" :loadingStories="$store.state.story.loadingStories")
-        aside.side-wrapper
+        aside.right-wrapper
             p side
 </template>
 
@@ -40,7 +40,6 @@
         async mounted() {
             const { data } = await this.$api.getUserStories(this.profile.userId)
             this.stories = data
-            // await this.$store.dispatch('story/getProfileFeed', { userId: this.profile.userId })
         },
         data(): VueData {
             return {
@@ -54,7 +53,7 @@
                         color: 'orange'
                     },
                     {
-                        text: 'WebDevelopment',
+                        text: 'Web Development',
                         color: 'red'
                     },
                     {
@@ -71,10 +70,30 @@
 <style lang="scss" scoped>
     .center-wrapper {
         @include make-col-ready;
-        @include make-col(12);
+        @include make-col(24);
+
+        @include media-breakpoint-up(md) {
+            @include make-col(18);
+        }
+
+        @include media-breakpoint-up(lg) {
+            @include make-col(12);
+        }
     }
-    .side-wrapper {
+    .left-wrapper, .right-wrapper {
         @include make-col-ready;
-        @include make-col(6);
+        display: none;
+    }
+    .left-wrapper {
+        @include media-breakpoint-up(md) {
+            display: initial;
+            @include make-col(6);
+        }
+    }
+    .right-wrapper {
+        @include media-breakpoint-up(lg) {
+            display: initial;
+            @include make-col(6);
+        }
     }
 </style>

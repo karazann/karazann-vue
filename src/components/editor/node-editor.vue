@@ -5,15 +5,17 @@
                 feDropShadow(stdDeviation='6' in='SourceGraphic' dx='0' dy='7' flood-color='#051d4008' flood-opacity='1' x='-10%' y='-10%' width='130%' height='130%' result='dropShadow')
             filter#filter-blue(x='-20%' y='-20%' width='140%' height='140%' filterunits='objectBoundingBox', primitiveunits='userSpaceOnUse' color-interpolation-filters='sRGB')
                 feDropShadow(stdDeviation='6' in='SourceGraphic' dx='0' dy='7' flood-color='#0396FF20' flood-opacity='1' x='-10%' y='-10%' width='130%' height='130%' result='dropShadow')
-            area-view(:editor="editor" :svgSize="[width, height]" ref="area" @updateArea="onUpdateArea")
-                rect(width="660" height="440" rx="12" ry="12" class="comment")
+            area-view(:editor="editor" :svgSize="[width, height]" ref="area")
                 connection-view(v-for="(connection, i) in getConnections" :editorConnection="connection" :key="i")
                 node-view(v-for="(node, i) in getNodes" :editorNode="node" :key="node.index")
         
-        v-toolbox(title="Toolbox")
-            v-button.primary(fill @onClick="toJSON") 123
+        v-toolbox(title="Toolbox" :x="60" :y="160")
             div.tool-outer(v-for="(builder, i) in getBuilders" :key="builder.name" )
                 .tool(v-drag="{ onStart, onDrag, onEnd }" :data-id="builder.name") {{builder.name}}
+
+        v-toolbox(title="Controls" :x="width-340" :y="160")
+            v-button.primary.tool-btn(fill @onClick="toJSON") Debug
+            v-button.primary.tool-btn(fill @onClick="save") Save
         
         .tool.ghost(v-if="ghost" :style="{ top: ghost.pos[1] + 'px', left: ghost.pos[0]+ 'px', transform: `scale(${ghost.scale})` }") {{ ghost.builder }}
 </template>
@@ -141,9 +143,18 @@
             toJSON() {
                 const nodes = this.editor!.nodes
                 console.debug(nodes)
+                
                 const engine = new FlowEngine()
-                //engine.startPorcessing
-                console.debug(this.editor!.toJSON())
+                const builders = [new OnStart(), new Console(), new Branch(), new All(), new Add(), new Cast()]
+                builders.forEach((b: NodeBuilder) => {
+                    engine.register(b)
+                })
+
+                const json = this.editor!.toJSON()
+                engine.startPorcessing(json, 1, true)
+            },
+            save() {
+                console.log('save')
             }
         },
         created() {
@@ -160,14 +171,7 @@
 
             this.editor = new Editor(this.$refs.view as SVGElement)
 
-            const builders = [
-                new OnStart(), 
-                new Console(), 
-                new Branch(), 
-                new All(), 
-                new Add(), 
-                new Cast()
-            ]
+            const builders = [new OnStart(), new Console(), new Branch(), new All(), new Add(), new Cast()]
             builders.forEach((b: NodeBuilder) => {
                 this.editor!.register(b)
             })
@@ -185,6 +189,10 @@
 </script>
 
 <style lang="scss" scoped>
+    .tool-btn {
+        margin-bottom: 15px;
+    }
+    
     .node-editor {
         overflow-y: hidden;
     }
@@ -207,7 +215,6 @@
         stroke: theme-var(color-green);
 
         &:hover {
-            
             stroke: theme-var(color-green);
         }
     }

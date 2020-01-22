@@ -15,6 +15,9 @@ Vue.config.productionTip = true
 import VueCompositionApi from '@vue/composition-api'
 Vue.use(VueCompositionApi)
 
+import PortalVue from 'portal-vue'
+Vue.use(PortalVue)
+
 
 Vue.directive('scroll', {
 

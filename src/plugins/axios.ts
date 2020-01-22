@@ -1,6 +1,6 @@
-import { APIErrorResponse, IOtherUser, APIResponse, IUser, ISignInUserRequest, IStory, IJob, IAuthResponse } from '@bit/szkabaroli.karazann-shared.interfaces'
+import { APIErrorResponse } from '@bit/szkabaroli.karazann-shared.interfaces'
 import { Context } from '@nuxt/types'
-import { NuxtAxiosInstance } from '@nuxtjs/axios'
+import { apiFactory } from '@/api'
 
 /** Declare types for vue and vuex */
 
@@ -21,48 +21,6 @@ declare module 'vuex/types/index' {
         $api: ReturnType<typeof apiFactory>
     }
 }
-
-export const apiFactory = ($axios: NuxtAxiosInstance) => ({
-    followUser(userId: string) {
-        return $axios.$post<APIResponse>(`/follows/${userId}`)
-    },
-    unfollowUser(userId: string) {
-        return $axios.$delete<APIResponse>(`/follows/${userId}`)
-    },
-    getUser(username: string) {
-        return $axios.$get<APIResponse<IUser>>(`/user/${username}`)
-    },
-    getUsers() { 
-        return $axios.$get<APIResponse>(`/user`)
-    },
-    getFollowers() {
-        return $axios.$get<APIResponse<IOtherUser[]>>(`/follows/followers`)
-    },
-    getFollowings() {
-        return $axios.$get<APIResponse<IOtherUser[]>>(`/follows/followings`)
-    },
-    signInInternal(req: ISignInUserRequest) { 
-        return $axios.$post<APIResponse<IAuthResponse>>('/user/signin', req)
-    },
-    getFeed() { 
-        return $axios.$get<APIResponse<IStory[]>>(`/user/feed`)
-    },
-    getUserStories(userId: string) { 
-        return $axios.$get<APIResponse<IStory[]>>(`/user/${userId}/feed`)
-    },
-    postStory(story: any) { 
-        return $axios.$post<APIResponse<IStory>>(`/story`, story)
-    },
-    getUserJobs(userId: string) { 
-        return $axios.$get<APIResponse<IJob[]>>(`/jobs?user_id=${userId}&fields=userId,title,jobId,type`)
-    },
-    reactStory(storyId: string, reactionType: string) {
-        return $axios.$post<APIResponse>(`/reactions?story_id=${storyId}&type=${reactionType}`)
-    },
-    unreactStory(storyId: string) { 
-        return $axios.$delete<APIResponse>(`/reactions?story_id=${storyId}`)
-    }
-})
 
 export default ({ store, app }: Context, inject: any) => {
     app.$axios.interceptors.request.use(

@@ -13,9 +13,9 @@
     import { dragDirective } from '../../helpers/drag'
 
     interface VueData {
-        x: number
-        y: number
-        startPosition: [number, number]
+        startPosition: [number, number],
+        lx: number,
+        ly: number
     }
 
     export default Vue.extend({
@@ -26,13 +26,15 @@
             title: {
                 type: String as PropType<string>,
                 default: 'Toolbox'
-            }
+            },
+            x: Number as PropType<number>,
+            y: Number as PropType<number>
         },
         data(): VueData {
             return {
-                x: 60,
-                y: 160,
-                startPosition: [0, 0]
+                startPosition: [0, 0],
+                lx: 0,
+                ly: 0
             }
         },
         methods: {
@@ -53,8 +55,8 @@
                 x = x < minX ? minX : x > maxX ? maxX : x
                 y = y < minY ? minY : y > maxY ? maxY : y
 
-                this.x = x
-                this.y = y
+                this.lx = x
+                this.ly = y
             }
         }
     })
@@ -64,18 +66,18 @@
     .toolbox {
         @include make-card;
         position: fixed;
-        height: 600px;
+        
         width: 280px;
 
         .header {
             width: 280px;
-            height: 50px;
-            padding: 12px 30px;
+            height: 60px;
+            padding: 15px 30px;
 
             .handle {
                 height: 6px;
                 cursor: grab;
-                margin: 2px auto;
+                margin: 5px auto 10px auto;
                 width: 60px;
                 border-radius: 5px;
                 background: theme-var(secondary-2);

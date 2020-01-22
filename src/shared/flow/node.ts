@@ -1,5 +1,6 @@
 import { Input, Output, Connection } from './io'
 import { INode, IOutputs, IInputs } from './interfaces'
+import { NodeBuilder } from '.'
 
 interface IOData {
     data: any
@@ -17,8 +18,10 @@ export interface FlowControls {
     [key: string]: () => void | Promise<void>
 }
 
+
 export interface NodeMetadata {
     position?: [number, number]
+    type?: string
     [key: string]: unknown
 }
 
@@ -89,19 +92,18 @@ export class Node {
 
         return {
             id: this.id,
-            inputs: reduceIO<IInputs>(this.inputs),
+            // inputs: reduceIO<IInputs>(this.inputs),
             outputs: reduceIO<IOutputs>(this.outputs),
-            position: this.metadata.position!,
+            metadata: this.metadata,
             builderName: this.builderName
         }
     }
 
-    static fromJSON(json: INode) {
-        const node = new Node()
-        const [x, y] = json.position
+    static fromJSON(json: INode, b: NodeBuilder) {
+        const node = b.createNode()
         
         node.id = json.id
-        node.metadata.position = [x, y]
+        node.metadata = json.metadata
         node.builderName = json.builderName
         Node.latestId = Math.max(node.id, Node.latestId)
 

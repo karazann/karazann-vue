@@ -21,7 +21,7 @@ export const jobPin = new Pin('job', PinType.Data)
 
 export class OnStart extends NodeBuilder {
     constructor() {
-        super('OnStart')
+        super('OnStart', 'trigger')
     }
 
     build(node: Node) {
@@ -30,13 +30,13 @@ export class OnStart extends NodeBuilder {
 
     async worker(node: Node, inputs: any, outputs: any, control: any) {
         node.processed = true
-        control['control']()
+        control['controlOut']()
     }
 }
 
 export class Console extends NodeBuilder {
     constructor() {
-        super('Console')
+        super('Console', 'action')
     }
 
     build(node: Node) {
@@ -48,13 +48,13 @@ export class Console extends NodeBuilder {
 
     async worker(node: Node, inputs: any, outputs: any, control: any) {
         node.processed = true
-        control['control']()
+        control['controlOut']()
     }
 }
 
 export class Branch extends NodeBuilder {
     constructor() {
-        super('Branch')
+        super('Branch', 'control')
     }
 
     build(node: Node) {
@@ -67,17 +67,21 @@ export class Branch extends NodeBuilder {
 
     async worker(node: Node, inputs: any, outputs: any, control: any) {
         node.processed = true
-        control['control']()
+        control['controlElse']()
     }
 }
 
 export class All extends NodeBuilder {
     constructor() {
-        super('All')
+        super('All', 'action')
     }
 
     build(node: Node) {
         node.addInput(new Input('controlIn', 'In', controlPin))
+        node.addInput(new Input('inNumber', 'Number', numberPin))
+        node.addInput(new Input('inBoolean', 'Boolean', booleanPin))
+        node.addInput(new Input('inText', 'Text', textPin))
+        node.addInput(new Input('inJob', 'Job', jobPin))
 
         node.addOutput(new Output('controlOut', 'Out', controlPin))
         node.addOutput(new Output('outNumber', 'Number', numberPin))
@@ -88,41 +92,37 @@ export class All extends NodeBuilder {
 
     async worker(node: Node, inputs: any, outputs: any, control: any) {
         node.processed = true
-        control['control']()
+        control['controlOut']()
     }
 }
 
 export class Add extends NodeBuilder {
     constructor() {
-        super('Add')
+        super('Add', 'data')
     }
 
     build(node: Node) {
         node.addInput(new Input('inNumber1', 'InNumber', numberPin))
         node.addInput(new Input('inNumber2', 'InNumber', numberPin))
-
         node.addOutput(new Output('outNumber1', 'Number', numberPin))
     }
 
     async worker(node: Node, inputs: any, outputs: any, control: any) {
         node.processed = true
-        control['control']()
     }
 }
 
 export class Cast extends NodeBuilder {
     constructor() {
-        super('Cast')
+        super('Cast', 'data')
     }
 
     build(node: Node) {
         node.addInput(new Input('inNumber1', 'Number', numberPin))
-
         node.addOutput(new Output('outString1', 'Text', textPin))
     }
 
     async worker(node: Node, inputs: any, outputs: any, control: any) {
         node.processed = true
-        control['control']()
     }
 }

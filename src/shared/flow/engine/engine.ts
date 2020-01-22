@@ -2,9 +2,10 @@ import { Node, InputsData, FlowControls } from '../node'
 import { Input } from '../io'
 import { PinType } from '../pin'
 import { Context } from '../core/context'
+import { IData } from '../interfaces'
 
 export class FlowEngine extends Context {
-    nodes!: Map<number, Node>
+    nodes: Map<number, Node> = new Map()
 
     extractInputData(node: Node) {
         const inputData: InputsData = {}
@@ -29,9 +30,62 @@ export class FlowEngine extends Context {
         return inputData
     }
 
-    async startPorcessing(nodes: Map<number, Node>, nodeId: number) {
-        this.nodes = nodes
+    async startPorcessing(json: IData, nodeId: number, onlyBuild: boolean) {
+        console.time('buildFlow')
+        // Build the node tree from json representation
+        for (const [key, value] of Object.entries(json.nodes)) {
+            const b = this.builders.get(value.builderName)!
+            const n = Node.fromJSON(value, b)
+            this.nodes.set(value.id, n)
+        }
+
+        // Build connections
+        let cons = 0
+        for (const [id, node] of Object.entries(json.nodes)) {
+            for (const [key, value] of Object.entries(node.outputs)) {
+                value.connections.forEach(c => {
+                    cons++
+                    const output = this.nodes.get(node.id)?.outputs.get(key)
+                    const input = this.nodes.get(c.node)?.inputs.get(c.input)
+
+                    output!.connectTo(input!)
+                })
+            }
+        }
+        console.timeEnd('buildFlow')
+
+        console.time('analyzeFlow')
+        let triggers = 0
+        let action = 0
+        let control = 0
+        let data = 0
+        
+        for (const node of Object.values(json.nodes)) {
+            switch (node.metadata.type) { 
+                case 'trigger':
+                    triggers++ 
+                    break
+                case 'action':
+                    action++
+                    break
+                case 'control':
+                    control++
+                    break
+                case 'data':
+                    data++
+                    break
+            }
+        }
+        console.timeEnd('analyzeFlow')
+        console.debug('triggers:', triggers)
+        console.debug('action:', action)
+        console.debug('control:', control)
+        console.debug('data:', data)
+
+
+        console.time('processFlow')
         await this.processNode(nodeId)
+        console.timeEnd('processFlow')
     }
 
     /*async processUnreachable(): Promise<void> {

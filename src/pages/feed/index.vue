@@ -2,11 +2,11 @@
     main
         .container
             .row.spacer
-                aside.side-wrapper
+                aside.left-wrapper
                     p side
                 .center-wrapper
                     story-feed(:stories="stories")
-                aside.side-wrapper
+                aside.right-wrapper
                     p side
 </template>
 
@@ -34,10 +34,31 @@
     }
     .center-wrapper {
         @include make-col-ready;
-        @include make-col(12);
+        @include make-col(24);
+
+        @include media-breakpoint-up(md) {
+            @include make-col(18);
+        }
+
+        @include media-breakpoint-up(lg) {
+            @include make-col(12);
+        }
     }
-    .side-wrapper {
+    .left-wrapper, .right-wrapper {
         @include make-col-ready;
-        @include make-col(6);
+        display: none;
+    }
+    .left-wrapper {
+        @include media-breakpoint-up(md) {
+            display: initial;
+            @include make-col(6);
+        }
+    }
+    .right-wrapper {
+        @include media-breakpoint-up(lg) {
+            display: initial;
+            @include make-col(6);
+        }
     }
 </style>
+

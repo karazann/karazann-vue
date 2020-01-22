@@ -64,8 +64,7 @@
         position: fixed;
         height: 69px;
         width: 100%;
-        z-index: 1000;
-        transition: all 0.4s ease;
+        z-index: 200;
     }
 
     .brand {

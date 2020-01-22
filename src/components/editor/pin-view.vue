@@ -2,10 +2,10 @@
     g
         path(v-if="ghostPath" :d="ghostPath" :stroke="pinColor" stroke-width="2px" fill="none")
     
-        svg(v-drag="{ onStart, onDrag, onEnd }" v-if="flow"  :x="x-5" :y="y-8" width="13" height="16" viewBox="0 0 13 16" fill="none" xmlns="http://www.w3.org/2000/svg" )
+        svg(v-drag="{ onStart, onDrag, onEnd }" v-if="flow"  :x="x-6" :y="y-8" width="15" height="18" viewBox="0 0 13 16" fill="none" xmlns="http://www.w3.org/2000/svg" )
             path(:fill="fill ? pinColor: 'transparent'" ref="arrow" :stroke="pinColor" d="M1 2.93426L1 13.0657C1 14.2638 2.33522 14.9784 3.33205 14.3138L10.9307 9.24808C11.8213 8.65434 11.8213 7.34566 10.9307 6.75193L3.33205 1.68618L2.77735 2.51823L3.33205 1.68618C2.33522 1.02163 1 1.73621 1 2.93426Z" )
     
-        circle.pin(v-drag="{ onStart, onDrag, onEnd }" v-else-if="!flow" ref="circle" :cx="x" :cy="y" r="5" :fill="fill ? pinColor: 'transparent'" :stroke="pinColor")
+        circle.pin(v-drag="{ onStart, onDrag, onEnd }" v-else-if="!flow" ref="circle" :cx="x" :cy="y" r="6" :fill="fill ? pinColor: 'transparent'" :stroke="pinColor")
 </template>
 
 <script lang="ts">
@@ -54,9 +54,9 @@
                 const [x, y] = this.editorPin.node.node.metadata.position
 
                 if (this.editorPin.io instanceof Input) {
-                    this.editorPin.position = [x + this.x - 3, y + this.y]
+                    this.editorPin.position = [x + this.x - 3, y + this.y+1]
                 } else {
-                    this.editorPin.position = [x + this.x + 5, y + this.y]
+                    this.editorPin.position = [x + this.x + 5, y + this.y+1]
                 }
             },
             onStart(e: PointerEvent) {
@@ -68,9 +68,9 @@
                 const dxz = dx / z
                 const dyz = dy / z
                 if (this.editorPin.io instanceof Input) {
-                    this.ghostPath = createPath([this.startPos[0] + dxz, this.startPos[1] + dyz, this.x, this.y], 0.6)
+                    this.ghostPath = createPath([this.startPos[0] + dxz, this.startPos[1] + dyz, this.x, this.y+1], 0.6)
                 } else {
-                    this.ghostPath = createPath([this.x, this.y, this.startPos[0] + dxz, this.startPos[1] + dyz], 0.6)
+                    this.ghostPath = createPath([this.x, this.y+1, this.startPos[0] + dxz, this.startPos[1] + dyz], 0.6)
                 }
             },
             onEnd(e: PointerEvent) {

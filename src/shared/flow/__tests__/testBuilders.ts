@@ -9,7 +9,7 @@ export const pinFlow = new Pin('Number', PinType.Data)
 
 export class NumberNode extends NodeBuilder {
     constructor() {
-        super('NumberNode')
+        super('NumberNode', 'data')
     }
 
     build(node: Node) {
@@ -24,7 +24,7 @@ export class NumberNode extends NodeBuilder {
 
 export class PrintNode extends NodeBuilder {
     constructor() {
-        super('PrintNode')
+        super('PrintNode', 'action')
     }
 
     build(node: Node) {

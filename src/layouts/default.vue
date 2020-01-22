@@ -1,5 +1,6 @@
 <template lang="pug">
     div(v-scroll="onScroll")
+        portal-target(name="modal-container")
         notifications-container(top="100")
         v-header(:signedIn="false" :top="top")
         nuxt.top
@@ -8,7 +9,7 @@
 <script lang="ts">
     import Vue from 'vue'
     import NotificationsContainer from '../components/notifications/notifications-container.vue'
-
+    
     export default Vue.extend({
         name: 'default-layout',
         components: {

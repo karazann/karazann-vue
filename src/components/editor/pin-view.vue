@@ -78,7 +78,17 @@
 
                 const pin: EditorPin = (this as any).foo.get(e.target)
 
-                if (pin) this.editorPin.node.editor.connect(this.editorPin.io, pin.io)
+                if (pin) {
+                    this.editorPin.node.editor.connect(this.editorPin.io, pin.io)
+                    
+                    let node
+                    if(this.editorPin.io instanceof Input) {
+                        node = pin.node.node.toJSON()
+                    } else {
+                        node = this.editorPin.node.node.toJSON()
+                    }
+                    this.$api.updateFlow(this.$route.params.id, { node })
+                }
             }
         },
         mounted() {

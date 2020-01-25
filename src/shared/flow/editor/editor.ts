@@ -71,8 +71,35 @@ export class Editor extends Context {
 
     toJSON() {
         const data: IData = { nodes: {} }
-        this.nodes.forEach(node => data.nodes[node.id] = node.toJSON())
+        this.nodes.forEach(node => (data.nodes[node.id] = node.toJSON()))
         return data
+    }
+
+    fromJSON(json: IData) {
+        console.time('buildFlow')
+        this.clear()
+        console.log('json:', json)
+        
+        // Build the node tree from json representation
+        for (const [key, value] of Object.entries(json.nodes)) {
+            const b = this.builders.get(value.builderName)!
+            const n = Node.fromJSON(value, b)
+            
+            this.addNode(n)
+        }
+
+        // Build connections
+        for (const [id, node] of Object.entries(json.nodes)) {
+            for (const [key, value] of Object.entries(node.outputs)) {
+                value.connections.forEach(c => {
+                    const output = this.nodes.find(n => n.id === node.id)?.outputs.get(key)
+                    const input = this.nodes.find(n => n.id === c.node)?.inputs.get(c.input)
+                    this.connect(output!, input!)
+                })
+            }
+        }
+
+        console.timeEnd('buildFlow')
     }
 
     addNode(node: Node) {
@@ -125,7 +152,8 @@ export class Editor extends Context {
     }
 
     clear() {
-        [...this.nodes].forEach(node => this.removeNode(node))
+        const nodes = [...this.nodes]
+        nodes.forEach(node => this.removeNode(node))
     }
 
     private addConnectionEditor(connection: Connection) {

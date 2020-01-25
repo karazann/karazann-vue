@@ -84,8 +84,6 @@
                 if (z > 2) return
                 if (z < 0.4) return
 
-                console.log()
-
                 if(z < 0.8) this.gridEnabled = false
                 if(z > 0.8) this.gridEnabled = true
 

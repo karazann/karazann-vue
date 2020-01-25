@@ -95,6 +95,10 @@
     "bit": {
         "env": {},
         "componentsDefaultDirectory": "src/shared/{name}",
-        "packageManager": "npm"
+        "packageManager": "npm",
+        "defaultScope": "szkabaroli.karazann-shared",
+        "overrides": {
+            "szkabaroli.karazann-shared/nodes": {}
+        }
     }
 }

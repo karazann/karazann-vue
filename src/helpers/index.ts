@@ -1,6 +1,5 @@
 export * from './zoom'
 export * from './drag'
-export * from './nodes'
 export * from './validator'
 
 export const createPath = (points: number[], curvature: number) => {
@@ -18,4 +17,16 @@ export const roundPosTo = (points: number[], to: number = 10) => {
     y = Math.ceil(y / to) * to
 
     return [x, y]
+}
+
+interface ColorMapping {
+    [key: string]: string
+}
+
+export const pinColorMapping: ColorMapping = {
+    flow: '#0396FF',
+    boolean: '#EB5757',
+    text: '#F2C94C',
+    number: '#27AE60',
+    job: '#F2994A'
 }

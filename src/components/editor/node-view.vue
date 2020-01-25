@@ -1,6 +1,6 @@
 <template lang="pug">
     g.node.filter(:style="{ transform: transformStyle }")
-        g.graphics(width="220px" v-drag="{ onStart, onDrag }" @click="test")
+        g.graphics(width="220px" v-drag="{ onStart, onDrag, onEnd }")
             rect.back(:height="height")
             polyline.header(points="1,50 219,50")
             text.text(x="110" y="32" text-anchor="middle") {{editorNode.node.builderName}}
@@ -91,8 +91,9 @@
             }
         },
         methods: {
-            test() {
-                console.log(123)
+            onEnd() {
+                const node = this.editorNode.node.toJSON()
+                this.$api.updateFlow(this.$route.params.id, { node })
             },
             getPinX(isOutput: boolean) {
                 if (isOutput) return -20
@@ -155,6 +156,12 @@
     }
 
     .graphics {
+        cursor: pointer;
+
+        &:active {
+            cursor: grabbing;        
+        }
+
         .header {
             stroke: theme-var(secondary-2);
             fill: transparent;

@@ -10,25 +10,31 @@
                 node-view(v-for="(node, i) in getNodes" :editorNode="node" :key="node.index")
         
         v-toolbox(title="Toolbox" :x="60" :y="160")
-            div.tool-outer(v-for="(builder, i) in getBuilders" :key="builder.name" )
+            .tool-outer(v-for="(builder, i) in getBuilders" :key="builder.name" )
                 .tool(v-drag="{ onStart, onDrag, onEnd }" :data-id="builder.name") {{builder.name}}
 
-        v-toolbox(title="Controls" :x="width-340" :y="160")
-            v-button.primary.tool-btn(fill @onClick="toJSON") Debug
-            v-button.primary.tool-btn(fill @onClick="save") Save
+        v-toolbox(title="Properties" :x="width-340" :y="160")
+            .tool-outer
+                p Please select a node to view its properties.
+        
+        v-toolbox(title="Controls" :x="width-340" :y="440")
+            .tool-outer
+                v-button.primary.tool-btn(fill @onClick="toJSON") Debug
+                v-button.primary.tool-btn(fill @onClick="save") Save
         
         .tool.ghost(v-if="ghost" :style="{ top: ghost.pos[1] + 'px', left: ghost.pos[0]+ 'px', transform: `scale(${ghost.scale})` }") {{ ghost.builder }}
 </template>
 
 <script lang="ts">
-    import Vue from 'vue'
+    import Vue, { PropType } from 'vue'
 
     import { Drag, dragDirective } from '../../helpers'
-    import { Console, OnStart, Branch, All, Add, Cast } from '../../helpers/nodes'
     import Toolbox from './toolbox.vue'
     import AreaView from '../../components/editor/area-view.vue'
     import NodeView from '../../components/editor/node-view.vue'
     import ConnectionView from '../../components/editor/connection-view.vue'
+    
+    import { Console, OnStart, Branch, All, Add, Cast } from '../../shared/nodes'
     import { Editor, EditorNode, NodeBuilder, EditorConnection, FlowEngine } from '../../shared/flow'
 
     interface GhostNodeTool {
@@ -59,6 +65,9 @@
         },
         directives: {
             drag: dragDirective()
+        },
+        props: {
+            jsonData: Object as PropType<any>
         },
         provide() {
             return {
@@ -138,13 +147,18 @@
                 })
 
                 this.editor!.addNode(node)
+                
+                // Update on remmote
+                const nodeJson = node.toJSON()
+                this.$api.updateFlow(this.$route.params.id, { node: nodeJson })
+
                 this.ghost = undefined
             },
             toJSON() {
                 const nodes = this.editor!.nodes
                 console.debug(nodes)
                 
-                const engine = new FlowEngine()
+                const engine = new FlowEngine({ logger: console })
                 const builders = [new OnStart(), new Console(), new Branch(), new All(), new Add(), new Cast()]
                 builders.forEach((b: NodeBuilder) => {
                     engine.register(b)
@@ -152,9 +166,11 @@
 
                 const json = this.editor!.toJSON()
                 engine.startPorcessing(json, 1, true)
+                console.log('from')
+                this.editor!.fromJSON(json)
             },
             save() {
-                console.log('save')
+                return
             }
         },
         created() {
@@ -176,11 +192,7 @@
                 this.editor!.register(b)
             })
 
-            const node1 = builders[0].createNode({
-                position: [0, 0]
-            })
-
-            this.editor.addNode(node1)
+            this.editor.fromJSON(this.jsonData)
         },
         destroyed() {
             window.removeEventListener('resize', this.handleResize)
@@ -217,6 +229,10 @@
         &:hover {
             stroke: theme-var(color-green);
         }
+    }
+
+    .tools {
+            padding: 30px;
     }
 
     .tool {

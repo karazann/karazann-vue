@@ -1,6 +1,6 @@
 <template lang="pug">
     main
-        node-editor
+        node-editor(:jsonData="flowData")
 </template>
 
 <script lang="ts">
@@ -11,8 +11,20 @@
         head: {
             title: 'Flow'
         },
+        data() {
+            return {
+                flowData: undefined
+            }
+        },
         components: {
             'node-editor': () => import('../../components/editor/node-editor.vue')
+        },
+        async asyncData({ params, app }) {
+            const flowId = params.id
+            const { data } = await app.$api.getFlowData(flowId)
+            return {
+                flowData: data
+            }
         }
     })
 </script>

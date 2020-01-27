@@ -28,13 +28,13 @@
 <script lang="ts">
     import Vue, { PropType } from 'vue'
 
-    import { Drag, dragDirective } from '../../helpers'
+    import { Drag, dragDirective, Select } from '../../helpers'
     import Toolbox from './toolbox.vue'
     import AreaView from '../../components/editor/area-view.vue'
     import NodeView from '../../components/editor/node-view.vue'
     import ConnectionView from '../../components/editor/connection-view.vue'
     
-    import { Console, OnStart, Branch, All, Add, Cast } from '../../shared/nodes'
+    import { DebugString, OnStart, Branch, ConvertTo, All } from '../../shared/nodes'
     import { Editor, EditorNode, NodeBuilder, EditorConnection, FlowEngine } from '../../shared/flow'
 
     interface GhostNodeTool {
@@ -48,6 +48,7 @@
     interface VueData {
         width: number
         height: number
+        select: Select | undefined,
         editor?: Editor
         isDragging: boolean
         ghost?: GhostNodeTool
@@ -80,6 +81,7 @@
                 height: 0,
                 isDragging: false,
                 editor: undefined,
+                select: undefined,
                 ghost: undefined,
                 dragOptions: {
                     onStart: undefined,
@@ -113,7 +115,6 @@
                 const y = e.clientY - 25
 
                 const builder = (e.target as HTMLElement).getAttribute('data-id')!
-
                 this.ghost = {
                     startPos: [x, y],
                     pos: [x, y],
@@ -151,7 +152,6 @@
                 // Update on remmote
                 const nodeJson = node.toJSON()
                 this.$api.updateFlow(this.$route.params.id, { node: nodeJson })
-
                 this.ghost = undefined
             },
             toJSON() {
@@ -159,14 +159,12 @@
                 console.debug(nodes)
                 
                 const engine = new FlowEngine({ logger: console })
-                const builders = [new OnStart(), new Console(), new Branch(), new All(), new Add(), new Cast()]
+                const builders = [new OnStart(), new DebugString(), new Branch(), new ConvertTo(), new All()]
                 builders.forEach((b: NodeBuilder) => {
                     engine.register(b)
                 })
 
                 const json = this.editor!.toJSON()
-                engine.startPorcessing(json, 1, true)
-                console.log('from')
                 this.editor!.fromJSON(json)
             },
             save() {
@@ -187,7 +185,7 @@
 
             this.editor = new Editor(this.$refs.view as SVGElement)
 
-            const builders = [new OnStart(), new Console(), new Branch(), new All(), new Add(), new Cast()]
+            const builders = [new OnStart(), new DebugString(), new Branch(), new ConvertTo(), new All()]
             builders.forEach((b: NodeBuilder) => {
                 this.editor!.register(b)
             })

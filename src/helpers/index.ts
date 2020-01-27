@@ -1,6 +1,7 @@
 export * from './zoom'
 export * from './drag'
 export * from './validator'
+export * from './select'
 
 export const createPath = (points: number[], curvature: number) => {
     const [x1, y1, x2, y2] = points
@@ -26,7 +27,8 @@ interface ColorMapping {
 export const pinColorMapping: ColorMapping = {
     flow: '#0396FF',
     boolean: '#EB5757',
-    text: '#F2C94C',
+    string: '#F2C94C',
     number: '#27AE60',
-    job: '#F2994A'
+    job: '#F2994A',
+    polymorphic: 'gray'
 }

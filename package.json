@@ -1,104 +1,100 @@
 {
-    "name": "karazann-vue",
-    "version": "0.1.0",
-    "description": "My super-excellent Nuxt.js project",
-    "author": "szkabaroli",
-    "private": true,
-    "scripts": {
-        "test": "jest",
-        "test:watch": "jest --watchAll",
-        "test:cover": "jest --coverage --colors",
-        "clear": "rm -rf dist",
-        "start:dev": "nuxt-ts",
-        "start": "nuxt-ts start",
-        "build": "npm run clear && nuxt-ts build",
-        "build:gen": "npm run clear && nuxt-ts generate",
-        "format-vue": "prettier --write \"src/**/*.vue\" --parser vue --vue-indent-script-and-style",
-        "format-ts": "prettier --write \"src/**/*.ts\"",
-        "format": "npm run format-vue && npm run format-ts"
-    },
-    "dependencies": {
-        "@abraham/reflection": "^0.7.0",
-        "@bit/szkabaroli.karazann-shared.flow": "file:./src/shared/flow",
-        "@bit/szkabaroli.karazann-shared.interfaces": "^0.7.4",
-        "@bit/szkabaroli.karazann-shared.validator": "^0.5.0",
-        "@bit/szkabaroli.karazann-shared.validators": "^0.4.7",
-        "@vue/composition-api": "^0.3.4",
-        "axios": "^0.19.1",
-        "class-transformer": "^0.2.3",
-        "class-validator": "^0.11.0",
-        "css-vars-ponyfill": "^2.1.2",
-        "feather-icons": "^4.25.0",
-        "jquery": "^3.4.1",
-        "jquery-slim": "^3.0.0",
-        "jwt-decode": "^2.2.0",
-        "portal-vue": "^2.1.7",
-        "reflect-metadata": "^0.1.13",
-        "regenerator-runtime": "^0.13.3",
-        "socket.io-client": "^2.3.0",
-        "svg-pan-zoom": "^3.6.1",
-        "typescript": "^3.7.4",
-        "vue-draggable-resizable": "^2.1.0",
-        "vue-fragment": "^1.5.1",
-        "vue-slick": "^1.1.15",
-        "vue-smooth-dnd": "^0.8.1",
-        "vue-typed-mixins": "^0.2.0",
-        "vuex-module-decorators": "^0.11.0"
-    },
-    "devDependencies": {
-        "@nuxt/types": "^0.5.7",
-        "@nuxt/typescript-build": "^0.5.2",
-        "@nuxt/typescript-runtime": "^0.3.3",
-        "@nuxtjs/axios": "^5.9.0",
-        "@nuxtjs/pwa": "^3.0.0-beta.19",
-        "@nuxtjs/sitemap": "^2.0.1",
-        "@nuxtjs/style-resources": "^1.0.0",
-        "@types/feather-icons": "^4.7.0",
-        "@types/jest": "^24.0.25",
-        "@types/node": "^13.1.2",
-        "@types/socket.io-client": "^1.4.32",
-        "@vue/test-utils": "^1.0.0-beta.30",
-        "babel-core": "^6.26.3",
-        "babel-jest": "^24.9.0",
-        "core-js": "^2.6.11",
-        "jest": "^24.9.0",
-        "jest-vue-preprocessor": "^1.7.0",
-        "node-sass": "^4.13.0",
-        "nuxt": "^2.11.0",
-        "nuxt-sass-resources-loader": "^2.0.5",
-        "prettier": "^1.19.1",
-        "pug": "^2.0.4",
-        "pug-plain-loader": "^1.0.0",
-        "sass-loader": "^8.0.1",
-        "style-loader": "^1.1.2",
-        "ts-jest": "^24.2.0",
-        "tslint": "^5.20.1",
-        "tslint-config-prettier": "^1.18.0",
-        "vue-jest": "^3.0.5"
-    },
-    "vue": {
-        "configureWebpack": {
-            "resolve": {
-                "alias": {
-                    "@": "src",
-                    "~": "src"
-                },
-                "extensions": [
-                    "*",
-                    ".ts",
-                    ".vue",
-                    ".json"
-                ]
-            }
-        }
-    },
-    "bit": {
-        "env": {},
-        "componentsDefaultDirectory": "src/shared/{name}",
-        "packageManager": "npm",
-        "defaultScope": "szkabaroli.karazann-shared",
-        "overrides": {
-            "szkabaroli.karazann-shared/nodes": {}
-        }
+  "name": "karazann-vue",
+  "version": "0.1.0",
+  "description": "My super-excellent Nuxt.js project",
+  "author": "szkabaroli",
+  "private": true,
+  "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watchAll",
+    "test:cover": "jest --coverage --colors",
+    "clear": "rm -rf dist",
+    "start:dev": "nuxt-ts",
+    "start": "nuxt-ts start",
+    "build": "npm run clear && nuxt-ts build",
+    "build:gen": "npm run clear && nuxt-ts generate",
+    "format-vue": "prettier --write \"src/**/*.vue\" --parser vue --vue-indent-script-and-style",
+    "format-ts": "prettier --write \"src/**/*.ts\"",
+    "format": "npm run format-vue && npm run format-ts"
+  },
+  "dependencies": {
+    "@abraham/reflection": "^0.7.0",
+    "@bit/szkabaroli.karazann-shared.interfaces": "^0.7.4",
+    "@bit/szkabaroli.karazann-shared.validator": "^0.5.0",
+    "@bit/szkabaroli.karazann-shared.validators": "^0.4.7",
+    "@vue/composition-api": "^0.3.4",
+    "axios": "^0.19.1",
+    "class-transformer": "^0.2.3",
+    "class-validator": "^0.11.0",
+    "css-vars-ponyfill": "^2.1.2",
+    "feather-icons": "^4.25.0",
+    "jquery": "^3.4.1",
+    "jquery-slim": "^3.0.0",
+    "jwt-decode": "^2.2.0",
+    "portal-vue": "^2.1.7",
+    "reflect-metadata": "^0.1.13",
+    "regenerator-runtime": "^0.13.3",
+    "socket.io-client": "^2.3.0",
+    "svg-pan-zoom": "^3.6.1",
+    "typescript": "^3.7.4",
+    "vue-draggable-resizable": "^2.1.0",
+    "vue-fragment": "^1.5.1",
+    "vue-slick": "^1.1.15",
+    "vue-smooth-dnd": "^0.8.1",
+    "vue-typed-mixins": "^0.2.0",
+    "vuex-module-decorators": "^0.11.0"
+  },
+  "devDependencies": {
+    "@nuxt/types": "^0.5.7",
+    "@nuxt/typescript-build": "^0.5.2",
+    "@nuxt/typescript-runtime": "^0.3.3",
+    "@nuxtjs/axios": "^5.9.3",
+    "@nuxtjs/pwa": "^3.0.0-beta.19",
+    "@nuxtjs/sitemap": "^2.0.1",
+    "@nuxtjs/style-resources": "^1.0.0",
+    "@types/feather-icons": "^4.7.0",
+    "@types/jest": "^24.0.25",
+    "@types/node": "^13.5.0",
+    "@types/socket.io-client": "^1.4.32",
+    "@vue/test-utils": "^1.0.0-beta.30",
+    "babel-core": "^6.26.3",
+    "babel-jest": "^24.9.0",
+    "core-js": "^2.6.11",
+    "jest": "^24.9.0",
+    "jest-vue-preprocessor": "^1.7.0",
+    "node-sass": "^4.13.0",
+    "nuxt": "^2.11.0",
+    "nuxt-sass-resources-loader": "^2.0.5",
+    "prettier": "^1.19.1",
+    "pug": "^2.0.4",
+    "pug-plain-loader": "^1.0.0",
+    "sass-loader": "^8.0.1",
+    "style-loader": "^1.1.2",
+    "ts-jest": "^24.2.0",
+    "tslint": "^5.20.1",
+    "tslint-config-prettier": "^1.18.0",
+    "vue-jest": "^3.0.5"
+  },
+  "vue": {
+    "configureWebpack": {
+      "resolve": {
+        "alias": {
+          "@": "src",
+          "~": "src"
+        },
+        "extensions": [
+          "*",
+          ".ts",
+          ".vue",
+          ".json"
+        ]
+      }
     }
+  },
+  "bit": {
+    "env": {},
+    "componentsDefaultDirectory": "src/shared/{name}",
+    "packageManager": "npm",
+    "defaultScope": "szkabaroli.karazann-shared"
+  }
 }

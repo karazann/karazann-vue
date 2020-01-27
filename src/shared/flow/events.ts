@@ -20,3 +20,14 @@ export interface EventTypes {
     builderregister: (node: NodeBuilder) => void
     destroy: () => void
 }
+
+export interface NodeEvents {
+    incomingconnection: (pin: Input) => void
+    outcomingconnection: (pin: Output) => void
+
+    addinput: (input: Input) => void
+    removeinput: (input: Input) => void
+    
+    addoutput: (output: Output) => void
+    removeoutput: (output: Output) => void
+}

@@ -4,11 +4,11 @@ import 'css-vars-ponyfill'
 import Vue from 'vue'
 
 import Header from '../components/header/index.vue'
-import Input from '../components/shared/input.vue'
-import Button from '../components/shared/button.vue'
-import Tag from '../components/shared/tag.vue'
-import Brand from '../components/shared/brand.vue'
-import TitleBar from '../components/shared/title-bar.vue'
+import Input from '../components/ui/input.vue'
+import Button from '../components/ui/button.vue'
+import Tag from '../components/ui/tag.vue'
+import Brand from '../components/ui/brand.vue'
+import TitleBar from '../components/ui/title-bar.vue'
 
 Vue.config.productionTip = true
 

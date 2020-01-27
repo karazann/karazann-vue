@@ -1,7 +1,7 @@
 <template lang="pug">
     g.node.filter(:style="{ transform: transformStyle }")
         g.graphics(width="220px" v-drag="{ onStart, onDrag, onEnd }")
-            rect.back(:height="height")
+            rect.back(:height="getHeight")
             polyline.header(points="1,50 219,50")
             text.text(x="110" y="32" text-anchor="middle") {{editorNode.node.builderName}}
             // Output texts
@@ -61,13 +61,20 @@
             }
         },
         computed: {
+            getHeight() {
+                let ioCount = 0
+                this.editorNode.editorOutPins.length > this.editorNode.editorInPins.length 
+                    ? (ioCount = this.editorNode.editorOutPins.length)
+                    : (ioCount = this.editorNode.editorInPins.length)
+                return 70 + 30 * ioCount
+            },
             inputs(): IOContext[] {
                 const ctxs: IOContext[] = []
-                let index: number = 0
-                this.editorNode.node.inputs.forEach((i, key) => {
+                let index = 0
+                this.editorNode.editorInPins.forEach((p, key) => {
                     ctxs.push({
-                        io: i,
-                        pin: this.getPin(i),
+                        io: p.io,
+                        pin: p,
                         pinX: this.getPinX(true),
                         pinY: this.getPinY(index)
                     })
@@ -78,10 +85,10 @@
             outputs(): IOContext[] {
                 const ctxs: IOContext[] = []
                 let index = 0
-                this.editorNode.node.outputs.forEach((o, key) => {
+                this.editorNode.editorOutPins.forEach((o, key) => {
                     ctxs.push({
-                        io: o,
-                        pin: this.getPin(o),
+                        io: o.io,
+                        pin: o,
                         pinX: this.getPinX(false),
                         pinY: this.getPinY(index)
                     })
@@ -102,9 +109,6 @@
             getPinY(index: number) {
                 const baseY = 75
                 return baseY + index * 30
-            },
-            getPin(io: IO) {
-                return this.editorNode.editorPins.find(epin => epin.io === io)!
             },
             onStart() {
                 this.startPosition = [...this.editorNode.node.metadata.position]
@@ -138,10 +142,6 @@
             }
         },
         mounted() {
-            let ioCount = 0
-            this.editorNode.node.outputs.size > this.editorNode.node.inputs.size ? (ioCount = this.editorNode.node.outputs.size) : (ioCount = this.editorNode.node.inputs.size)
-            this.height = 70 + 30 * ioCount
-
             this.update()
         }
     })

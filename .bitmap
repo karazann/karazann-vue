@@ -88,14 +88,14 @@
         "files": [
             {
                 "name": "index.ts",
-                "relativePath": "src/shared/nodes/index.ts",
+                "relativePath": "index.ts",
                 "test": false
             }
         ],
-        "mainFile": "src/shared/nodes/index.ts",
-        "trackDir": "src/shared/nodes",
-        "origin": "AUTHORED",
-        "exported": true
+        "mainFile": "index.ts",
+        "rootDir": "src/shared/nodes",
+        "origin": "IMPORTED",
+        "originallySharedDir": "src/shared/nodes"
     },
     "version": "14.7.2"
 }

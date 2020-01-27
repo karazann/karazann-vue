@@ -8,27 +8,47 @@ export class EditorPin {
 }
 
 export class EditorNode {
-    editorPins: EditorPin[] = []
+    editorOutPins: EditorPin[] = []
+    editorInPins: EditorPin[] = []
 
     constructor(public node: Node, private builder: NodeBuilder, public editor: Editor) {
-        this.buildPins([...node.inputs.values(), ...node.outputs.values()])
+        this.buildPins()
+        node.on('addinput', input => { 
+            this.editorInPins.push(new EditorPin(input, this))
+        })
+        node.on('addoutput', output => { 
+            this.editorOutPins.push(new EditorPin(output, this))
+        })
+        node.on('removeinput', input => { 
+            this.editorInPins.splice(this.editorInPins.findIndex(pin => pin.io === input), 1)
+        })
+        node.on('removeoutput', output => { 
+            this.editorInPins.splice(this.editorInPins.findIndex(pin => pin.io === output), 1)
+        })
+    }
+
+    findPin(io: IO) {
+        const ios = [...this.editorInPins, ...this.editorOutPins]
+        const editorPin = ios.find(pin => pin.io === io)
+        return editorPin
     }
 
     getPinPosition(io: IO) {
-        const editorPin = this.editorPins.find(pin => pin.io === io)
-        if (!editorPin) throw new Error(`Pin not found for ${io.key}`)
-
-        return editorPin.position
+        const pin = this.findPin(io)
+        if (!pin) throw new Error(`Pin not found for ${io.key}`)
+        return pin.position
     }
 
     destroy() {
         console.debug('destroy editor node')
     }
 
-    private buildPins(ios: IO[]) {
-        // this.clearSockets()
-        ios.forEach(io => {
-            this.editorPins.push(new EditorPin(io, this))
+    buildPins() {
+        Array.from(this.node.inputs.values()).forEach(io => {
+            this.editorInPins.push(new EditorPin(io, this))
+        })
+        Array.from(this.node.outputs.values()).forEach(io => {
+            this.editorOutPins.push(new EditorPin(io, this))
         })
     }
 }
@@ -78,13 +98,12 @@ export class Editor extends Context {
     fromJSON(json: IData) {
         console.time('buildFlow')
         this.clear()
-        console.log('json:', json)
-        
+
         // Build the node tree from json representation
         for (const [key, value] of Object.entries(json.nodes)) {
             const b = this.builders.get(value.builderName)!
             const n = Node.fromJSON(value, b)
-            
+
             this.addNode(n)
         }
 

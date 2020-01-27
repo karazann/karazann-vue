@@ -40,9 +40,20 @@
             flow(): boolean {
                 return this.editorPin.io.pin.isFlow()
             },
-
             pinColor(): string {
                 const name = this.editorPin.io.pin.name
+                if(name === 'polymorphic') {
+                    const pinConnections = this.editorPin.io.getConnections()[0]
+                    let polymorphedName
+                    if(pinConnections) {
+                        if(this.editorPin.io instanceof Input) {
+                            polymorphedName = pinConnections.output.pin.name
+                        } else {
+                            polymorphedName = pinConnections.input.pin.name
+                        }
+                        return pinColorMapping[polymorphedName]
+                    }
+                }
                 return pinColorMapping[name]
             },
             fill(): boolean {
@@ -77,10 +88,10 @@
                 this.ghostPath = ''
 
                 const pin: EditorPin = (this as any).foo.get(e.target)
-
                 if (pin) {
                     this.editorPin.node.editor.connect(this.editorPin.io, pin.io)
-                    
+                    this.$forceUpdate()
+
                     let node
                     if(this.editorPin.io instanceof Input) {
                         node = pin.node.node.toJSON()

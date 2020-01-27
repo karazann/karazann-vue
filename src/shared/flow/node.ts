@@ -1,6 +1,8 @@
 import { Input, Output, Connection } from './io'
 import { INode, IOutputs, IInputs } from './interfaces'
+import { EventEmitter as EE } from 'ee-ts'
 import { NodeBuilder } from '.'
+import { NodeEvents } from './events'
 
 interface IOData {
     data: any
@@ -18,14 +20,13 @@ export interface FlowControls {
     [key: string]: () => void | Promise<void>
 }
 
-
 export interface NodeMetadata {
     position?: [number, number]
     type?: string
     [key: string]: unknown
 }
 
-export class Node {
+export class Node extends EE<NodeEvents> {
     private static latestId = 0
 
     private static incrementId(): number {
@@ -46,23 +47,41 @@ export class Node {
     outputDatas: OutputsData = {}
 
     constructor() {
+        super()
         this.id = Node.incrementId()
     }
 
     addInput(input: Input): Node {
         this._add(this.inputs, input, 'node')
+        this.emit('addinput', input)
         return this
     }
-
+    
     removeInput(input: Input): void {
         input.removeConnections()
         input.node = null
-
+        
         this.inputs.delete(input.key)
+        this.emit('removeinput', input)
+    }
+
+    // tslint:disable-next-line: no-shadowed-variable
+    replaceInput(oldIn: Input, newIn: Input, migrateConnections: boolean = true) { 
+        console.log(oldIn)
+        console.log(newIn)
+        this.removeInput(oldIn)
+        this.addInput(newIn)
+        
+        /*if (migrateConnections) { 
+            const compatible = oldIn.connections.every(c => c.input.pin.compatibleWith(newIn.pin)) 
+            if (!compatible) throw new Error('Failed to replace input!') 
+            newIn.connections = oldIn.connections
+        }*/
     }
 
     addOutput(output: Output): Node {
         this._add(this.outputs, output, 'node')
+        this.emit('addoutput', output)
         return this
     }
 
@@ -71,6 +90,7 @@ export class Node {
         output.node = null
 
         this.outputs.delete(output.key)
+        this.emit('removeoutput', output)
     }
 
     getConnections() {
@@ -112,7 +132,7 @@ export class Node {
 
     private _add<T extends any>(list: Map<string, T>, item: T, prop: string): void {
         if (list.has(item.key)) throw new Error(`Item with key '${item.key}' already been added to the node`)
-        if (item[prop] !== null) throw new Error('Item has already been added to some node')
+        // TODO: if (item[prop] !== null) throw new Error('Item has already been added to some node')
 
         item[prop] = this
         list.set(item.key, item)

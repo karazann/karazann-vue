@@ -66,7 +66,7 @@
                 this.editorNode.editorOutPins.length > this.editorNode.editorInPins.length 
                     ? (ioCount = this.editorNode.editorOutPins.length)
                     : (ioCount = this.editorNode.editorInPins.length)
-                return 70 + 30 * ioCount
+                return 70 + 33 * ioCount
             },
             inputs(): IOContext[] {
                 const ctxs: IOContext[] = []
@@ -108,7 +108,7 @@
             },
             getPinY(index: number) {
                 const baseY = 75
-                return baseY + index * 30
+                return baseY + index * 33
             },
             onStart() {
                 this.startPosition = [...this.editorNode.node.metadata.position]

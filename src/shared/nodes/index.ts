@@ -3,13 +3,12 @@ import { FlowControls } from '../flow/node'
 
 export const controlPin = new Pin('flow', PinType.Flow)
 
-
 export const numberPin = new Pin('number', PinType.Data)
 export const stringPin = new Pin('string', PinType.Data)
 export const booleanPin = new Pin('boolean', PinType.Data)
 export const jobPin = new Pin('job', PinType.Data)
 
-export const polymorphicPin = new Pin('polymorphic', PinType.Data, [numberPin,stringPin,booleanPin,jobPin])
+export const polymorphicPin = new Pin('polymorphic', PinType.Data, [numberPin, stringPin, booleanPin, jobPin])
 
 export class OnStart extends NodeBuilder {
     constructor() {
@@ -42,7 +41,7 @@ export class DebugString extends NodeBuilder {
 
     async worker(node: Node, inputs: InputsData, outputs: OutputsData, control: FlowControls) {
         console.log(inputs['stringIn'].data)
-        
+
         node.processed = true
         control['controlOut']()
     }
@@ -72,27 +71,28 @@ export class Branch extends NodeBuilder {
     }
 }
 
-
 export class ConvertTo extends NodeBuilder {
-    
-    inNumber = new Input('inNumber1', 'Any', polymorphicPin, false)
-    
     constructor() {
         super('ConvertTo', 'data')
     }
 
     build(node: Node) {
-         // Events
-        node.on('outcomingconnection', o => this.morphOutput(o, node))
+        // Events
+        node.on('outcomingconnection', o => {
+            this.morphOutput(node)
+            node.metadata['morphed'] = true
+        })
         // Data types
-        node.addInput(this.inNumber)
-        node.addOutput(new Output('outAny', 'Any', polymorphicPin, false)) 
+        node.addInput(new Input('inAny', 'Any', polymorphicPin, false))
+        node.addOutput(new Output('outAny', 'Any', polymorphicPin, false))
+
+        if (node.metadata['morphed'] === true) {
+            this.morphOutput(node)
+        }
     }
 
-    morphOutput(o: Output, n: Node) {   
-        n.replaceInput(this.inNumber, new Input('inNumber1', 'Number', numberPin))
-        
-        console.log('morphing')
+    morphOutput(node: Node) {
+        node.replaceInput('inAny', new Input('inNumber1', 'Number', numberPin))
     }
 
     async worker(node: Node, inputs: InputsData, outputs: OutputsData, control: FlowControls) {

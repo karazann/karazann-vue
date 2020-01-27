@@ -66,10 +66,8 @@ export class Node extends EE<NodeEvents> {
     }
 
     // tslint:disable-next-line: no-shadowed-variable
-    replaceInput(oldIn: Input, newIn: Input, migrateConnections: boolean = true) { 
-        console.log(oldIn)
-        console.log(newIn)
-        this.removeInput(oldIn)
+    replaceInput(oldIn: string, newIn: Input, migrateConnections: boolean = true) { 
+        this.removeInput(this.inputs.get(oldIn)!)
         this.addInput(newIn)
         
         /*if (migrateConnections) { 
@@ -131,8 +129,9 @@ export class Node extends EE<NodeEvents> {
     }
 
     private _add<T extends any>(list: Map<string, T>, item: T, prop: string): void {
+        console.log(item)
         if (list.has(item.key)) throw new Error(`Item with key '${item.key}' already been added to the node`)
-        // TODO: if (item[prop] !== null) throw new Error('Item has already been added to some node')
+        if (item[prop] !== null) throw new Error('Item has already been added to some node')
 
         item[prop] = this
         list.set(item.key, item)

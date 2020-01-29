@@ -1,5 +1,5 @@
 <template lang="pug">
-    .toolbox(:style="{ top: `${y}px`, left: `${x}px` }")
+    .toolbox(:style="{ top: `${ly}px`, left: `${lx}px` }")
         .header
             .handle(v-drag="{ onStart, onDrag }")
             h2.title {{ title }}
@@ -39,8 +39,8 @@
         },
         methods: {
             onStart(e: PointerEvent) {
-                this.startPosition[0] = this.x
-                this.startPosition[1] = this.y
+                this.startPosition[0] = this.lx
+                this.startPosition[1] = this.ly
             },
             onDrag(dx: number, dy: number, e: PointerEvent) {
                 let x = this.startPosition[0] + dx
@@ -49,8 +49,8 @@
                 const minX = 0
                 const maxX = window.window.innerWidth - 270 - 28
 
-                const minY = 78
-                const maxY = window.window.innerHeight - 600
+                const minY = 68
+                const maxY = window.window.innerHeight - 497
 
                 x = x < minX ? minX : x > maxX ? maxX : x
                 y = y < minY ? minY : y > maxY ? maxY : y
@@ -58,6 +58,10 @@
                 this.lx = x
                 this.ly = y
             }
+        },
+        created() {
+            this.lx = this.x
+            this.ly = this.y
         }
     })
 </script>
@@ -66,6 +70,7 @@
     .toolbox {
         @include make-card;
         position: fixed;
+        box-shadow: $shadow-lg;
         
         width: 280px;
 

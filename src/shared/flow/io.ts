@@ -3,20 +3,24 @@
  */
 
 import { Node } from './node'
-import { Pin } from './pin'
-import { EditorConnection } from '.'
+import { Pin, PinType } from './pin'
 import { IInput, IOutput } from './interfaces'
+import { EventEmitter as EE } from 'ee-ts'
+import { ConnectionEvents } from './events'
 
-export class Connection {
-    editorConnection!: EditorConnection
+export class Connection extends EE<ConnectionEvents> {
+    id: number
 
     constructor(public output: Output, public input: Input, public data: unknown = {}) {
+        super()
         this.input.addConnection(this)
+        this.id = Math.random()
     }
 
     remove(): void {
         this.input.removeConnection(this)
         this.output.removeConnection(this)
+        this.emit('removeconnection', this)
     }
 }
 
@@ -31,7 +35,7 @@ export class IO {
         this.connections = []
     }
 
-    getConnections() { 
+    getConnections() {
         return this.connections
     }
 
@@ -49,8 +53,8 @@ export class IO {
 }
 
 export class Input extends IO {
-    constructor(key: string, name: string, pin: Pin, multiConns: boolean = false) {
-        super(key, name, pin, multiConns)
+    constructor(key: string, name: string, pin: Pin) {
+        super(key, name, pin, pin.type === PinType.Flow ? true : false)
     }
 
     addConnection(connection: Connection): void {
@@ -75,7 +79,7 @@ export class Input extends IO {
 
 export class Output extends IO {
     constructor(key: string, name: string, pin: Pin, multiConns: boolean = true) {
-        super(key, name, pin, multiConns)
+        super(key, name, pin, pin.type === PinType.Data ? true : false)
     }
 
     connectTo(input: Input): Connection {
@@ -83,11 +87,14 @@ export class Output extends IO {
         if (!input.multipleConnections && input.hasConnection()) throw new Error('Input already has one connection')
         if (!this.multipleConnections && this.hasConnection()) throw new Error('Output already has one connection')
 
+        if (this.node === input.node) throw new Error('Cant connect node to itself!')
+
         // Emit node events
-        this.node!.emit('outcomingconnection', this)
-        input.node!.emit('incomingconnection', input)
 
         const connection = new Connection(this, input)
+
+        this.node!.emit('outcomingconnection', connection)
+        input.node!.emit('incomingconnection', connection)
 
         this.connections.push(connection)
         return connection

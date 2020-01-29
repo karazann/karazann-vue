@@ -21,9 +21,14 @@ export interface EventTypes {
     destroy: () => void
 }
 
+export interface ConnectionEvents { 
+    removeconnection: (connection: Connection) => void
+}
+
 export interface NodeEvents {
-    incomingconnection: (pin: Input) => void
-    outcomingconnection: (pin: Output) => void
+    incomingconnection: (connection: Connection) => void
+    outcomingconnection: (connection: Connection) => void
+
 
     addinput: (input: Input) => void
     removeinput: (input: Input) => void

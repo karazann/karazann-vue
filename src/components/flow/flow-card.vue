@@ -27,5 +27,12 @@
         padding: 15px;
         text-align: center;
         line-height: 35px;
+        margin-bottom: 30px;
+        transition: all .3s;
+        cursor: pointer;
+
+        &:hover {
+            transform: translateY(-1px);
+        }
     }
 </style>

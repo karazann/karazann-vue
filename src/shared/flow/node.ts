@@ -1,7 +1,7 @@
 import { Input, Output, Connection } from './io'
-import { INode, IOutputs, IInputs } from './interfaces'
+import { INode, IOutputs } from './interfaces'
 import { EventEmitter as EE } from 'ee-ts'
-import { NodeBuilder } from '.'
+import { NodeBuilder, Pin } from '.'
 import { NodeEvents } from './events'
 
 interface IOData {
@@ -38,7 +38,7 @@ export class Node extends EE<NodeEvents> {
     id!: number
     builderName!: string
     processed: boolean = false
-    
+
     metadata: NodeMetadata = {}
 
     inputs = new Map<string, Input>()
@@ -56,31 +56,33 @@ export class Node extends EE<NodeEvents> {
         this.emit('addinput', input)
         return this
     }
-    
-    removeInput(input: Input): void {
+
+    removeInput(inputKey: string): void {
+        const input = this.inputs.get(inputKey)!
+
         input.removeConnections()
         input.node = null
-        
+
         this.inputs.delete(input.key)
         this.emit('removeinput', input)
     }
 
-    // tslint:disable-next-line: no-shadowed-variable
-    replaceInput(oldIn: string, newIn: Input, migrateConnections: boolean = true) { 
-        this.removeInput(this.inputs.get(oldIn)!)
-        this.addInput(newIn)
-        
-        /*if (migrateConnections) { 
-            const compatible = oldIn.connections.every(c => c.input.pin.compatibleWith(newIn.pin)) 
-            if (!compatible) throw new Error('Failed to replace input!') 
-            newIn.connections = oldIn.connections
-        }*/
+    updateInput(oldInKey: string, name: string, pin: Pin) {
+        const input = this.inputs.get(oldInKey)!
+        input.pin = pin
+        input.name = name
     }
 
     addOutput(output: Output): Node {
         this._add(this.outputs, output, 'node')
         this.emit('addoutput', output)
         return this
+    }
+
+    updateOutput(oldOutKey: string, name: string, pin: Pin) {
+        const output = this.outputs.get(oldOutKey)!
+        output.pin = pin
+        output.name = name
     }
 
     removeOutput(output: Output): void {
@@ -118,20 +120,15 @@ export class Node extends EE<NodeEvents> {
     }
 
     static fromJSON(json: INode, b: NodeBuilder) {
-        const node = b.createNode()
-        
+        const node = b.createNode(json.metadata)
         node.id = json.id
-        node.metadata = json.metadata
-        node.builderName = json.builderName
         Node.latestId = Math.max(node.id, Node.latestId)
-
         return node
     }
 
     private _add<T extends any>(list: Map<string, T>, item: T, prop: string): void {
-        console.log(item)
         if (list.has(item.key)) throw new Error(`Item with key '${item.key}' already been added to the node`)
-        if (item[prop] !== null) throw new Error('Item has already been added to some node')
+        // if (item[prop] !== null) throw new Error('Item has already been added to some node')
 
         item[prop] = this
         list.set(item.key, item)

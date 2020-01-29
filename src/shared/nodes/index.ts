@@ -1,4 +1,4 @@
-import { NodeBuilder, PinType, Pin, Output, Node, Input, InputsData, OutputsData } from '../flow'
+import { NodeBuilder, PinType, Pin, Output, Node, Input, InputsData, OutputsData, Connection } from '../flow'
 import { FlowControls } from '../flow/node'
 
 export const controlPin = new Pin('flow', PinType.Flow)
@@ -10,7 +10,7 @@ export const jobPin = new Pin('job', PinType.Data)
 
 export const polymorphicPin = new Pin('polymorphic', PinType.Data, [numberPin, stringPin, booleanPin, jobPin])
 
-export class OnStart extends NodeBuilder {
+class OnStart extends NodeBuilder {
     constructor() {
         super('OnStart', 'trigger')
     }
@@ -26,7 +26,7 @@ export class OnStart extends NodeBuilder {
     }
 }
 
-export class DebugString extends NodeBuilder {
+class DebugString extends NodeBuilder {
     constructor() {
         super('DebugString', 'action')
     }
@@ -47,7 +47,7 @@ export class DebugString extends NodeBuilder {
     }
 }
 
-export class Branch extends NodeBuilder {
+class Branch extends NodeBuilder {
     constructor() {
         super('Branch', 'control')
     }
@@ -71,28 +71,41 @@ export class Branch extends NodeBuilder {
     }
 }
 
-export class ConvertTo extends NodeBuilder {
+class ConvertTo extends NodeBuilder {
     constructor() {
         super('ConvertTo', 'data')
     }
 
     build(node: Node) {
         // Events
-        node.on('outcomingconnection', o => {
-            this.morphOutput(node)
-            node.metadata['morphed'] = true
+        node.on('outcomingconnection', c => {
+            node.updateInput('inAny', 'Number', numberPin)
+            node.updateOutput('outAny', 'Morphed2', c.input.pin)
+            node.metadata['morphed'] = c.input.pin.name
         })
         // Data types
-        node.addInput(new Input('inAny', 'Any', polymorphicPin, false))
-        node.addOutput(new Output('outAny', 'Any', polymorphicPin, false))
-
-        if (node.metadata['morphed'] === true) {
-            this.morphOutput(node)
+        if (node.metadata['morphed']) {
+            let pin: Pin
+            switch (node.metadata['morphed']) {
+                case 'number':
+                    pin = numberPin
+                    break
+                case 'string':
+                    pin = stringPin
+                    break
+                case 'job':
+                    pin = jobPin
+                    break
+                case 'boolean':
+                    pin = booleanPin
+                    break
+            }
+            node.addInput(new Input('inAny', 'Any', numberPin))
+            node.addOutput(new Output('outAny', 'Morphed1', pin!))
+        } else {
+            node.addInput(new Input('inAny', 'Any', polymorphicPin))
+            node.addOutput(new Output('outAny', 'Any', polymorphicPin))
         }
-    }
-
-    morphOutput(node: Node) {
-        node.replaceInput('inAny', new Input('inNumber1', 'Number', numberPin))
     }
 
     async worker(node: Node, inputs: InputsData, outputs: OutputsData, control: FlowControls) {
@@ -100,7 +113,31 @@ export class ConvertTo extends NodeBuilder {
     }
 }
 
-export class All extends NodeBuilder {
+class Sequence extends NodeBuilder {
+    constructor() {
+        super('Sequence', 'control')
+    }
+
+    build(node: Node) {
+        node.addInput(new Input('controlIn', 'In', controlPin))
+
+        const count = (node.metadata['squenceCount'] = 4)
+        for (let i = 0; i < count; i++) {
+            node.addOutput(new Output(`controlOut-${i}`, `Out ${i}`, controlPin))
+        }
+    }
+
+    async worker(node: Node, inputs: InputsData, outputs: OutputsData, control: FlowControls) {
+        const count = (node.metadata['squenceCount'] = 4)
+
+        node.processed = true
+        for (let i = 0; i < count; i++) {
+            control[`controlOut-${i}`]()
+        }
+    }
+}
+
+class All extends NodeBuilder {
     constructor() {
         super('All', 'action')
     }
@@ -111,6 +148,7 @@ export class All extends NodeBuilder {
         node.addInput(new Input('inBoolean', 'Boolean', booleanPin))
         node.addInput(new Input('inText', 'Text', stringPin))
         node.addInput(new Input('inJob', 'Job', jobPin))
+
         node.addOutput(new Output('controlOut', 'Out', controlPin))
         node.addOutput(new Output('outNumber', 'Number', numberPin))
         node.addOutput(new Output('outBoolean', 'Boolean', booleanPin))
@@ -124,3 +162,5 @@ export class All extends NodeBuilder {
         control['controlOut']()
     }
 }
+
+export const builders = [new Branch(), new DebugString(), new All(), new ConvertTo(), new OnStart(), new Sequence()]

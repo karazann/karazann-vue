@@ -38,6 +38,32 @@ export const dragDirective = (): DirectiveOptions => {
     }
 }
 
+function debounced(delay: number, fn: any) {
+    let timerId: any
+    return (...args: any) => {
+        if (timerId) {
+            clearTimeout(timerId)
+        }
+        timerId = setTimeout(() => {
+            fn(...args)
+            timerId = null
+        }, delay)
+    }
+}
+
+function throttled(delay: number, fn: any) {
+    let lastCall = 0
+    // ts-lint-ignore: only-arrow-functions
+    return (...args: any) => {
+        const now = new Date().getTime()
+        if (now - lastCall < delay) {
+            return
+        }
+        lastCall = now
+        return fn(...args)
+    }
+}
+
 export class Drag {
     pointerStart: [number, number] | null
 
@@ -46,14 +72,15 @@ export class Drag {
         el.style.touchAction = 'none'
         el.addEventListener('pointerdown', this.down.bind(this) as EventListenerOrEventListenerObject)
 
-        const destroyMove = listenWindow('pointermove', this.move.bind(this))
+        const destroyMove = listenWindow('pointermove', throttled(15, this.move.bind(this)))
         const destroyUp = listenWindow('pointerup', this.up.bind(this))
     }
 
     down(e: PointerEvent) {
         e.preventDefault()
         e.stopPropagation()
-        if ((e.pointerType === 'mouse') && (e.button !== 0)) return
+        
+        if ((e.pointerType !== 'mouse')) return
         this.pointerStart = [e.pageX, e.pageY]
 
         if (this.onStart) this.onStart(e)

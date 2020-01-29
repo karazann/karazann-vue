@@ -1,6 +1,6 @@
 <template lang="pug">
     g.node.filter(:style="{ transform: transformStyle }")
-        g.graphics(width="220px" v-drag="{ onStart, onDrag, onEnd }")
+        g.graphics(width="220px" v-drag="{ onStart, onDrag, onEnd }" :class="editorNode.selected ? 'selected' : ''")
             rect.back(:height="getHeight")
             polyline.header(points="1,50 219,50")
             text.text(x="110" y="32" text-anchor="middle") {{editorNode.node.builderName}}
@@ -31,6 +31,7 @@
         startPosition: number[]
         transformStyle: string
         height: number
+        dragging: boolean
     }
 
     interface IOContext {
@@ -57,7 +58,8 @@
             return {
                 startPosition: [],
                 transformStyle: 'translate(0px, 0px)',
-                height: 0
+                height: 0,
+                dragging: false
             }
         },
         computed: {
@@ -98,10 +100,6 @@
             }
         },
         methods: {
-            onEnd() {
-                const node = this.editorNode.node.toJSON()
-                this.$api.updateFlow(this.$route.params.id, { node })
-            },
             getPinX(isOutput: boolean) {
                 if (isOutput) return -20
                 else return 240
@@ -114,6 +112,7 @@
                 this.startPosition = [...this.editorNode.node.metadata.position]
             },
             onDrag(dx: number, dy: number, e: PointerEvent) {
+                this.dragging = true
                 const z = this.editorNode.editor.zoomLevel
 
                 const x = this.startPosition[0] + dx / z
@@ -123,6 +122,15 @@
                 const ty = Math.round(y / 11)*11
 
                 this.translate(tx, ty, e)
+            },
+            onEnd(e: PointerEvent) {
+                if(this.dragging) {
+                    const node = this.editorNode.node.toJSON()
+                    this.$api.updateFlow(this.$route.params.id, { node: { id: node.id, data: node} })
+                } else {
+                    this.editorNode.editor.select.add(this.editorNode, e.ctrlKey)
+                }
+                this.dragging = false
             },
             translate(x: number, y: number, e: PointerEvent) {
                 const node = this.editorNode.node
@@ -158,9 +166,6 @@
     .graphics {
         cursor: pointer;
 
-        &:active {
-            cursor: grabbing;        
-        }
 
         .header {
             stroke: theme-var(secondary-2);
@@ -172,8 +177,7 @@
             fill: theme-var(surface);
             stroke: theme-var(secondary-2);
             width: 220px;
-            rx: 6px;
-            y: 0;
+            rx: 4px;
             filter: url(#filter-black);
             transition: stroke 0.1s, filter 0.1s;
         }
@@ -181,7 +185,13 @@
         &:hover {
             .back {
                 stroke: theme-var(primary);
+            }
+        }
+
+        &.selected {
+            .back {
                 filter: url(#filter-blue);
+                stroke: theme-var(primary);
             }
         }
     }

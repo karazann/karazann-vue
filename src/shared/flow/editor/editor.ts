@@ -11,6 +11,8 @@ export class EditorNode {
     editorOutPins: EditorPin[] = []
     editorInPins: EditorPin[] = []
 
+    selected = false
+
     constructor(public node: Node, private builder: NodeBuilder, public editor: Editor) {
         this.buildPins()
         node.on('addinput', input => { 
@@ -23,7 +25,7 @@ export class EditorNode {
             this.editorInPins.splice(this.editorInPins.findIndex(pin => pin.io === input), 1)
         })
         node.on('removeoutput', output => { 
-            this.editorInPins.splice(this.editorInPins.findIndex(pin => pin.io === output), 1)
+            this.editorOutPins.splice(this.editorInPins.findIndex(pin => pin.io === output), 1)
         })
     }
 
@@ -54,7 +56,11 @@ export class EditorNode {
 }
 
 export class EditorConnection {
-    constructor(public connection: Connection, private inputNode: EditorNode, private outputNode: EditorNode) {}
+    
+    
+    constructor(public connection: Connection, private inputNode: EditorNode, private outputNode: EditorNode) {
+        
+    }
 
     /*getPoints() {
         const [x1, y1] = this.outputNode.getPinPosition(this.connection.output)
@@ -71,8 +77,37 @@ export class EditorConnection {
     }
 }
 
-interface EditorConnectionObj {
-    [key: string]: EditorConnection
+export class EditorSelect {
+    list: EditorNode[] = []
+
+    add(item: EditorNode, accumulate = false) {
+        item.selected = true
+        if (!accumulate) {
+            this.each(e => e.selected = false)
+            this.list = [item]
+        }
+        else if (!this.contains(item)) {
+            this.list.push(item)
+        }
+    }
+
+    clear() {
+        this.each(e => e.selected = false)
+        this.list = []
+    }
+
+    remove(item: EditorNode) {
+        this.list.splice(this.list.indexOf(item), 1)
+        item.selected = false
+    }
+
+    contains(item: EditorNode) {
+        return this.list.indexOf(item) !== -1
+    }
+
+    each(callback: (n: EditorNode, index: number) => void) {
+        this.list.forEach(callback)
+    }
 }
 
 export class Editor extends Context {
@@ -84,6 +119,8 @@ export class Editor extends Context {
 
     zoomLevel: number = 1
     area!: SVGElement
+
+    select: EditorSelect = new EditorSelect()
 
     constructor(public root: SVGElement) {
         super()
@@ -100,19 +137,21 @@ export class Editor extends Context {
         this.clear()
 
         // Build the node tree from json representation
-        for (const [key, value] of Object.entries(json.nodes)) {
+        for (const value of Object.values(json.nodes)) {
             const b = this.builders.get(value.builderName)!
             const n = Node.fromJSON(value, b)
-
             this.addNode(n)
         }
 
         // Build connections
-        for (const [id, node] of Object.entries(json.nodes)) {
+        for (const node of Object.values(json.nodes)) {
             for (const [key, value] of Object.entries(node.outputs)) {
                 value.connections.forEach(c => {
-                    const output = this.nodes.find(n => n.id === node.id)?.outputs.get(key)
-                    const input = this.nodes.find(n => n.id === c.node)?.inputs.get(c.input)
+                    const editorNode = this.editorNodes.find(n => n.node.id === node.id)!
+                    const otherEditorNode = this.editorNodes.find(n => n.node.id === c.node)!
+                    // REVIEW: 
+                    const output = editorNode.editorOutPins.find(p => p.io.key === key)
+                    const input = otherEditorNode.editorInPins.find(p => p.io.key === c.input)
                     this.connect(output!, input!)
                 })
             }
@@ -128,6 +167,10 @@ export class Editor extends Context {
         const builder = this.builders.get(node.builderName)
         if (!builder) throw new Error(`Builder ${node.builderName} not found`)
 
+        /*node.on('removeoutput', o => {
+            this.editorConnections = this.editorConnections.filter(c => c.connection.input.key !== o.key)
+        })*/
+
         this.editorNodes.push(new EditorNode(node, builder, this))
     }
 
@@ -139,17 +182,22 @@ export class Editor extends Context {
         this.nodes.splice(this.nodes.indexOf(node), 1)
     }
 
-    connect(io1: IO, io2: IO) {
+    connect(pin1: EditorPin, pin2: EditorPin) {
         let connection: Connection
 
-        if (io1 instanceof Input && io2 instanceof Input) throw new Error('Cannot connect input to another input')
-        if (io1 instanceof Output && io2 instanceof Output) throw new Error('Cannot connect output to another output')
+        if (pin1.io instanceof Input && pin2.io instanceof Input) throw new Error('Cannot connect input to another input')
+        if (pin2.io instanceof Output && pin1.io instanceof Output) throw new Error('Cannot connect output to another output')
 
-        if (io1 instanceof Input) {
-            connection = (io2 as Output).connectTo(io1 as Input)
+        if (pin1.io instanceof Input) {
+            connection = (pin2.io as Output).connectTo(pin1.io as Input)
         } else {
-            connection = (io1 as Output).connectTo(io2 as Input)
+            connection = (pin1.io as Output).connectTo(pin2.io as Input)
         }
+
+        connection.one('removeconnection', c => {
+            console.log('remm')
+            this.editorConnections = this.editorConnections.filter(editorConn => editorConn.connection.id !== c.id)
+        })
 
         this.addConnectionEditor(connection)
     }
@@ -175,11 +223,12 @@ export class Editor extends Context {
         nodes.forEach(node => this.removeNode(node))
     }
 
-    private addConnectionEditor(connection: Connection) {
+    private addConnectionEditor(connection: Connection) {  
         if (!connection.input.node || !connection.output.node) throw new Error('Connection input or output not added to node')
 
         const editorInput = this.editorNodes.find(enode => enode.node === connection.input.node)
         const editorOutput = this.editorNodes.find(enode => enode.node === connection.output.node)
+
 
         if (!editorInput || !editorOutput) throw new Error('View node not fount for input or output')
 

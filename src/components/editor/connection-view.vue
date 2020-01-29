@@ -30,9 +30,9 @@
         },
         mounted() {
             this.$nextTick(() => {
-                this.pathData = createPath(this.editorConnection.getPoints(), 0.6)
+                this.pathData = createPath(this.editorConnection.getPoints(), 0.7)
                 this.$root.$on('update-connections', () => {
-                    this.pathData = createPath(this.editorConnection.getPoints(), 0.6)
+                    this.pathData = createPath(this.editorConnection.getPoints(), 0.7)
                 })
             })
         }

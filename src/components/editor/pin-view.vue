@@ -2,8 +2,8 @@
     g
         path(v-if="ghostPath" :d="ghostPath" :stroke="pinColor" stroke-width="2px" fill="none")
     
-        g.flow.n( v-drag="{ onStart, onDrag, onEnd }" v-if="flow" :style="{ transform: `translate(${x-6}px, ${y-8}px)` }" fill="transparent")
-            path(:fill="fill ? pinColor: 'transparent'" ref="arrow" :stroke="pinColor" d="M1.83092 14.9205L1.83088 14.9206C1.4515 15.1456 1 14.8615 1 14.4696L1 1.53042C1 1.13845 1.45156 0.854416 1.83088 1.07943L1.83092 1.07945L12.7401 7.55013C12.7403 7.55023 12.7405 7.55033 12.7406 7.55043C13.0866 7.75638 13.0864 8.2443 12.7403 8.44981L1.83092 14.9205Z" )
+        g.flow( v-drag="{ onStart, onDrag, onEnd }" v-if="flow" :style="{ transform: `translate(${x-6}px, ${y-8}px)` }" fill="transparent")
+            path.n(:fill="fill ? pinColor: 'transparent'" ref="arrow" :stroke="pinColor" d="M1.83092 14.9205L1.83088 14.9206C1.4515 15.1456 1 14.8615 1 14.4696L1 1.53042C1 1.13845 1.45156 0.854416 1.83088 1.07943L1.83092 1.07945L12.7401 7.55013C12.7403 7.55023 12.7405 7.55033 12.7406 7.55043C13.0866 7.75638 13.0864 8.2443 12.7403 8.44981L1.83092 14.9205Z" )
     
         circle.data.n(v-drag="{ onStart, onDrag, onEnd }" v-else-if="!flow" ref="circle" :cx="x" :cy="y" r="6" :fill="fill ? pinColor: 'transparent'" :stroke="pinColor")
 </template>

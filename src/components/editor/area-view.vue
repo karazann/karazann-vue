@@ -144,26 +144,29 @@
                 this.selector = false
             },
             selectIntersectedNodes() {
-                const selectorEl = this.$refs.selector as SVGRectElement
-                const selectorBounds = selectorEl.getBoundingClientRect()
-                this.editor.select.clear()
-                
-                this.$slots.default!.forEach(element => {
-                    const el = element.elm as SVGGElement
-                    const graphics = el.children[0] as SVGGElement
-                    const graphicsBounds = graphics.getBoundingClientRect()
+                if(this.selector === true) {
 
-                    const intersects = !(
-                        selectorBounds.left > graphicsBounds.right ||
-                        selectorBounds.right < graphicsBounds.left ||
-                        selectorBounds.top > graphicsBounds.bottom ||
-                        selectorBounds.bottom < graphicsBounds.top
-                    )
-
-                    if (intersects) {
-                        this.editor.select.add((element.componentOptions!.propsData! as any).editorNode, true)
-                    }
-                })
+                    const selectorEl = this.$refs.selector as SVGRectElement
+                    const selectorBounds = selectorEl.getBoundingClientRect()
+                    this.editor.select.clear()
+                    
+                    this.$slots.default!.forEach(element => {
+                        const el = element.elm as SVGGElement
+                        const graphics = el.children[0] as SVGGElement
+                        const graphicsBounds = graphics.getBoundingClientRect()
+    
+                        const intersects = !(
+                            selectorBounds.left > graphicsBounds.right ||
+                            selectorBounds.right < graphicsBounds.left ||
+                            selectorBounds.top > graphicsBounds.bottom ||
+                            selectorBounds.bottom < graphicsBounds.top
+                        )
+    
+                        if (intersects) {
+                            this.editor.select.add((element.componentOptions!.propsData! as any).editorNode, true)
+                        }
+                    })
+                }
             },
             onZoom(d: number, oX: number, oY: number, source: ZoomSource) {
                 // this.zoom(this.transform.k * (1 + delta), ox, oy, source)

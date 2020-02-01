@@ -263,7 +263,7 @@
         color: theme-var(primary);
         border: 1px solid theme-var(secondary-2);
         border-radius: 4px;
-        box-shadow: $shadow-lg;
+        box-shadow: $shadow-md;
         width: 100%;
         height: 50px;
         padding: 15px;

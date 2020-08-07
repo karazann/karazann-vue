@@ -24,7 +24,7 @@
     "@bit/szkabaroli.karazann-shared.validators": "^0.4.7",
     "@vue/composition-api": "^0.3.4",
     "axios": "^0.19.1",
-    "class-transformer": "^0.2.3",
+    "class-transformer": "^0.3.1",
     "class-validator": "^0.11.0",
     "css-vars-ponyfill": "^2.1.2",
     "feather-icons": "^4.25.0",
